@@ -24,9 +24,10 @@ library PBTokenComposer {
     }
 
     function getImageParts(
-        IPBTokenPartsStore store,
+        address storeAddress,
         uint96 dna
     ) public view returns (ImageParts memory) {
+        IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
         PBTokenDna.Image memory image = PBTokenDna.getImageFromDna(dna);
 
         return
@@ -47,11 +48,11 @@ library PBTokenComposer {
     }
 
     function getTokenMetadata(
-        IPBTokenPartsStore store,
+        address storeAddress,
         uint256 tokenId,
         uint96 dna
     ) public view returns (string memory) {
-        ImageParts memory parts = getImageParts(store, dna);
+        ImageParts memory parts = getImageParts(storeAddress, dna);
 
         // @dev splitting to prevent "stack to deep" error, need to process 16 variables maximum at a time
 

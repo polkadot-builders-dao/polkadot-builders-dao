@@ -1,0 +1,63 @@
+{
+  "name": "contracts",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Polkadot Builders",
+  "private": true,
+  "devDependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "@nomiclabs/hardhat-etherscan": "^3.1.6",
+    "@openzeppelin/contracts": "^4.8.1",
+    "@typechain/ethers-v5": "^10.2.0",
+    "@typechain/hardhat": "^6.1.5",
+    "@types/chai": "^4.3.4",
+    "@types/fs-extra": "^11.0.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.13.0",
+    "base64-sol": "1.1.0",
+    "chai": "^4.3.7",
+    "chai-ethers": "^0.0.1",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "fs-extra": "^11.1.0",
+    "hardhat": "^2.12.7",
+    "hardhat-deploy": "^0.11.23",
+    "hardhat-gas-reporter": "^1.0.9",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.20",
+    "solidity-coverage": "^0.8.2",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.1",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "dev": "(hardhat node && hardhat deploy --network localhost) & hardhat run scripts/export.ts",
+    "devmode": "hardhat run scripts/devMode.ts --network localhost",
+    "export": "hardhat clean & hardhat compile & hardhat run scripts/export.ts",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:watch": "nodemon -x 'hardhat test'",
+    "coverage": "hardhat coverage",
+    "deploy": "hardhat deploy",
+    "deploy:moonbase": "hardhat deploy --network moonbase",
+    "lint": "eslint .",
+    "clean": "hardhat clean"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "cache/**",
+      "artifacts/**",
+      "typechain-types/**"
+    ],
+    "watch": [
+      "contracts",
+      "test"
+    ],
+    "ext": "ts,sol"
+  }
+}

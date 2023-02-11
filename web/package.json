@@ -1,0 +1,52 @@
+{
+  "name": "web",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Polkadot Builders",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "predev": "cp -r ../contracts/artifacts/export/*.json ./contracts && wagmi generate",
+    "wagmi": "wagmi generate"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.9",
+    "@heroicons/react": "^2.0.14",
+    "@tabler/icons-react": "^2.3.0",
+    "@talismn/wagmi-connector": "^0.2.0",
+    "blueimp-md5": "^2.19.0",
+    "classnames": "^2.3.2",
+    "color": "^4.2.3",
+    "date-fns": "^2.29.3",
+    "ethers": "^5.7.2",
+    "nanoid": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.8.1",
+    "react-toastify": "^9.1.1",
+    "react-use": "^17.4.0",
+    "wagmi": "^0.11.4"
+  },
+  "devDependencies": {
+    "@types/blueimp-md5": "^2.18.0",
+    "@types/color": "^3.0.3",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^3.1.0",
+    "@wagmi/cli": "^0.1.5",
+    "autoprefixer": "^10.4.13",
+    "dotenv": "^16.0.3",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.1",
+    "vite-plugin-svgr": "^2.4.0"
+  },
+  "packageManager": "yarn@3.3.0"
+}

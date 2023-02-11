@@ -7,6 +7,7 @@ import { useWallet } from "../../lib/useWallet"
 import { AuctionStart } from "./AuctionStart"
 import { BidInput } from "./BidInput"
 import formatDistanceToNow from "date-fns/formatDistanceToNow"
+import { CHAIN_ID } from "../../lib/settings"
 
 const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   if (!date) return null
@@ -26,8 +27,9 @@ export const Auction = () => {
     error: errorAuction,
     status,
   } = usePbAuctionHouseGetAuction({
-    //address: "0xDC11f7E700A4c898AE5CAddB1082cFfa76512aDD",
     watch: true,
+    chainId: CHAIN_ID,
+    enabled: true,
   })
 
   const { image, metadata } = usePBTokenDetails(auction?.tokenId)

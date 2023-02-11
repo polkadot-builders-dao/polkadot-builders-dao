@@ -1,6 +1,7 @@
 import { BigNumber, BigNumberish } from "ethers"
 import { useMemo } from "react"
 import { usePbTokenTokenUri } from "../contracts/generated"
+import { CHAIN_ID } from "./settings"
 
 export const usePBTokenDetails = (tokenId?: BigNumberish) => {
   const id = tokenId ? BigNumber.from(tokenId) : BigNumber.from(0)
@@ -8,6 +9,7 @@ export const usePBTokenDetails = (tokenId?: BigNumberish) => {
   const call = usePbTokenTokenUri({
     args: [id],
     enabled: id.gt(0),
+    chainId: CHAIN_ID,
   })
 
   const { image, metadata } = useMemo(() => {

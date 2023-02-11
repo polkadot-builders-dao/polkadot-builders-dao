@@ -17,13 +17,16 @@ export const Playground: FC = () => {
   const provider = useProvider({ chainId: CHAIN_ID })
   const storeContract = usePbTokenPartsStore({
     signerOrProvider: provider,
+    chainId: CHAIN_ID,
   })
   const dnaContract = usePbTokenDna({
     signerOrProvider: provider,
+    chainId: CHAIN_ID,
   })
 
   const { data, error } = usePbTokenComposerGetTokenMetadata({
     args: [pbTokenPartsStoreAddress[CHAIN_ID], BigNumber.from(0), BigNumber.from(dna)],
+    chainId: CHAIN_ID,
   })
 
   const { image, metadata } = useMemo(() => {

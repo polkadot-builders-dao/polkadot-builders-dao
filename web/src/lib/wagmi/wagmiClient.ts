@@ -1,13 +1,9 @@
 import { createClient, configureChains } from "wagmi"
 import { publicProvider } from "wagmi/providers/public"
 import { CHAIN_ID } from "../settings"
+import { injectedConnector } from "./injectedConnector"
 
 import { supportedChains } from "./supportedChains"
-import { InjectedConnector } from "wagmi/connectors/injected"
-
-const injectedConnector = new InjectedConnector({
-  chains: supportedChains,
-})
 
 const allowedChains = supportedChains.filter((chain) => chain.id === CHAIN_ID)
 

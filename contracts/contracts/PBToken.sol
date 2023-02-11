@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import {PBTokenComposer} from "./lib/PBTokenComposer.sol";
 import {PBTokenDna} from "./lib/PBTokenDna.sol";
-import {IPBTokenPartsStore} from "./interfaces/IPBTokenPartsStore.sol";
 import {IPBToken} from "./interfaces/IPBToken.sol";
 
 /// @custom:security-contact contact@polkadot-builders.xyz
@@ -29,7 +28,7 @@ contract PBToken is
     Counters.Counter private _tokenIdCounter;
 
     // Parts store contract address
-    IPBTokenPartsStore public store;
+    address public store;
 
     // auction house account address (can mint and burn)
     address public auctionHouse;
@@ -41,7 +40,7 @@ contract PBToken is
     mapping(uint256 => uint96) public dnaMap;
 
     constructor(
-        IPBTokenPartsStore _store,
+        address _store,
         address _auctionHouse,
         address _founders
     ) ERC721("Polkadot Builders", "PBT") EIP712("Polkadot Builders", "1") {
@@ -76,7 +75,7 @@ contract PBToken is
         uint256 tokenId = _tokenIdCounter.current();
 
         // Generate and store dna for this token
-        dnaMap[tokenId] = PBTokenDna.generateDna(address(store), block.timestamp + tokenId);
+        dnaMap[tokenId] = PBTokenDna.generateDna(store, block.timestamp + tokenId);
 
         // Mint :rock:
         _safeMint(to, tokenId);

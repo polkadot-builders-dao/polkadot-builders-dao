@@ -160,4 +160,45 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         //   require(logos4.length < 255, "To many entries");
         logos4.push(part);
     }
+
+    function getColorNames(Color[] memory colors) private pure returns (string[] memory) {
+        string[] memory names = new string[](colors.length);
+        for (uint256 i = 0; i < colors.length; i++) {
+            names[i] = colors[i].name;
+        }
+        return names;
+    }
+
+    function getPaletteNames(Palette[] memory palettes) private pure returns (string[] memory) {
+        string[] memory names = new string[](palettes.length);
+        for (uint256 i = 0; i < palettes.length; i++) {
+            names[i] = palettes[i].name;
+        }
+        return names;
+    }
+
+    function getImagePartNames(ImagePart[] memory parts) private pure returns (string[] memory) {
+        string[] memory names = new string[](parts.length);
+        for (uint256 i = 0; i < parts.length; i++) {
+            names[i] = parts[i].name;
+        }
+        return names;
+    }
+
+    function getAllTraits() external view returns (AvailableTraits memory) {
+        return
+            AvailableTraits(
+                getColorNames(bgColors),
+                getColorNames(googlesColors),
+                getImagePartNames(crowns),
+                getImagePartNames(decorations),
+                getImagePartNames(garlands),
+                getImagePartNames(shields),
+                getPaletteNames(logoPalettes),
+                getImagePartNames(logos1),
+                getImagePartNames(logos2),
+                getImagePartNames(logos3),
+                getImagePartNames(logos4)
+            );
+    }
 }

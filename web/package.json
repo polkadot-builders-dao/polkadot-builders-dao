@@ -8,10 +8,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "ghpages": "tsc && vite build --base=/polkadot-builders-dao/",
     "preview": "vite preview",
     "lint": "eslint .",
-    "predev": "cp -r ../contracts/artifacts/export/*.json ./contracts && wagmi generate",
-    "wagmi": "wagmi generate"
+    "wagmi": "wagmi generate",
+    "wagmi:watch": "wagmi generate --watch"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.9",

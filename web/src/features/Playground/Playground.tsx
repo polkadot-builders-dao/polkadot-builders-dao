@@ -1,79 +1,90 @@
-// import { BigNumber, ethers } from "ethers"
-// import { FC, useCallback, useMemo, useState } from "react"
-// import { useContractRead, useProvider } from "wagmi"
-// import { Button } from "../../components/Button"
-// // import { PB_TOKEN, PB_TOKEN_COMPOSER, PB_TOKEN_PARTS_STORE } from "../../lib/contract"
-// import { CHAIN_ID } from "../../lib/settings"
-// //import { DnaEditor } from "./DnaEditor"
+import classNames from "classnames"
+import { BigNumber } from "ethers"
+import { FC, useCallback, useMemo, useState } from "react"
+import { useProvider } from "wagmi"
+import { Button } from "../../components/Button"
+import {
+  pbTokenPartsStoreAddress,
+  usePbTokenComposerGetTokenMetadata,
+  usePbTokenDna,
+  usePbTokenPartsStore,
+} from "../../contracts/generated"
+import { CHAIN_ID } from "../../lib/settings"
+import { DnaEditor } from "./DnaEditor"
 
-// export const Playground: FC = () => {
-//   const [dna, setDna] = useState("0")
-//   const provider = useProvider({ chainId: CHAIN_ID })
+export const Playground: FC = () => {
+  const [dna, setDna] = useState("0")
+  const provider = useProvider({ chainId: CHAIN_ID })
+  const storeContract = usePbTokenPartsStore({
+    signerOrProvider: provider,
+    chainId: CHAIN_ID,
+  })
+  const dnaContract = usePbTokenDna({
+    signerOrProvider: provider,
+    chainId: CHAIN_ID,
+  })
 
-//   const { data, error, isFetching } = useContractRead({
-//     ...PB_TOKEN,
-//     functionName: "generateMetadata",
-//     args: [0, dna],
-//   })
+  const { data, error } = usePbTokenComposerGetTokenMetadata({
+    args: [pbTokenPartsStoreAddress[CHAIN_ID], BigNumber.from(0), BigNumber.from(dna)],
+    chainId: CHAIN_ID,
+  })
 
-//   const { image, metadata } = useMemo(() => {
-//     if (typeof data !== "string") return { image: undefined, metadata: undefined }
-//     console.time("decode")
-//     const json = atob(data.replace("data:application/json;base64,", ""))
-//     const { image, ...metadata } = JSON.parse(json)
-//     console.timeEnd("decode")
-//     return { image, metadata }
-//   }, [data])
+  const { image, metadata } = useMemo(() => {
+    if (typeof data !== "string") return { image: undefined, metadata: undefined }
+    const json = atob(data.replace("data:application/json;base64,", ""))
+    const { image, ...metadata } = JSON.parse(json)
+    return { image, metadata }
+  }, [data])
 
-//   const handleRandom = useCallback(async () => {
-//     try {
-//       const store = new ethers.Contract(
-//         PB_TOKEN_PARTS_STORE.address,
-//         PB_TOKEN_PARTS_STORE.abi,
-//         provider
-//       )
-//       console.time("generateDna")
-//       const test: BigNumber = await store.generateDna(Date.now())
-//       console.timeEnd("generateDna")
-//       setDna(test.toString())
-//       console.log(test)
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }, [provider])
+  const handleRandom = useCallback(async () => {
+    try {
+      if (!dnaContract || !storeContract) return
 
-//   return (
-//     <div className="flex w-full flex-col">
-//       <h1 className="text-polkadot-500 mb-3 w-full text-left text-3xl font-bold ">Playground</h1>
-//       {/*
-//       <DnaEditor dna={dna} onChange={setDna} /> */}
+      const test = await dnaContract.generateDna(storeContract.address, BigNumber.from(Date.now()))
 
-//       <div className="flex w-full gap-8">
-//         <div className="h-64 w-64 rounded-xl bg-neutral-800">
-//           {image && <img alt="" src={image} className="rounded-xl" />}
-//         </div>
-//         <div className="flex h-64 grow flex-col justify-between gap-8 text-center">
-//           <div>DNA {dna}</div>
-//           <div className="grow">
-//             <Button onClick={handleRandom} className="inline-block w-auto">
-//               Random
-//             </Button>
-//           </div>
-//           <div>
-//             {error && <div className="text-brand-orange">{error.message}</div>}
-//             {isFetching && <div>Querying smart contract</div>}
-//           </div>
-//         </div>
-//       </div>
-//       <div className="flex w-full justify-center text-center"></div>
+      setDna(test.toString())
+    } catch (err) {
+      console.error(err)
+    }
+  }, [dnaContract, storeContract])
 
-//       <div className="mt-4 w-full rounded-xl bg-neutral-800 p-4">
-//         <pre className="h-[300px] overflow-auto text-sm ">
-//           {metadata && JSON.stringify(metadata, undefined, 2)}
-//         </pre>
-//       </div>
-//     </div>
-//   )
-// }
+  return (
+    <div>
+      <div className="flex items-center">
+        <div className="grow">
+          <h1 className="text-3xl font-bold text-neutral-300">Playground</h1>
+          <div className="text-neutral-500">DNA {dna}</div>
+        </div>
+        <Button onClick={handleRandom} className="inline-block">
+          Random
+        </Button>
+      </div>
+      <div className="my-8 flex w-full flex-col gap-8">
+        <DnaEditor dna={dna} onChange={setDna} />
+        <div className="flex w-full gap-8">
+          <div
+            className={classNames(
+              "h-80 w-80 rounded-xl bg-neutral-800 ",
+              !image && "animate-pulse"
+            )}
+          >
+            {image && <img alt="" src={image} className="rounded-xl" />}
+          </div>
+          <div className="grow">
+            <pre
+              className={classNames(
+                "h-80 overflow-auto rounded-xl bg-neutral-800 p-4 text-sm",
+                !metadata && "animate-pulse"
+              )}
+            >
+              {metadata && JSON.stringify(metadata, undefined, 2)}
+            </pre>
+          </div>
+        </div>
+      </div>
+      <div className="text-red-500">{error?.message}</div>
+    </div>
+  )
+}
 
 export default {}

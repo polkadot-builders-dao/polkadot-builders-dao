@@ -3,6 +3,7 @@ import { useAccount, useConnect, useDisconnect } from "wagmi"
 import { showToastAlert } from "../components/ToastAlert"
 import { provideContext } from "./provideContext"
 import { CHAIN_ID } from "./settings"
+import { injectedConnector } from "./wagmi/injectedConnector"
 
 const useWalletProvider = () => {
   const { address, isConnected, isConnecting, isReconnecting } = useAccount()
@@ -11,12 +12,10 @@ const useWalletProvider = () => {
   // used UI side to prevent the "Connect" button from flashing
   const [isJustAfterConnect, setIsJustAfterConnect] = useState(() => isConnected)
 
-  const { connect: connectWallet, error: errorConnect } =
-    useConnect()
-    // {
-    // chainId: CHAIN_ID,
-    // connector: injectedConnector,
-    // }
+  const { connect: connectWallet, error: errorConnect } = useConnect({
+    chainId: CHAIN_ID,
+    connector: injectedConnector,
+  })
 
   useEffect(() => {
     if (errorConnect)

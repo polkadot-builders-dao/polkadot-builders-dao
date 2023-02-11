@@ -16,15 +16,18 @@ export const AuctionStart = () => {
   if (!auction || !auction.isFinished) return null
 
   return isConnected ? (
-    <div>
-      <Button className="w-[200px]" onClick={handleStart}>
-        Next
-      </Button>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      <div>{error?.toString()}</div>
-    </div>
+    <Button className="" onClick={handleStart}>
+      Next
+    </Button>
   ) : (
-    <Button className="w-[200px]" onClick={connect}>
+    // <div>
+    //   <Button className="" onClick={handleStart}>
+    //     Next
+    //   </Button>
+    //   <pre>{JSON.stringify(data, null, 2)}</pre>
+    //   <div>{error?.toString()}</div>
+    // </div>
+    <Button className="" onClick={connect}>
       Connect
     </Button>
   )

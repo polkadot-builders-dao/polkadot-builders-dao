@@ -1,15 +1,10 @@
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 import { useCallback, useMemo, useRef, useState } from "react"
-import { useNetwork, useWaitForTransaction } from "wagmi"
-import { Button } from "../../components/Button"
+import { useNetwork } from "wagmi"
 import { usePbAuctionHouseBid, usePbAuctionHouseGetAuction } from "../../contracts/generated"
 
 export const BidInput = () => {
   const { data: auction } = usePbAuctionHouseGetAuction()
-  //   const { data: amount } = usePbAuctionHouseAmount()
-  //   const { data: minBid } = usePbAuctionHouseMinBid()
-  //   const { data: minBidIncrement } = usePbAuctionHouseMinBidIncrementPercent()
-  //   const { data: endDate } = usePbAuctionHouseEndTime()
 
   const minValue = useMemo(() => {
     if (!auction) return undefined
@@ -38,10 +33,6 @@ export const BidInput = () => {
       console.error("Bid failed", { err })
     }
   }, [bnBid, writeAsync])
-
-  //   const txReceipt = useWaitForTransaction({
-  //     hash: txResult?.hash,
-  //   })
 
   if (!auction || auction.isFinished) return null
 

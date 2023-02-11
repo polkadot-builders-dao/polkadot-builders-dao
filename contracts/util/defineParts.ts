@@ -348,15 +348,50 @@ export const LOGOS4: IPBTokenPartsStore.ImagePartStruct[] = [
 ]
 
 export const defineParts = async (tokenPartsContract: PBTokenPartsStore) => {
-  for (const bgColor of BG_COLORS) await tokenPartsContract.addBgColor(bgColor)
-  for (const googlesColor of GOOGLES_COLORS) await tokenPartsContract.addGooglesColor(googlesColor)
-  for (const crown of CROWNS) await tokenPartsContract.addCrown(crown)
-  for (const decoration of DECORATIONS) await tokenPartsContract.addDecoration(decoration)
-  for (const garland of GARLANDS) await tokenPartsContract.addGarland(garland)
-  for (const shield of SHIELDS) await tokenPartsContract.addShield(shield)
-  for (const palette of LOGO_PALETTES) await tokenPartsContract.addLogoPalette(palette)
-  for (const logo of LOGOS1) await tokenPartsContract.addLogo1(logo)
-  for (const logo of LOGOS2) await tokenPartsContract.addLogo2(logo)
-  for (const logo of LOGOS3) await tokenPartsContract.addLogo3(logo)
-  for (const logo of LOGOS4) await tokenPartsContract.addLogo4(logo)
+  const traits = await tokenPartsContract.getAllTraits()
+
+  for (const bgColor of BG_COLORS)
+    if (!traits.bgColors.includes(await bgColor.name)) {
+      await tokenPartsContract.addBgColor(bgColor)
+    }
+  for (const googlesColor of GOOGLES_COLORS)
+    if (!traits.googlesColors.includes(await googlesColor.name)) {
+      await tokenPartsContract.addGooglesColor(googlesColor)
+    }
+  for (const crown of CROWNS)
+    if (!traits.crowns.includes(await crown.name)) {
+      await tokenPartsContract.addCrown(crown)
+    }
+  for (const decoration of DECORATIONS)
+    if (!traits.decorations.includes(await decoration.name)) {
+      await tokenPartsContract.addDecoration(decoration)
+    }
+  for (const garland of GARLANDS)
+    if (!traits.garlands.includes(await garland.name)) {
+      await tokenPartsContract.addGarland(garland)
+    }
+  for (const shield of SHIELDS)
+    if (!traits.shields.includes(await shield.name)) {
+      await tokenPartsContract.addShield(shield)
+    }
+  for (const palette of LOGO_PALETTES)
+    if (!traits.logoPalettes.includes(await palette.name)) {
+      await tokenPartsContract.addLogoPalette(palette)
+    }
+  for (const logo of LOGOS1)
+    if (!traits.logos1.includes(await logo.name)) {
+      await tokenPartsContract.addLogo1(logo)
+    }
+  for (const logo of LOGOS2)
+    if (!traits.logos2.includes(await logo.name)) {
+      await tokenPartsContract.addLogo2(logo)
+    }
+  for (const logo of LOGOS3)
+    if (!traits.logos3.includes(await logo.name)) {
+      await tokenPartsContract.addLogo3(logo)
+    }
+  for (const logo of LOGOS4)
+    if (!traits.logos4.includes(await logo.name)) {
+      await tokenPartsContract.addLogo4(logo)
+    }
 }

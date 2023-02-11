@@ -15,7 +15,7 @@ import { HomePage } from "./routes/HomePage"
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <WagmiConfig client={wagmiClient}>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <WalletProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />

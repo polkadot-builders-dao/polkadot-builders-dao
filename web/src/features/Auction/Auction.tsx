@@ -26,6 +26,7 @@ export const Auction = () => {
     error: errorAuction,
     status,
   } = usePbAuctionHouseGetAuction({
+    //address: "0xDC11f7E700A4c898AE5CAddB1082cFfa76512aDD",
     watch: true,
   })
 
@@ -33,39 +34,56 @@ export const Auction = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-neutral-600">Current auction</h1>
-      <div className="flex gap-4">
-        <div className="h-[300px] w-[300px] shrink-0 rounded-xl bg-slate-500">
-          {image && <img className="h-[300px] w-[300px] rounded-xl" src={image} alt="" />}
+      <div className="flex items-center">
+        <div className="grow">
+          <h1 className="text-3xl font-bold text-neutral-300">Current auction</h1>
+          <div className="text-neutral-500">{metadata?.name}</div>
         </div>
-        <div className="">
-          <div className="flex h-full flex-col">
-            <div>NFT : {metadata?.name ?? "Unknown"}</div>
-            <div>Start : {displayBigNumberAsDate(auction?.startTime)}</div>
-            <div>End : {displayBigNumberAsDate(auction?.endTime, true)}</div>
-            {auction?.currentBid?.gt(0) ? (
-              <>
-                <div>
-                  Current bid :{" "}
-                  {auction.currentBid ? formatEther(auction.currentBid) : auction.currentBid} ETH
-                </div>
-                <div>Current bidder : {auction.bidder ? shortenAddress(auction.bidder) : null}</div>
-              </>
-            ) : (
-              <div>
-                No bids yet, this NFT will be burned at the end of the auction if noone bids.
-              </div>
-            )}
-            {!!auction?.isFinished && (
-              <div className="flex grow flex-col justify-center">
-                Auction has ended, anyone may start the next one by clicking the button below.
-              </div>
-            )}
-          </div>
-        </div>
+        {isConnected && <AuctionStart />}
       </div>
-      <BidInput />
-      <AuctionStart />
+      {!!auction && !!image && !!metadata && (
+        <div>
+          <div className="my-8 flex gap-4">
+            <div className="h-[300px] w-[300px] shrink-0 rounded-xl bg-slate-500">
+              {image && <img className="h-[300px] w-[300px] rounded-xl" src={image} alt="" />}
+            </div>
+            <div className="">
+              <div className="flex h-full flex-col">
+                <div></div>
+                <div>Start : {displayBigNumberAsDate(auction?.startTime)}</div>
+                {auction?.isFinished ? (
+                  <div>Ended</div>
+                ) : (
+                  <div>End : {displayBigNumberAsDate(auction?.endTime, true)}</div>
+                )}
+                <div className="h-[1em]"></div>
+                {auction?.currentBid?.gt(0) ? (
+                  <>
+                    <div>
+                      Current bid :{" "}
+                      {auction.currentBid ? formatEther(auction.currentBid) : auction.currentBid}{" "}
+                      ETH
+                    </div>
+                    <div>
+                      Current bidder : {auction.bidder ? shortenAddress(auction.bidder) : null}
+                    </div>
+                  </>
+                ) : (
+                  <div>
+                    No bids yet, this NFT will be burned at the end of the auction if noone bids.
+                  </div>
+                )}
+                {!!auction?.isFinished && (
+                  <div className="flex grow flex-col justify-center">
+                    Auction has ended, anyone may start the next one by clicking the button below.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {isConnected && <BidInput />}
+        </div>
+      )}
     </div>
   )
 }

@@ -5,7 +5,7 @@ import "hardhat/console.sol";
 import {IPBTokenPartsStore} from "../interfaces/IPBTokenPartsStore.sol";
 
 library PBTokenDna {
-    struct Image {
+    struct TokenTraits {
         uint8 bgColorId;
         uint8 googlesColorId;
         uint8 crownId;
@@ -50,7 +50,7 @@ library PBTokenDna {
     function reduceDna(address storeAddress, uint96 dna) private view returns (uint96) {
         IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
 
-        Image memory image = Image({
+        TokenTraits memory image = TokenTraits({
             bgColorId: uint8(dna % store.bgColorsCount()),
             googlesColorId: uint8((dna >> 8) % store.googlesColorsCount()),
             crownId: uint8((dna >> 16) % store.crownsCount()),
@@ -68,9 +68,9 @@ library PBTokenDna {
         return getDnaFromImage(image);
     }
 
-    function getImageFromDna(uint96 dna) public pure returns (Image memory) {
+    function getImageFromDna(uint96 dna) public pure returns (TokenTraits memory) {
         return
-            Image({
+            TokenTraits({
                 bgColorId: uint8(dna),
                 googlesColorId: uint8((dna >> 8)),
                 crownId: uint8((dna >> 16)),
@@ -86,7 +86,7 @@ library PBTokenDna {
             });
     }
 
-    function getDnaFromImage(Image memory img) public pure returns (uint96 dna) {
+    function getDnaFromImage(TokenTraits memory img) public pure returns (uint96 dna) {
         return
             uint96(img.bgColorId) |
             (uint96(img.googlesColorId) << 8) |

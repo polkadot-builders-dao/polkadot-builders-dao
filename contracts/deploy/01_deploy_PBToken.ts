@@ -5,7 +5,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre
   const { deploy } = deployments
 
-  const { deployer, founders } = await getNamedAccounts()
+  const { deployer } = await getNamedAccounts()
 
   const store = await deployments.get("PBTokenPartsStore")
 
@@ -25,7 +25,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await deploy("PBToken", {
     from: deployer,
     // TODO change 2nd param (auction house)
-    args: [store.address, deployer, founders],
+    args: [store.address, deployer, deployer],
     libraries: {
       PBTokenComposer: composer.address,
       PBTokenDna: tokenDna.address,

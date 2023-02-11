@@ -1,6 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["DEPLOYER_MOONBEAM", "DEPLOYER_MOONBASE", "MOONSCAN_API_KEY", "VITE_CHAIN_ID"],
+  "globalEnv": [
+    "DEPLOYER_MOONBEAM",
+    "DEPLOYER_MOONBASE",
+    "MOONSCAN_API_KEY",
+    "VITE_CHAIN_ID",
+    "FOUNDERS",
+    "DAO"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],

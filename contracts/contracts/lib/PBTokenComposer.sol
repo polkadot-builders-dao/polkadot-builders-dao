@@ -28,22 +28,22 @@ library PBTokenComposer {
         uint96 dna
     ) public view returns (ImageParts memory) {
         IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
-        PBTokenDna.Image memory image = PBTokenDna.getImageFromDna(dna);
+        PBTokenDna.TokenTraits memory traits = PBTokenDna.getImageFromDna(dna);
 
         return
             ImageParts({
-                bgColor: store.getBgColor(image.bgColorId),
-                googlesColor: store.getGooglesColor(image.googlesColorId),
-                crown: store.getCrown(image.crownId),
-                decoration: store.getDecoration(image.decorationId),
-                garland: store.getGarland(image.garlandId),
-                shield: store.getShield(image.shieldId),
-                logoPalette1: store.getLogoPalette(image.logoPalette1Id),
-                logoPalette2: store.getLogoPalette(image.logoPalette2Id),
-                logo1: store.getLogo1(image.logo1Id),
-                logo2: store.getLogo2(image.logo2Id),
-                logo3: store.getLogo3(image.logo3Id),
-                logo4: store.getLogo4(image.logo4Id)
+                bgColor: store.getBgColor(traits.bgColorId),
+                googlesColor: store.getGooglesColor(traits.googlesColorId),
+                crown: store.getCrown(traits.crownId),
+                decoration: store.getDecoration(traits.decorationId),
+                garland: store.getGarland(traits.garlandId),
+                shield: store.getShield(traits.shieldId),
+                logoPalette1: store.getLogoPalette(traits.logoPalette1Id),
+                logoPalette2: store.getLogoPalette(traits.logoPalette2Id),
+                logo1: store.getLogo1(traits.logo1Id),
+                logo2: store.getLogo2(traits.logo2Id),
+                logo3: store.getLogo3(traits.logo3Id),
+                logo4: store.getLogo4(traits.logo4Id)
             });
     }
 

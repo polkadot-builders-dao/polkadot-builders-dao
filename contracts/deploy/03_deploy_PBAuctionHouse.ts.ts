@@ -6,7 +6,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, ethers } = hre
   const { deploy } = deployments
 
-  const { deployer, dao } = await getNamedAccounts()
+  const { deployer } = await getNamedAccounts()
 
   const tokenDeployment = await deployments.get("PBToken")
 
@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployed = await deploy("PBAuctionHouse", {
     from: deployer,
-    args: [token.address, dao],
+    args: [token.address, deployer],
     log: true,
   })
 

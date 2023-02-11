@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["DEPLOYER_MOONBEAM", "DEPLOYER_MOONBASE", "MOONSCAN_API_KEY", "VITE_CHAIN_ID"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    },
+    "nft:deploy:moonbase": {},
+    "nft:deploy:moonbeam": {},
+    "test": {},
+    "test:watch": {},
+    "compile": { "cache": false }
+  }
+}

@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "ghpages": "tsc && vite build --base=/polkadot-builders-dao/",
     "preview": "vite preview",
     "lint": "eslint .",
     "wagmi": "wagmi generate",

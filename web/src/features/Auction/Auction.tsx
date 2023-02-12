@@ -42,26 +42,30 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
       <h1 className="text-3xl font-bold text-neutral-300">
         Polkadot Builder #{auction.tokenId.toNumber()}
       </h1>
-      <div className="mt-8 flex gap-8">
-        <div>
-          <div className="text-neutral-500">Current bid</div>
-          <div className="text-xl">
-            {currentBid} {currency?.symbol}
+      {auction.isFinished ? (
+        <div className="mt-8">
+          <div>Auction has ended.</div>
+        </div>
+      ) : (
+        <div className="mt-8 flex gap-8">
+          <div>
+            <div className="text-neutral-500">Current bid</div>
+            <div className="text-xl">
+              {currentBid} {currency?.symbol}
+            </div>
+          </div>
+          <div className="my-1 border-r border-current opacity-50"></div>
+          <div>
+            <div className="text-neutral-500">Auction ends in</div>
+            <div className="text-xl ">{<Countdown date={dateEnd} />}</div>
           </div>
         </div>
-        <div className="my-1 border-r border-current opacity-50"></div>
-        <div>
-          <div className="text-neutral-500">Auction ends in</div>
-          <div className="text-xl ">
-            <Countdown date={dateEnd} />
-          </div>
-        </div>
-      </div>
+      )}
       <div className="flex grow items-center">
         <BidInput />
       </div>
       <div>
-        {currentBid !== "0" && (
+        {auction.currentBid?.gt(0) ? (
           <div>
             <div className="text-neutral-500">Latest</div>
             <div className="flex w-full justify-between text-lg">
@@ -76,6 +80,8 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
               </div>
             </div>
           </div>
+        ) : (
+          <div>Noone bidded yet.</div>
         )}
       </div>
     </div>
@@ -87,6 +93,7 @@ export const Auction = () => {
 
   const { data: auction } = usePbAuctionHouseGetAuction({
     chainId: CHAIN_ID,
+    watch: true,
   })
 
   const { image, metadata } = usePBTokenDetails(auction?.tokenId)
@@ -98,7 +105,7 @@ export const Auction = () => {
           <h1 className="text-3xl font-bold text-neutral-300">Current auction</h1>
           <div className="text-neutral-500">Place your bid, fren!</div>
         </div>
-        {isConnected && <AuctionStart />}
+        <AuctionStart />
       </div>
       {!!auction && !!image && !!metadata && (
         <div>

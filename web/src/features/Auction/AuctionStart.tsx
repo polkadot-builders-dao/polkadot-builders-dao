@@ -1,27 +1,60 @@
 import { useCallback } from "react"
+import { Id } from "react-toastify"
+import { useProvider } from "wagmi"
 import { Button } from "../../components/Button"
+import { showToastAlert } from "../../components/ToastAlert"
 import { usePbAuctionHouseGetAuction, usePbAuctionHouseStart } from "../../contracts/generated"
+import { CHAIN_ID } from "../../lib/settings"
 import { useWallet } from "../../lib/useWallet"
 
 export const AuctionStart = () => {
   const { isConnected, connect, address } = useWallet()
-  const { data: auction, error: errorAuction, status } = usePbAuctionHouseGetAuction()
+
+  const { data: auction, refetch } = usePbAuctionHouseGetAuction({ chainId: CHAIN_ID })
 
   const { write, writeAsync, data, error } = usePbAuctionHouseStart()
+  console.log({ auction })
+  const handleStart = useCallback(async () => {
+    let toastId: Id | undefined
+    try {
+      if (!isConnected) {
+        connect()
+        return
+      }
 
-  const handleStart = useCallback(() => {
-    write?.()
-  }, [write])
+      if (!writeAsync) return
+      const tx = await writeAsync()
+
+      toastId = showToastAlert("loading", "Initializing", "Next auction is about to start...", {
+        autoClose: false,
+      })
+      const receipt = await tx.wait(1)
+      if (receipt.status)
+        showToastAlert("success", "Success", "Auction is ready", {
+          toastId,
+          autoClose: 3000,
+        })
+      else
+        showToastAlert("success", "Failed", "Failed to initialize auction", {
+          toastId,
+          autoClose: 10000,
+        })
+      refetch()
+    } catch (err) {
+      console.error("Cannot bid", { err })
+      showToastAlert("error", "Error", (err as Error).message, {
+        toastId,
+        autoClose: 3000,
+      })
+      refetch()
+    }
+  }, [connect, isConnected, refetch, writeAsync])
 
   if (!auction || !auction.isFinished) return null
 
-  return isConnected ? (
-    <Button className="" onClick={handleStart}>
+  return (
+    <button type="button" className="primary" onClick={handleStart}>
       {auction.bidder === address ? "Claim" : "Next"}
-    </Button>
-  ) : (
-    <Button className="" onClick={connect}>
-      Connect
-    </Button>
+    </button>
   )
 }

@@ -24,6 +24,7 @@ const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
 }
 
 const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
+  const { address } = useWallet()
   const currency = useNativeCurrency(CHAIN_ID)
   const auctionDate = useMemo(
     () => new Date(auction.startTime.toNumber() * 1000).toLocaleDateString(),
@@ -36,7 +37,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
   )
 
   return (
-    <div className="">
+    <div className="flex h-full flex-col">
       <div className="text-neutral-500">{auctionDate}</div>
       <h1 className="text-3xl font-bold text-neutral-300">
         Polkadot Builder #{auction.tokenId.toNumber()}
@@ -56,8 +57,26 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
           </div>
         </div>
       </div>
-      <div className="mt-12">
+      <div className="flex grow items-center">
         <BidInput />
+      </div>
+      <div>
+        {currentBid !== "0" && (
+          <div>
+            <div className="text-neutral-500">Latest</div>
+            <div className="flex w-full justify-between text-lg">
+              <div>
+                {shortenAddress(auction.bidder, 4, 4)}{" "}
+                {auction.bidder === address ? (
+                  <span className="text-polkadot-500">(you)</span>
+                ) : null}
+              </div>
+              <div>
+                {currentBid} {currency?.symbol}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

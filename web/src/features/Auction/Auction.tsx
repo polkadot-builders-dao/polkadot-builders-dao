@@ -8,6 +8,10 @@ import { AuctionStart } from "./AuctionStart"
 import { BidInput } from "./BidInput"
 import formatDistanceToNow from "date-fns/formatDistanceToNow"
 import { CHAIN_ID } from "../../lib/settings"
+import { Countdown } from "../../components/Countdown"
+import { AuctionData } from "../../contracts/types"
+import { useMemo } from "react"
+import { useNativeCurrency } from "../../lib/useNativeCurrency"
 
 const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   if (!date) return null
@@ -19,17 +23,51 @@ const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   return `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`
 }
 
-export const Auction = () => {
-  const { isConnected, connect } = useWallet()
+const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
+  const currency = useNativeCurrency(CHAIN_ID)
+  const auctionDate = useMemo(
+    () => new Date(auction.startTime.toNumber() * 1000).toLocaleDateString(),
+    [auction.startTime]
+  )
+  const dateEnd = useMemo(() => new Date(auction.endTime.toNumber() * 1000), [auction.endTime])
+  const currentBid = useMemo(
+    () => Number(formatEther(auction.currentBid)).toFixed(2),
+    [auction.currentBid]
+  )
 
-  const {
-    data: auction,
-    error: errorAuction,
-    status,
-  } = usePbAuctionHouseGetAuction({
-    watch: true,
+  return (
+    <div className="">
+      <div className="text-neutral-500">{auctionDate}</div>
+      <h1 className="text-3xl font-bold text-neutral-300">
+        Polkadot Builder #{auction.tokenId.toNumber()}
+      </h1>
+      <div className="mt-8 flex gap-8">
+        <div>
+          <div className="text-neutral-500">Current bid</div>
+          <div className="text-xl">
+            {currentBid} {currency?.symbol}
+          </div>
+        </div>
+        <div className="my-1 border-r border-current opacity-50"></div>
+        <div>
+          <div className="text-neutral-500">Auction ends in</div>
+          <div className="text-xl ">
+            <Countdown date={dateEnd} />
+          </div>
+        </div>
+      </div>
+      <div className="mt-12">
+        <BidInput />
+      </div>
+    </div>
+  )
+}
+
+export const Auction = () => {
+  const { isConnected } = useWallet()
+
+  const { data: auction } = usePbAuctionHouseGetAuction({
     chainId: CHAIN_ID,
-    enabled: true,
   })
 
   const { image, metadata } = usePBTokenDetails(auction?.tokenId)
@@ -39,51 +77,20 @@ export const Auction = () => {
       <div className="flex items-center">
         <div className="grow">
           <h1 className="text-3xl font-bold text-neutral-300">Current auction</h1>
-          <div className="text-neutral-500">{metadata?.name}</div>
+          <div className="text-neutral-500">Place your bid, fren!</div>
         </div>
         {isConnected && <AuctionStart />}
       </div>
       {!!auction && !!image && !!metadata && (
         <div>
-          <div className="my-8 flex gap-4">
+          <div className="my-8 flex justify-center gap-12">
             <div className="h-[300px] w-[300px] shrink-0 rounded-xl bg-slate-500">
               {image && <img className="h-[300px] w-[300px] rounded-xl" src={image} alt="" />}
             </div>
-            <div className="">
-              <div className="flex h-full flex-col">
-                <div></div>
-                <div>Start : {displayBigNumberAsDate(auction?.startTime)}</div>
-                {auction?.isFinished ? (
-                  <div>Ended</div>
-                ) : (
-                  <div>End : {displayBigNumberAsDate(auction?.endTime, true)}</div>
-                )}
-                <div className="h-[1em]"></div>
-                {auction?.currentBid?.gt(0) ? (
-                  <>
-                    <div>
-                      Current bid :{" "}
-                      {auction.currentBid ? formatEther(auction.currentBid) : auction.currentBid}{" "}
-                      ETH
-                    </div>
-                    <div>
-                      Current bidder : {auction.bidder ? shortenAddress(auction.bidder) : null}
-                    </div>
-                  </>
-                ) : (
-                  <div>
-                    No bids yet, this NFT will be burned at the end of the auction if noone bids.
-                  </div>
-                )}
-                {!!auction?.isFinished && (
-                  <div className="flex grow flex-col justify-center">
-                    Auction has ended, anyone may start the next one by clicking the button below.
-                  </div>
-                )}
-              </div>
+            <div>
+              <AuctionDetails auction={auction} />
             </div>
           </div>
-          {isConnected && <BidInput />}
         </div>
       )}
     </div>

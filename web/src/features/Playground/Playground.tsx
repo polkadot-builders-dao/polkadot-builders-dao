@@ -55,9 +55,9 @@ export const Playground: FC = () => {
           <h1 className="text-3xl font-bold text-neutral-300">Playground</h1>
           <div className="text-neutral-500">DNA {dna}</div>
         </div>
-        <Button onClick={handleRandom} className="inline-block">
+        <button type="button" onClick={handleRandom} className="primary">
           Random
-        </Button>
+        </button>
       </div>
       <div className="my-8 flex w-full flex-col gap-8">
         <DnaEditor dna={dna} onChange={setDna} />

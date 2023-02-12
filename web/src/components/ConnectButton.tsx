@@ -21,6 +21,16 @@ export const ConnectButton: FC<ConnectButtonProps> = ({ className }) => {
 
   return (
     <button
+      onClick={handleClick}
+      className={classNames("w-40", isConnected ? "secondary" : "primary")}
+      type="button"
+    >
+      {address ? shortenAddress(address as string, 4, 4) : "Connect"}
+    </button>
+  )
+
+  return (
+    <button
       ref={refButton}
       className={classNames(
         "relative inline-flex items-center gap-2 overflow-hidden rounded-xl py-2 px-4 font-normal transition-colors",
@@ -31,8 +41,8 @@ export const ConnectButton: FC<ConnectButtonProps> = ({ className }) => {
       )}
       onClick={handleClick}
     >
-      <span className="grow text-center">
-        {address ? shortenAddress(address as string) : "Connect"}
+      <span className="grow text-center proportional-nums">
+        {address ? shortenAddress(address as string, 4, 4) : "Connect"}
       </span>
       <div
         className={classNames(

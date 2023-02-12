@@ -1,59 +1,97 @@
 import { ethers } from "ethers"
 import { useCallback, useMemo, useRef, useState } from "react"
-import { useNetwork } from "wagmi"
+import { Id } from "react-toastify"
+import { useChainId } from "wagmi"
+import { showToastAlert } from "../../components/ToastAlert"
 import { usePbAuctionHouseBid, usePbAuctionHouseGetAuction } from "../../contracts/generated"
+import { CHAIN_ID } from "../../lib/settings"
+import { useNativeCurrency } from "../../lib/useNativeCurrency"
+import { useWallet } from "../../lib/useWallet"
 
 export const BidInput = () => {
-  const { data: auction } = usePbAuctionHouseGetAuction()
+  const chainId = useChainId()
+  const { isConnected, connect } = useWallet()
+  const { data: auction, refetch } = usePbAuctionHouseGetAuction({
+    chainId: CHAIN_ID,
+  })
 
   const minValue = useMemo(() => {
     if (!auction) return undefined
-    return ethers.utils.formatEther(auction.minBid)
+    return Number(ethers.utils.formatEther(auction.minBid)).toFixed(2)
   }, [auction])
 
   const [bid, setBid] = useState<number>()
-  const { chain } = useNetwork()
+
+  const currency = useNativeCurrency(chainId)
 
   const bnBid = useMemo(() => {
-    return ethers.utils.parseEther((bid || 0).toString())
-  }, [bid])
+    return bid
+      ? ethers.utils.parseEther((bid || 0).toString())
+      : auction?.minBid ?? ethers.BigNumber.from(0)
+  }, [auction?.minBid, bid])
 
   const { writeAsync, data: txResult } = usePbAuctionHouseBid({ mode: "recklesslyUnprepared" })
   const refInput = useRef<HTMLInputElement>(null)
   const handleBid = useCallback(async () => {
+    let toastId: Id | undefined
     try {
-      await writeAsync({
+      if (!isConnected) {
+        connect()
+        return
+      }
+
+      const tx = await writeAsync({
         recklesslySetUnpreparedOverrides: {
           value: bnBid,
         },
       })
-
       if (refInput.current) refInput.current.value = ""
+
+      toastId = showToastAlert("loading", "Bid submitted", "Waiting for confirmation...", {
+        autoClose: false,
+      })
+      console.log("now waiting for confirmation ", toastId)
+      const receipt = await tx.wait(1)
+      console.log("receipt", receipt)
+      if (receipt.status)
+        showToastAlert("success", "Bid confirmed", "Your bid has been confirmed", {
+          toastId,
+          autoClose: 3000,
+        })
+      else
+        showToastAlert("success", "Bid rejected", "Your bid has been cancelled", {
+          toastId,
+          autoClose: 10000,
+        })
+      refetch()
     } catch (err) {
-      console.error("Bid failed", { err })
+      console.error("Cannot bid", { err })
+      showToastAlert("error", "Cannot bid", (err as Error).message, {
+        toastId,
+        autoClose: 3000,
+      })
+      refetch()
     }
-  }, [bnBid, writeAsync])
+  }, [bnBid, connect, isConnected, refetch, writeAsync])
 
   if (!auction || auction.isFinished) return null
 
   return (
-    <div className="my-4 inline-flex items-center gap-2 rounded bg-neutral-800 py-1 px-2">
-      <div className="flex items-center rounded bg-neutral-800 p-1  ">
+    <div className="inline-flex w-96 items-center gap-2">
+      <div className="inline-flex h-10 grow items-center overflow-hidden rounded bg-neutral-700 px-2 outline-neutral-600 focus-within:outline">
         <input
           ref={refInput}
-          className="bg-inherit px-2 text-right outline-none placeholder:text-neutral-600"
+          className="min-w-0 grow bg-inherit px-2 text-right outline-none placeholder:text-neutral-500"
           type="number"
-          placeholder={minValue}
+          placeholder={`${minValue} or more`}
           min={0}
           onChange={(e) => setBid(e.target.valueAsNumber)}
         />
-        <div>{chain?.nativeCurrency.symbol}</div>
+        <div>{currency?.symbol}</div>
       </div>
-      <div>
-        <button className="rounded bg-pink-500 py-1 px-4 text-white" onClick={handleBid}>
-          Place Bid
-        </button>
-      </div>
+      <button className="primary" onClick={handleBid}>
+        Place Bid
+      </button>
     </div>
   )
 }

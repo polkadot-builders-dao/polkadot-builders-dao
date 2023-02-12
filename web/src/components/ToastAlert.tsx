@@ -8,11 +8,11 @@ type ToastAlertType = "success" | "error" | "loading"
 const ToastAlertIcon: FC<{ type: ToastAlertType }> = ({ type }) => {
   switch (type) {
     case "success":
-      return <IconChecks />
+      return <IconChecks className="text-green-500" />
     case "error":
-      return <IconAlertCircle />
+      return <IconAlertCircle className="text-red-500" />
     case "loading":
-      return <IconLoader />
+      return <IconLoader className="animate-spin" />
   }
 }
 
@@ -47,14 +47,25 @@ export const showToastAlert = (
   subtitle?: ReactNode,
   options?: ToastOptions
 ) => {
-  return toast(() => <ToastAlert type={type} title={title} subtitle={subtitle} />, {
-    autoClose: false,
+  const render = () => <ToastAlert type={type} title={title} subtitle={subtitle} />
+  const baseOptions = {
+    autoClose: false as const,
     className: classNames(
       "rounded-lg border border-neutral-200 shadow bg-neutral-100 dark:bg-neutral-900 dark:border-neutral-800 ",
       options?.className?.toString?.()
     ),
     ...options,
-  })
+  }
+  console.log("toast", title, subtitle, options)
+  if (options?.toastId) {
+    toast.update(options.toastId, {
+      render,
+      ...baseOptions,
+    })
+    return options.toastId
+  }
+
+  return toast(render, baseOptions)
 }
 
 export const dismissToastAlert = (id: string) => {

@@ -67,7 +67,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
       <div>
         {auction.currentBid?.gt(0) ? (
           <div>
-            <div className="text-neutral-500">Latest</div>
+            <div className="text-neutral-500">{auction.isFinished ? "Winner" : "Latest bid"}</div>
             <div className="flex w-full justify-between text-lg">
               <div>
                 {shortenAddress(auction.bidder, 4, 4)}{" "}

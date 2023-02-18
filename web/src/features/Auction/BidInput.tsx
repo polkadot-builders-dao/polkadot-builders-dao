@@ -59,7 +59,7 @@ export const BidInput = () => {
           autoClose: 3000,
         })
       else
-        showToastAlert("success", "Bid rejected", "Your bid has been cancelled", {
+        showToastAlert("error", "Bid rejected", "Your bid has been cancelled", {
           toastId,
           autoClose: 10000,
         })

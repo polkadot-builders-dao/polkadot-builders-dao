@@ -33,7 +33,7 @@ export const AuctionStart = () => {
           autoClose: 3000,
         })
       else
-        showToastAlert("success", "Failed", "Failed to initialize auction", {
+        showToastAlert("error", "Failed", "Failed to initialize auction", {
           toastId,
           autoClose: 10000,
         })

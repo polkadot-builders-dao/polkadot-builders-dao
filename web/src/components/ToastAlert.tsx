@@ -30,9 +30,9 @@ export const ToastAlert: FC<ToastAlertProps> = ({ title, subtitle, type }) => {
         <ToastAlertIcon type={type} />
       </div>
       <div className="flex grow flex-col overflow-hidden">
-        <div className="text-normal font-bold text-black dark:text-white">{title}</div>
+        <div className="text-normal font-bold text-white">{title}</div>
         {subtitle && (
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-neutral-600 dark:text-neutral-400">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm  dark:text-neutral-400">
             {subtitle}
           </div>
         )}
@@ -51,7 +51,7 @@ export const showToastAlert = (
   const baseOptions = {
     autoClose: false as const,
     className: classNames(
-      "rounded-lg border border-neutral-200 shadow bg-neutral-100 dark:bg-neutral-900 dark:border-neutral-800 ",
+      "rounded-lg border border-neutral-200 shadow bg-neutral-100 bg-neutral-800 border-neutral-700 ",
       options?.className?.toString?.()
     ),
     ...options,

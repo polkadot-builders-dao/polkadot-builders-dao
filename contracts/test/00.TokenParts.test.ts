@@ -115,7 +115,7 @@ describe("PBTokenPartsStore", function () {
       const { tokenPartsContract } = await setup({ provisionParts: true })
 
       const firstBgColor = await tokenPartsContract.bgColors(0)
-      expect(firstBgColor.name).to.equal("Green")
+      expect(firstBgColor.name).to.equal("Teal")
       expect(firstBgColor.color).to.equal("#0F3B4A")
     })
   })

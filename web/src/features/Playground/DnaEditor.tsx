@@ -17,6 +17,8 @@ const PartEditor: FC<PartEditorProps> = ({ label, parts, selectedIndex = 0, onSe
     label: value,
   }))
 
+  console.log(label, parts)
+
   const handleSelect = useCallback(
     (value: string) => {
       onSelect(Number(value))

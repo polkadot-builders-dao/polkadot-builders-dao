@@ -3,9 +3,9 @@ import { BigNumber } from "ethers"
 import {
   BG_COLORS,
   CROWNS,
-  DECORATIONS,
+  DOODADS,
   GARLANDS,
-  GOOGLES_COLORS,
+  NOOGLES_COLORS,
   REPS,
   LOGO_PALETTES,
   SHIELDS,
@@ -39,7 +39,7 @@ describe("PBTokenPartsStore", function () {
         "No noggles colors"
       )
 
-      await tokenPartsContract.addNogglesColor(GOOGLES_COLORS[0])
+      await tokenPartsContract.addNogglesColor(NOOGLES_COLORS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No crowns"
       )
@@ -49,7 +49,7 @@ describe("PBTokenPartsStore", function () {
         "No doodads"
       )
 
-      await tokenPartsContract.addDoodad(DECORATIONS[0])
+      await tokenPartsContract.addDoodad(DOODADS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No garlands"
       )

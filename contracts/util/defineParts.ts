@@ -1,3 +1,4 @@
+import { ContractTransaction } from "ethers"
 import { IPBTokenPartsStore, PBTokenPartsStore } from "../typechain-types"
 
 export const BG_COLORS: IPBTokenPartsStore.ColorStruct[] = [
@@ -8,7 +9,7 @@ export const BG_COLORS: IPBTokenPartsStore.ColorStruct[] = [
   { color: "#414042", name: "Gray" },
 ]
 
-export const GOOGLES_COLORS: IPBTokenPartsStore.ColorStruct[] = [
+export const NOOGLES_COLORS: IPBTokenPartsStore.ColorStruct[] = [
   { color: "#BE1E2D", name: "Yellow" },
   { color: "#EF4136", name: "Orange" },
   { color: "#BDD5EC", name: "Sky" },
@@ -44,7 +45,7 @@ export const CROWNS: IPBTokenPartsStore.ImagePartStruct[] = [
   },
 ]
 
-export const DECORATIONS: IPBTokenPartsStore.ImagePartStruct[] = [
+export const DOODADS: IPBTokenPartsStore.ImagePartStruct[] = [
   {
     name: "Circles",
     svg: `<path d="M78.319 210.142C88.8564 210.142 97.3986 201.589 97.3986 191.039C97.3986 180.489 88.8564 171.937 78.319 171.937C67.7817 171.937 59.2395 180.489 59.2395 191.039C59.2395 201.589 67.7817 210.142 78.319 210.142Z" fill="#E4C048"/>
@@ -469,48 +470,72 @@ export const TRAITS: IPBTokenPartsStore.ImagePartStruct[] = [
 export const defineParts = async (tokenPartsContract: PBTokenPartsStore) => {
   const traits = await tokenPartsContract.getAllParts()
 
+  let pendingTransactions: ContractTransaction[] = []
+
+  const flush = async (label: string) => {
+    if (pendingTransactions.length)
+      console.log(`Provisioning ${pendingTransactions.length} ${label}...`)
+    await Promise.all(pendingTransactions.map((tx) => tx.wait()))
+    pendingTransactions = []
+  }
+
   for (const bgColor of BG_COLORS)
     if (!traits.bgColors.includes(await bgColor.name)) {
-      await tokenPartsContract.addBgColor(bgColor)
+      pendingTransactions.push(await tokenPartsContract.addBgColor(bgColor))
     }
-  for (const nogglesColor of GOOGLES_COLORS)
+  for (const nogglesColor of NOOGLES_COLORS)
     if (!traits.nogglesColors.includes(await nogglesColor.name)) {
-      await tokenPartsContract.addNogglesColor(nogglesColor)
-    }
-  for (const crown of CROWNS)
-    if (!traits.crowns.includes(await crown.name)) {
-      await tokenPartsContract.addCrown(crown)
-    }
-  for (const doodad of DECORATIONS)
-    if (!traits.doodads.includes(await doodad.name)) {
-      await tokenPartsContract.addDoodad(doodad)
-    }
-  for (const garland of GARLANDS)
-    if (!traits.garlands.includes(await garland.name)) {
-      await tokenPartsContract.addGarland(garland)
-    }
-  for (const shield of SHIELDS)
-    if (!traits.shields.includes(await shield.name)) {
-      await tokenPartsContract.addShield(shield)
+      pendingTransactions.push(await tokenPartsContract.addNogglesColor(nogglesColor))
     }
   for (const palette of LOGO_PALETTES)
     if (!traits.quadrantPalettes.includes(await palette.name)) {
-      await tokenPartsContract.addQuadrantPalette(palette)
+      pendingTransactions.push(await tokenPartsContract.addQuadrantPalette(palette))
     }
+  await flush("colors")
+
+  for (const crown of CROWNS)
+    if (!traits.crowns.includes(await crown.name)) {
+      pendingTransactions.push(await tokenPartsContract.addCrown(crown))
+    }
+  await flush("crowns")
+
+  for (const doodad of DOODADS)
+    if (!traits.doodads.includes(await doodad.name)) {
+      pendingTransactions.push(await tokenPartsContract.addDoodad(doodad))
+    }
+
+  for (const garland of GARLANDS)
+    if (!traits.garlands.includes(await garland.name)) {
+      pendingTransactions.push(await tokenPartsContract.addGarland(garland))
+    }
+
+  for (const shield of SHIELDS)
+    if (!traits.shields.includes(await shield.name)) {
+      pendingTransactions.push(await tokenPartsContract.addShield(shield))
+    }
+  await flush("garlands & shields")
+
   for (const logo of REPS)
     if (!traits.reps.includes(await logo.name)) {
-      await tokenPartsContract.addRep(logo)
+      pendingTransactions.push(await tokenPartsContract.addRep(logo))
     }
+  await flush("reps")
+
   for (const logo of SKILLS)
     if (!traits.skills.includes(await logo.name)) {
-      await tokenPartsContract.addSkill(logo)
+      pendingTransactions.push(await tokenPartsContract.addSkill(logo))
     }
+
+  await flush("skills")
+
   for (const logo of CLASSES)
     if (!traits.classes.includes(await logo.name)) {
-      await tokenPartsContract.addClass(logo)
+      pendingTransactions.push(await tokenPartsContract.addClass(logo))
     }
+  await flush("classes")
   for (const logo of TRAITS)
     if (!traits.traits.includes(await logo.name)) {
-      await tokenPartsContract.addTrait(logo)
+      pendingTransactions.push(await tokenPartsContract.addTrait(logo))
     }
+  await flush("traits")
 }

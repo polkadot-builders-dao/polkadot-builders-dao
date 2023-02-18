@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers"
 import { FC, useCallback, useMemo } from "react"
 import { Dropdown } from "../../components/Dropdown"
-import { usePbTokenPartsStoreGetAllTraits } from "../../contracts/generated"
+import { usePbTokenPartsStoreGetAllParts } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 
 type PartEditorProps = {
@@ -40,23 +40,23 @@ type DnaEditorProps = {
 }
 
 export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
-  const { data: traits } = usePbTokenPartsStoreGetAllTraits({
+  const { data: parts } = usePbTokenPartsStoreGetAllParts({
     chainId: CHAIN_ID,
   })
 
   const [
     bgColorId,
-    googlesColorId,
+    nogglesColorId,
     crownId,
-    decorationId,
+    doodadId,
     garlandId,
     shieldId,
-    logoPalette1,
-    logoPalette2,
-    logo1,
-    logo2,
-    logo3,
-    logo4,
+    quadrantPalette1Id,
+    quadrantPalette2Id,
+    repId,
+    skillId,
+    classId,
+    traitId,
   ] = useMemo(() => {
     const bnDna = BigNumber.from(dna)
     return [
@@ -89,81 +89,69 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
     [dna, onChange]
   )
 
-  if (!traits) return null
+  if (!parts) return null
 
   return (
-    <div className="grid grid-cols-3 gap-x-4 gap-y-2">
+    <div className="grid grid-cols-4 gap-x-4 gap-y-2">
       <PartEditor
         label="Background"
-        parts={traits.bgColors}
+        parts={parts.bgColors}
         selectedIndex={bgColorId}
         onSelect={handleSelect(0)}
       />
       <PartEditor
-        label="Googles"
-        parts={traits.googlesColors}
-        selectedIndex={googlesColorId}
+        label="Noggles"
+        parts={parts.nogglesColors}
+        selectedIndex={nogglesColorId}
         onSelect={handleSelect(8)}
       />
       <PartEditor
+        label="Quadrants Palette 1"
+        parts={parts.quadrantPalettes}
+        selectedIndex={quadrantPalette1Id}
+        onSelect={handleSelect(48)}
+      />
+      <PartEditor
+        label="Quadrants Palette 2"
+        parts={parts.quadrantPalettes}
+        selectedIndex={quadrantPalette2Id}
+        onSelect={handleSelect(56)}
+      />
+      <PartEditor
+        label="Rep"
+        parts={parts.reps}
+        selectedIndex={repId}
+        onSelect={handleSelect(64)}
+      />
+      <PartEditor
+        label="Skill"
+        parts={parts.skills}
+        selectedIndex={skillId}
+        onSelect={handleSelect(72)}
+      />
+      <PartEditor
+        label="Class"
+        parts={parts.classes}
+        selectedIndex={classId}
+        onSelect={handleSelect(80)}
+      />
+      <PartEditor
+        label="Trait"
+        parts={parts.traits}
+        selectedIndex={traitId}
+        onSelect={handleSelect(88)}
+      />
+      <PartEditor
         label="Crown"
-        parts={traits.crowns}
+        parts={parts.crowns}
         selectedIndex={crownId}
         onSelect={handleSelect(16)}
       />
       <PartEditor
-        label="Decoration"
-        parts={traits.decorations}
-        selectedIndex={decorationId}
+        label="Doodads"
+        parts={parts.doodads}
+        selectedIndex={doodadId}
         onSelect={handleSelect(24)}
-      />
-      <PartEditor
-        label="Garland"
-        parts={traits.garlands}
-        selectedIndex={garlandId}
-        onSelect={handleSelect(32)}
-      />
-      <PartEditor
-        label="Shield"
-        parts={traits.shields}
-        selectedIndex={shieldId}
-        onSelect={handleSelect(40)}
-      />
-      <PartEditor
-        label="Palette 1"
-        parts={traits.logoPalettes}
-        selectedIndex={logoPalette1}
-        onSelect={handleSelect(48)}
-      />
-      <PartEditor
-        label="Palette 2"
-        parts={traits.logoPalettes}
-        selectedIndex={logoPalette2}
-        onSelect={handleSelect(56)}
-      />
-      <PartEditor
-        label="Logo 1"
-        parts={traits.logos1}
-        selectedIndex={logo1}
-        onSelect={handleSelect(64)}
-      />
-      <PartEditor
-        label="Logo 2"
-        parts={traits.logos2}
-        selectedIndex={logo2}
-        onSelect={handleSelect(72)}
-      />
-      <PartEditor
-        label="Logo 3"
-        parts={traits.logos3}
-        selectedIndex={logo3}
-        onSelect={handleSelect(80)}
-      />
-      <PartEditor
-        label="Logo 4"
-        parts={traits.logos4}
-        selectedIndex={logo4}
-        onSelect={handleSelect(88)}
       />
     </div>
   )

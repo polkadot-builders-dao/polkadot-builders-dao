@@ -7,31 +7,31 @@ import {IPBTokenPartsStore} from "./interfaces/IPBTokenPartsStore.sol";
 
 contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     Color[] public bgColors;
-    Color[] public googlesColors;
+    Color[] public nogglesColors;
     ImagePart[] public crowns;
-    ImagePart[] public decorations;
+    ImagePart[] public doodads;
     ImagePart[] public garlands;
     ImagePart[] public shields;
-    Palette[] public logoPalettes;
-    ImagePart[] public logos1;
-    ImagePart[] public logos2;
-    ImagePart[] public logos3;
-    ImagePart[] public logos4;
+    Palette[] public quadrantPalettes;
+    ImagePart[] public reps;
+    ImagePart[] public skills;
+    ImagePart[] public classes;
+    ImagePart[] public traits;
 
     function bgColorsCount() external view returns (uint256) {
         return bgColors.length;
     }
 
-    function googlesColorsCount() external view returns (uint256) {
-        return googlesColors.length;
+    function nogglesColorsCount() external view returns (uint256) {
+        return nogglesColors.length;
     }
 
     function crownsCount() external view returns (uint256) {
         return crowns.length;
     }
 
-    function decorationsCount() external view returns (uint256) {
-        return decorations.length;
+    function doodadsCount() external view returns (uint256) {
+        return doodads.length;
     }
 
     function garlandsCount() external view returns (uint256) {
@@ -42,40 +42,40 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return shields.length;
     }
 
-    function logoPalettesCount() external view returns (uint256) {
-        return logoPalettes.length;
+    function quadrantPalettesCount() external view returns (uint256) {
+        return quadrantPalettes.length;
     }
 
-    function logos1Count() external view returns (uint256) {
-        return logos1.length;
+    function repsCount() external view returns (uint256) {
+        return reps.length;
     }
 
-    function logos2Count() external view returns (uint256) {
-        return logos2.length;
+    function skillsCount() external view returns (uint256) {
+        return skills.length;
     }
 
-    function logos3Count() external view returns (uint256) {
-        return logos3.length;
+    function classesCount() external view returns (uint256) {
+        return classes.length;
     }
 
-    function logos4Count() external view returns (uint256) {
-        return logos4.length;
+    function traitsCount() external view returns (uint256) {
+        return traits.length;
     }
 
     function getBgColor(uint8 id) external view returns (Color memory) {
         return bgColors[id];
     }
 
-    function getGooglesColor(uint8 id) external view returns (Color memory) {
-        return googlesColors[id];
+    function getNogglesColor(uint8 id) external view returns (Color memory) {
+        return nogglesColors[id];
     }
 
     function getCrown(uint8 id) external view returns (ImagePart memory) {
         return crowns[id];
     }
 
-    function getDecoration(uint8 id) external view returns (ImagePart memory) {
-        return decorations[id];
+    function getDoodad(uint8 id) external view returns (ImagePart memory) {
+        return doodads[id];
     }
 
     function getGarland(uint8 id) external view returns (ImagePart memory) {
@@ -86,24 +86,24 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return shields[id];
     }
 
-    function getLogoPalette(uint8 id) external view returns (Palette memory) {
-        return logoPalettes[id];
+    function getQuadrantPalette(uint8 id) external view returns (Palette memory) {
+        return quadrantPalettes[id];
     }
 
-    function getLogo1(uint8 id) external view returns (ImagePart memory) {
-        return logos1[id];
+    function getRep(uint8 id) external view returns (ImagePart memory) {
+        return reps[id];
     }
 
-    function getLogo2(uint8 id) external view returns (ImagePart memory) {
-        return logos2[id];
+    function getSkill(uint8 id) external view returns (ImagePart memory) {
+        return skills[id];
     }
 
-    function getLogo3(uint8 id) external view returns (ImagePart memory) {
-        return logos3[id];
+    function getClass(uint8 id) external view returns (ImagePart memory) {
+        return classes[id];
     }
 
-    function getLogo4(uint8 id) external view returns (ImagePart memory) {
-        return logos4[id];
+    function getTrait(uint8 id) external view returns (ImagePart memory) {
+        return traits[id];
     }
 
     function addBgColor(Color calldata color) external onlyOwner {
@@ -111,9 +111,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         bgColors.push(color);
     }
 
-    function addGooglesColor(Color calldata color) external onlyOwner {
-        //    require(googlesColors.length < 255, "To many entries");
-        googlesColors.push(color);
+    function addNogglesColor(Color calldata color) external onlyOwner {
+        //    require(nogglesColors.length < 255, "To many entries");
+        nogglesColors.push(color);
     }
 
     function addCrown(ImagePart calldata part) external onlyOwner {
@@ -121,9 +121,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         crowns.push(part);
     }
 
-    function addDecoration(ImagePart calldata part) external onlyOwner {
-        //   require(decorations.length < 255, "To many entries");
-        decorations.push(part);
+    function addDoodad(ImagePart calldata part) external onlyOwner {
+        //   require(doodads.length < 255, "To many entries");
+        doodads.push(part);
     }
 
     function addGarland(ImagePart calldata part) external onlyOwner {
@@ -136,29 +136,29 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         shields.push(part);
     }
 
-    function addLogoPalette(Palette calldata palette) external onlyOwner {
-        //    require(logoPalettes.length < 255, "To many entries");
-        logoPalettes.push(palette);
+    function addQuadrantPalette(Palette calldata palette) external onlyOwner {
+        //    require(quadrantPalettes.length < 255, "To many entries");
+        quadrantPalettes.push(palette);
     }
 
-    function addLogo1(ImagePart calldata part) external onlyOwner {
-        //    require(logos1.length < 255, "To many entries");
-        logos1.push(part);
+    function addRep(ImagePart calldata part) external onlyOwner {
+        //    require(reps.length < 255, "To many entries");
+        reps.push(part);
     }
 
-    function addLogo2(ImagePart calldata part) external onlyOwner {
-        //    require(logos2.length < 255, "To many entries");
-        logos2.push(part);
+    function addSkill(ImagePart calldata part) external onlyOwner {
+        //    require(skills.length < 255, "To many entries");
+        skills.push(part);
     }
 
-    function addLogo3(ImagePart calldata part) external onlyOwner {
-        //    require(logos3.length < 255, "To many entries");
-        logos3.push(part);
+    function addClass(ImagePart calldata part) external onlyOwner {
+        //    require(classes.length < 255, "To many entries");
+        classes.push(part);
     }
 
-    function addLogo4(ImagePart calldata part) external onlyOwner {
-        //   require(logos4.length < 255, "To many entries");
-        logos4.push(part);
+    function addTrait(ImagePart calldata part) external onlyOwner {
+        //   require(traits.length < 255, "To many entries");
+        traits.push(part);
     }
 
     function getColorNames(Color[] memory colors) private pure returns (string[] memory) {
@@ -185,20 +185,20 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return names;
     }
 
-    function getAllTraits() external view returns (AvailableTraits memory) {
+    function getAllParts() external view returns (AvailableParts memory) {
         return
-            AvailableTraits(
+            AvailableParts(
                 getColorNames(bgColors),
-                getColorNames(googlesColors),
+                getColorNames(nogglesColors),
                 getImagePartNames(crowns),
-                getImagePartNames(decorations),
+                getImagePartNames(doodads),
                 getImagePartNames(garlands),
                 getImagePartNames(shields),
-                getPaletteNames(logoPalettes),
-                getImagePartNames(logos1),
-                getImagePartNames(logos2),
-                getImagePartNames(logos3),
-                getImagePartNames(logos4)
+                getPaletteNames(quadrantPalettes),
+                getImagePartNames(reps),
+                getImagePartNames(skills),
+                getImagePartNames(classes),
+                getImagePartNames(traits)
             );
     }
 }

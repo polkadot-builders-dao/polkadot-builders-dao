@@ -1,69 +1,21 @@
 import { expect } from "./chai-setup"
 import { BigNumber } from "ethers"
-import { PBToken, PBTokenComposer, PBTokenDna, PBTokenPartsStore } from "../typechain-types"
 import {
   BG_COLORS,
   CROWNS,
   DECORATIONS,
-  defineParts,
   GARLANDS,
   GOOGLES_COLORS,
-  LOGOS1,
+  REPS,
   LOGO_PALETTES,
   SHIELDS,
+  CLASSES,
+  TRAITS,
+  SKILLS,
 } from "../util/defineParts"
 import { setup } from "./utils/setup"
 
-// const setup = deployments.createFixture(async () => {
-//   await deployments.fixture("PBToken")
-//   const { deployer } = await getNamedAccounts()
-//   const contracts = {
-//     tokenPartsContract: <PBTokenPartsStore>await ethers.getContract("PBTokenPartsStore"),
-//     tokenDna: <PBTokenDna>await ethers.getContract("PBTokenDna"),
-//     composer: <PBTokenComposer>await ethers.getContract("PBTokenComposer"),
-//     token: <PBToken>await ethers.getContract("PBToken"),
-//   }
-//   //const users = await setupUsers(await getUnnamedAccounts(), contracts)
-//   return {
-//     ...contracts,
-//     // users,
-//     //deployer: await setupUser(simpleERC20Beneficiary, contracts),
-//   }
-// })
-
 describe("PBTokenPartsStore", function () {
-  // async function deployFixture() {
-  //   const [owner, account1, account2] = await ethers.getSigners()
-
-  //   const PBTokenPartsStore = await ethers.getContractFactory("PBTokenPartsStore")
-  //   const tokenPartsContract = (await PBTokenPartsStore.deploy()) as PBTokenPartsStore
-
-  //   const PBTokenDna = await ethers.getContractFactory("PBTokenDna")
-  //   const tokenDna = (await PBTokenDna.deploy()) as PBTokenDna
-
-  //   return {
-  //     tokenPartsContract,
-  //     tokenDna,
-  //     owner,
-  //     account1,
-  //     account2,
-  //   }
-  // }
-
-  // async function deployParts(partsContract:PBTokenParts) {
-  //   const [owner, account1, account2] = await ethers.getSigners()
-
-  //   const PBTokenParts = await ethers.getContractFactory("PBTokenParts")
-  //   const tokenPartsContract = await PBTokenParts.deploy()
-
-  //   return {
-  //     tokenPartsContract,
-  //     owner,
-  //     account1,
-  //     account2,
-  //   }
-  // }
-
   describe("Deployment", function () {
     it("Should be deployed", async function () {
       const { tokenPartsContract } = await setup()
@@ -78,26 +30,26 @@ describe("PBTokenPartsStore", function () {
       ).to.be.revertedWith("No bg colors")
     })
 
-    it("Shouln't generate dna if no googles color defined", async function () {
+    it("Shouln't generate dna if no noggles color defined", async function () {
       const { tokenPartsContract, tokenDna } = await setup()
       const seed = BigNumber.from("165189498146486486")
 
       await tokenPartsContract.addBgColor(BG_COLORS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No googles colors"
+        "No noggles colors"
       )
 
-      await tokenPartsContract.addGooglesColor(GOOGLES_COLORS[0])
+      await tokenPartsContract.addNogglesColor(GOOGLES_COLORS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No crowns"
       )
 
       await tokenPartsContract.addCrown(CROWNS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No decorations"
+        "No doodads"
       )
 
-      await tokenPartsContract.addDecoration(DECORATIONS[0])
+      await tokenPartsContract.addDoodad(DECORATIONS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No garlands"
       )
@@ -112,27 +64,27 @@ describe("PBTokenPartsStore", function () {
         "No logo palettes"
       )
 
-      await tokenPartsContract.addLogoPalette(LOGO_PALETTES[0])
+      await tokenPartsContract.addQuadrantPalette(LOGO_PALETTES[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No logos1"
+        "No reps"
       )
 
-      await tokenPartsContract.addLogo1(LOGOS1[0])
+      await tokenPartsContract.addRep(REPS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No logos2"
+        "No skills"
       )
 
-      await tokenPartsContract.addLogo2(LOGOS1[0])
+      await tokenPartsContract.addSkill(SKILLS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No logos3"
+        "No classes"
       )
 
-      await tokenPartsContract.addLogo3(LOGOS1[0])
+      await tokenPartsContract.addClass(CLASSES[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No logos4"
+        "No traits"
       )
 
-      await tokenPartsContract.addLogo4(LOGOS1[0])
+      await tokenPartsContract.addTrait(TRAITS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).not.to.be.reverted
     })
 
@@ -145,25 +97,26 @@ describe("PBTokenPartsStore", function () {
       )
 
       const decoded = await tokenDna.getImageFromDna(dna)
+      console.log(decoded)
       expect(decoded.bgColorId).to.eq(2)
-      expect(decoded.googlesColorId).to.eq(2)
+      expect(decoded.nogglesColorId).to.eq(0)
       expect(decoded.crownId).to.eq(4)
-      expect(decoded.decorationId).to.eq(3)
+      expect(decoded.doodadId).to.eq(3)
       expect(decoded.garlandId).to.eq(0)
       expect(decoded.shieldId).to.eq(0)
-      expect(decoded.logoPalette1Id).to.eq(0)
-      expect(decoded.logoPalette2Id).to.eq(9)
-      expect(decoded.logo1Id).to.eq(6)
-      expect(decoded.logo2Id).to.eq(3)
-      expect(decoded.logo3Id).to.eq(3)
-      expect(decoded.logo4Id).to.eq(6)
+      expect(decoded.quadrantPalette1Id).to.eq(0)
+      expect(decoded.quadrantPalette2Id).to.eq(9)
+      expect(decoded.repId).to.eq(8)
+      expect(decoded.skillId).to.eq(3)
+      expect(decoded.classId).to.eq(9)
+      expect(decoded.traitId).to.eq(3)
     })
 
     it("Should have valid colors", async function () {
       const { tokenPartsContract } = await setup({ provisionParts: true })
 
       const firstBgColor = await tokenPartsContract.bgColors(0)
-      expect(firstBgColor.name).to.equal("#0F3B4A")
+      expect(firstBgColor.name).to.equal("Green")
       expect(firstBgColor.color).to.equal("#0F3B4A")
     })
   })

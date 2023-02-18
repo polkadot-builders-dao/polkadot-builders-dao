@@ -19,85 +19,85 @@ interface IPBTokenPartsStore {
         string svg;
     }
 
-    struct AvailableTraits {
+    struct AvailableParts {
         string[] bgColors;
-        string[] googlesColors;
+        string[] nogglesColors;
         string[] crowns;
-        string[] decorations;
+        string[] doodads;
         string[] garlands;
         string[] shields;
-        string[] logoPalettes;
-        string[] logos1;
-        string[] logos2;
-        string[] logos3;
-        string[] logos4;
+        string[] quadrantPalettes;
+        string[] reps;
+        string[] skills;
+        string[] classes;
+        string[] traits;
     }
 
     function bgColorsCount() external view returns (uint256);
 
-    function googlesColorsCount() external view returns (uint256);
+    function nogglesColorsCount() external view returns (uint256);
 
     function crownsCount() external view returns (uint256);
 
-    function decorationsCount() external view returns (uint256);
+    function doodadsCount() external view returns (uint256);
 
     function garlandsCount() external view returns (uint256);
 
     function shieldsCount() external view returns (uint256);
 
-    function logoPalettesCount() external view returns (uint256);
+    function quadrantPalettesCount() external view returns (uint256);
 
-    function logos1Count() external view returns (uint256);
+    function repsCount() external view returns (uint256);
 
-    function logos2Count() external view returns (uint256);
+    function skillsCount() external view returns (uint256);
 
-    function logos3Count() external view returns (uint256);
+    function classesCount() external view returns (uint256);
 
-    function logos4Count() external view returns (uint256);
+    function traitsCount() external view returns (uint256);
 
     function getBgColor(uint8 id) external view returns (Color memory);
 
-    function getGooglesColor(uint8 id) external view returns (Color memory);
+    function getNogglesColor(uint8 id) external view returns (Color memory);
 
     function getCrown(uint8 id) external view returns (ImagePart memory);
 
-    function getDecoration(uint8 id) external view returns (ImagePart memory);
+    function getDoodad(uint8 id) external view returns (ImagePart memory);
 
     function getGarland(uint8 id) external view returns (ImagePart memory);
 
     function getShield(uint8 id) external view returns (ImagePart memory);
 
-    function getLogoPalette(uint8 id) external view returns (Palette memory);
+    function getQuadrantPalette(uint8 id) external view returns (Palette memory);
 
-    function getLogo1(uint8 id) external view returns (ImagePart memory);
+    function getRep(uint8 id) external view returns (ImagePart memory);
 
-    function getLogo2(uint8 id) external view returns (ImagePart memory);
+    function getSkill(uint8 id) external view returns (ImagePart memory);
 
-    function getLogo3(uint8 id) external view returns (ImagePart memory);
+    function getClass(uint8 id) external view returns (ImagePart memory);
 
-    function getLogo4(uint8 id) external view returns (ImagePart memory);
+    function getTrait(uint8 id) external view returns (ImagePart memory);
 
     function addBgColor(Color calldata color) external;
 
-    function addGooglesColor(Color calldata color) external;
+    function addNogglesColor(Color calldata color) external;
 
     function addCrown(ImagePart calldata part) external;
 
-    function addDecoration(ImagePart calldata part) external;
+    function addDoodad(ImagePart calldata part) external;
 
     function addGarland(ImagePart calldata part) external;
 
     function addShield(ImagePart calldata part) external;
 
-    function addLogoPalette(Palette calldata palette) external;
+    function addQuadrantPalette(Palette calldata palette) external;
 
-    function addLogo1(ImagePart calldata part) external;
+    function addRep(ImagePart calldata part) external;
 
-    function addLogo2(ImagePart calldata part) external;
+    function addSkill(ImagePart calldata part) external;
 
-    function addLogo3(ImagePart calldata part) external;
+    function addClass(ImagePart calldata part) external;
 
-    function addLogo4(ImagePart calldata part) external;
+    function addTrait(ImagePart calldata part) external;
 
-    function getAllTraits() external returns (AvailableTraits memory);
+    function getAllParts() external returns (AvailableParts memory);
 }

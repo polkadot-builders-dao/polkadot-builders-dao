@@ -7,7 +7,7 @@ import {IPBTokenPartsStore} from "../interfaces/IPBTokenPartsStore.sol";
 library PBTokenDna {
     struct TokenTraits {
         uint8 bgColorId;
-        uint8 googlesColorId;
+        uint8 nogglesColorId;
         uint8 crownId;
         uint8 doodadId;
         uint8 garlandId;
@@ -27,7 +27,7 @@ library PBTokenDna {
         IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
 
         require(store.bgColorsCount() > 0, "No bg colors");
-        require(store.googlesColorsCount() > 0, "No googles colors");
+        require(store.nogglesColorsCount() > 0, "No noggles colors");
         require(store.crownsCount() > 0, "No crowns");
         require(store.doodadsCount() > 0, "No doodads");
         require(store.garlandsCount() > 0, "No garlands");
@@ -52,7 +52,7 @@ library PBTokenDna {
 
         TokenTraits memory image = TokenTraits({
             bgColorId: uint8(dna % store.bgColorsCount()),
-            googlesColorId: uint8((dna >> 8) % store.googlesColorsCount()),
+            nogglesColorId: uint8((dna >> 8) % store.nogglesColorsCount()),
             crownId: uint8((dna >> 16) % store.crownsCount()),
             doodadId: uint8((dna >> 24) % store.doodadsCount()),
             garlandId: uint8((dna >> 32) % store.garlandsCount()),
@@ -72,7 +72,7 @@ library PBTokenDna {
         return
             TokenTraits({
                 bgColorId: uint8(dna),
-                googlesColorId: uint8((dna >> 8)),
+                nogglesColorId: uint8((dna >> 8)),
                 crownId: uint8((dna >> 16)),
                 doodadId: uint8((dna >> 24)),
                 garlandId: uint8((dna >> 32)),
@@ -89,7 +89,7 @@ library PBTokenDna {
     function getDnaFromImage(TokenTraits memory img) public pure returns (uint96 dna) {
         return
             uint96(img.bgColorId) |
-            (uint96(img.googlesColorId) << 8) |
+            (uint96(img.nogglesColorId) << 8) |
             (uint96(img.crownId) << 16) |
             (uint96(img.doodadId) << 24) |
             (uint96(img.garlandId) << 32) |

@@ -473,9 +473,9 @@ export const defineParts = async (tokenPartsContract: PBTokenPartsStore) => {
     if (!traits.bgColors.includes(await bgColor.name)) {
       await tokenPartsContract.addBgColor(bgColor)
     }
-  for (const googlesColor of GOOGLES_COLORS)
-    if (!traits.googlesColors.includes(await googlesColor.name)) {
-      await tokenPartsContract.addGooglesColor(googlesColor)
+  for (const nogglesColor of GOOGLES_COLORS)
+    if (!traits.nogglesColors.includes(await nogglesColor.name)) {
+      await tokenPartsContract.addNogglesColor(nogglesColor)
     }
   for (const crown of CROWNS)
     if (!traits.crowns.includes(await crown.name)) {

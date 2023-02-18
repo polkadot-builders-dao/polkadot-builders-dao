@@ -21,7 +21,7 @@ interface IPBTokenPartsStore {
 
     struct AvailableParts {
         string[] bgColors;
-        string[] googlesColors;
+        string[] nogglesColors;
         string[] crowns;
         string[] doodads;
         string[] garlands;
@@ -35,7 +35,7 @@ interface IPBTokenPartsStore {
 
     function bgColorsCount() external view returns (uint256);
 
-    function googlesColorsCount() external view returns (uint256);
+    function nogglesColorsCount() external view returns (uint256);
 
     function crownsCount() external view returns (uint256);
 
@@ -57,7 +57,7 @@ interface IPBTokenPartsStore {
 
     function getBgColor(uint8 id) external view returns (Color memory);
 
-    function getGooglesColor(uint8 id) external view returns (Color memory);
+    function getNogglesColor(uint8 id) external view returns (Color memory);
 
     function getCrown(uint8 id) external view returns (ImagePart memory);
 
@@ -79,7 +79,7 @@ interface IPBTokenPartsStore {
 
     function addBgColor(Color calldata color) external;
 
-    function addGooglesColor(Color calldata color) external;
+    function addNogglesColor(Color calldata color) external;
 
     function addCrown(ImagePart calldata part) external;
 

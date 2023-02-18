@@ -10,7 +10,7 @@ import {PBTokenDna} from "./PBTokenDna.sol";
 library PBTokenComposer {
     struct ImageParts {
         IPBTokenPartsStore.Color bgColor;
-        IPBTokenPartsStore.Color googlesColor;
+        IPBTokenPartsStore.Color nogglesColor;
         IPBTokenPartsStore.ImagePart crown;
         IPBTokenPartsStore.ImagePart doodad;
         IPBTokenPartsStore.ImagePart garland;
@@ -33,7 +33,7 @@ library PBTokenComposer {
         return
             ImageParts({
                 bgColor: store.getBgColor(traits.bgColorId),
-                googlesColor: store.getGooglesColor(traits.googlesColorId),
+                nogglesColor: store.getNogglesColor(traits.nogglesColorId),
                 crown: store.getCrown(traits.crownId),
                 doodad: store.getDoodad(traits.doodadId),
                 garland: store.getGarland(traits.garlandId),
@@ -60,7 +60,7 @@ library PBTokenComposer {
         string memory attributes = string.concat(
             ', "attributes": [',
             '{"trait_type": "Background","value":"', parts.bgColor.name, '"},',
-            '{"trait_type": "Googles","value":"', parts.googlesColor.name, '"},',
+            '{"trait_type": "Noggles","value":"', parts.nogglesColor.name, '"},',
             '{"trait_type": "Crown","value":"', parts.crown.name, '"},',
             '{"trait_type": "Doodad","value":"', parts.doodad.name, '"},'
         );
@@ -109,9 +109,9 @@ library PBTokenComposer {
         );
 
         // prettier-ignore
-        string memory googles = string.concat(
+        string memory noggles = string.concat(
             '<path d="M284.867 88.6242H265.995V126.398H284.867V88.6242Z" fill="white"/><path d="M303.74 88.6242H284.867V127.485H303.74V88.6242Z" fill="#231F20"/><path d="M219.787 89.2109H201.224V126.381H219.787V89.2109Z" fill="white"/><path d="M239.556 88.3826H219.804V128.503H239.556V88.3826Z" fill="#231F20"/>',
-            '<path fill="', parts.googlesColor.color, '" d="M257.032 79.8753V98.5637H247.725V79.8753H192.003V98.5637H154.775V129.418L163.91 126.795V107.709H192.003V135.664H247.725V107.709H257.032V135.664H312.754V79.8753H257.032ZM238.366 126.398H201.241V89.2282H238.366V126.398ZM303.395 126.398H266.27V89.2282H303.395V126.398Z"/>'
+            '<path fill="', parts.nogglesColor.color, '" d="M257.032 79.8753V98.5637H247.725V79.8753H192.003V98.5637H154.775V129.418L163.91 126.795V107.709H192.003V135.664H247.725V107.709H257.032V135.664H312.754V79.8753H257.032ZM238.366 126.398H201.241V89.2282H238.366V126.398ZM303.395 126.398H266.27V89.2282H303.395V126.398Z"/>'
         );
 
         // prettier-ignore
@@ -128,7 +128,7 @@ library PBTokenComposer {
                                 logos,
                                 parts.garland.svg,
                                 parts.doodad.svg,
-                                googles,
+                                noggles,
                                 '</svg>'
                             )
                         )

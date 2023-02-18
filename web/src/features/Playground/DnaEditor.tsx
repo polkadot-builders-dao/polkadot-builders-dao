@@ -46,7 +46,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
 
   const [
     bgColorId,
-    googlesColorId,
+    nogglesColorId,
     crownId,
     doodadId,
     garlandId,
@@ -101,8 +101,8 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
       />
       <PartEditor
         label="Noggles"
-        parts={parts.googlesColors}
-        selectedIndex={googlesColorId}
+        parts={parts.nogglesColors}
+        selectedIndex={nogglesColorId}
         onSelect={handleSelect(8)}
       />
       <PartEditor
@@ -117,20 +117,6 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
         selectedIndex={quadrantPalette2Id}
         onSelect={handleSelect(56)}
       />
-
-      {/* <PartEditor
-        label="Garland"
-        parts={parts.garlands}
-        selectedIndex={garlandId}
-        onSelect={handleSelect(32)}
-      />
-      <PartEditor
-        label="Shield"
-        parts={parts.shields}
-        selectedIndex={shieldId}
-        onSelect={handleSelect(40)}
-      /> */}
-
       <PartEditor
         label="Rep"
         parts={parts.reps}

@@ -7,7 +7,7 @@ import {IPBTokenPartsStore} from "./interfaces/IPBTokenPartsStore.sol";
 
 contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     Color[] public bgColors;
-    Color[] public googlesColors;
+    Color[] public nogglesColors;
     ImagePart[] public crowns;
     ImagePart[] public doodads;
     ImagePart[] public garlands;
@@ -22,8 +22,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return bgColors.length;
     }
 
-    function googlesColorsCount() external view returns (uint256) {
-        return googlesColors.length;
+    function nogglesColorsCount() external view returns (uint256) {
+        return nogglesColors.length;
     }
 
     function crownsCount() external view returns (uint256) {
@@ -66,8 +66,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return bgColors[id];
     }
 
-    function getGooglesColor(uint8 id) external view returns (Color memory) {
-        return googlesColors[id];
+    function getNogglesColor(uint8 id) external view returns (Color memory) {
+        return nogglesColors[id];
     }
 
     function getCrown(uint8 id) external view returns (ImagePart memory) {
@@ -111,9 +111,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         bgColors.push(color);
     }
 
-    function addGooglesColor(Color calldata color) external onlyOwner {
-        //    require(googlesColors.length < 255, "To many entries");
-        googlesColors.push(color);
+    function addNogglesColor(Color calldata color) external onlyOwner {
+        //    require(nogglesColors.length < 255, "To many entries");
+        nogglesColors.push(color);
     }
 
     function addCrown(ImagePart calldata part) external onlyOwner {
@@ -189,7 +189,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return
             AvailableParts(
                 getColorNames(bgColors),
-                getColorNames(googlesColors),
+                getColorNames(nogglesColors),
                 getImagePartNames(crowns),
                 getImagePartNames(doodads),
                 getImagePartNames(garlands),

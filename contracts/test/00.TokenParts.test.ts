@@ -97,7 +97,6 @@ describe("PBTokenPartsStore", function () {
       )
 
       const decoded = await tokenDna.getImageFromDna(dna)
-      console.log(decoded)
       expect(decoded.bgColorId).to.eq(2)
       expect(decoded.nogglesColorId).to.eq(0)
       expect(decoded.crownId).to.eq(4)

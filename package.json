@@ -18,20 +18,20 @@
     "cleanup": "rimraf web/dist frontend/.turbo web/node_modules .yarn/cache .yarn/install-state.gz contracts/.turbo contracts/artifacts contracts/cache contracts/coverage contracts/coverage.json contracts/typechain-types node_modules"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.51.0",
-    "@typescript-eslint/parser": "^5.51.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-config-turbo": "^0.0.7",
+    "eslint-config-turbo": "^0.0.8",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.4",
     "prettier-plugin-solidity": "^1.1.2",
-    "prettier-plugin-tailwindcss": "^0.2.2",
+    "prettier-plugin-tailwindcss": "^0.2.3",
     "rimraf": "^4.1.2",
-    "turbo": "^1.7.4"
+    "turbo": "^1.8.1"
   },
   "engines": {
     "node": ">=16.0.0"

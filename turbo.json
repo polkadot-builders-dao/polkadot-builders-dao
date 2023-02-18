@@ -6,7 +6,8 @@
     "MOONSCAN_API_KEY",
     "VITE_CHAIN_ID",
     "FOUNDERS",
-    "DAO"
+    "DAO",
+    "NODE_ENV"
   ],
   "pipeline": {
     "build": {

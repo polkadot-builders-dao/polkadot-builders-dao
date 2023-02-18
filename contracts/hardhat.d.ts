@@ -7,5 +7,6 @@ declare namespace NodeJS {
     readonly FOUNDERS: string
     readonly DAO: string
     readonly MOONSCAN_API_KEY: string
+    readonly NODE_ENV: string
   }
 }

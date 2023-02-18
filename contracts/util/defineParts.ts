@@ -473,7 +473,7 @@ export const defineParts = async (tokenPartsContract: PBTokenPartsStore) => {
   let pendingTransactions: ContractTransaction[] = []
 
   const flush = async (label: string) => {
-    if (pendingTransactions.length)
+    if (pendingTransactions.length && process.env.NODE_ENV !== "test")
       console.log(`Provisioning ${pendingTransactions.length} ${label}...`)
     await Promise.all(pendingTransactions.map((tx) => tx.wait()))
     pendingTransactions = []

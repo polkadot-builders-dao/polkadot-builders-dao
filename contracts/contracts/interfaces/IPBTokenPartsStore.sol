@@ -29,7 +29,7 @@ interface IPBTokenPartsStore {
         string[] quadrantPalettes;
         string[] reps;
         string[] skills;
-        string[] logos3;
+        string[] classes;
         string[] logos4;
     }
 
@@ -51,7 +51,7 @@ interface IPBTokenPartsStore {
 
     function skillsCount() external view returns (uint256);
 
-    function logos3Count() external view returns (uint256);
+    function classesCount() external view returns (uint256);
 
     function logos4Count() external view returns (uint256);
 
@@ -73,7 +73,7 @@ interface IPBTokenPartsStore {
 
     function getSkill(uint8 id) external view returns (ImagePart memory);
 
-    function getLogo3(uint8 id) external view returns (ImagePart memory);
+    function getClass(uint8 id) external view returns (ImagePart memory);
 
     function getLogo4(uint8 id) external view returns (ImagePart memory);
 
@@ -95,7 +95,7 @@ interface IPBTokenPartsStore {
 
     function addSkill(ImagePart calldata part) external;
 
-    function addLogo3(ImagePart calldata part) external;
+    function addClass(ImagePart calldata part) external;
 
     function addLogo4(ImagePart calldata part) external;
 

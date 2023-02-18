@@ -124,10 +124,10 @@ describe("PBTokenPartsStore", function () {
 
       await tokenPartsContract.addSkill(LOGOS1[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No logos3"
+        "No classes"
       )
 
-      await tokenPartsContract.addLogo3(LOGOS1[0])
+      await tokenPartsContract.addClass(LOGOS1[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No logos4"
       )
@@ -155,7 +155,7 @@ describe("PBTokenPartsStore", function () {
       expect(decoded.quadrantPalette2Id).to.eq(9)
       expect(decoded.repId).to.eq(6)
       expect(decoded.skillId).to.eq(3)
-      expect(decoded.logo3Id).to.eq(3)
+      expect(decoded.classId).to.eq(3)
       expect(decoded.logo4Id).to.eq(6)
     })
 

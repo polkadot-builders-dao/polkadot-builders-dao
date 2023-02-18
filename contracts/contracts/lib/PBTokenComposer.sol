@@ -19,7 +19,7 @@ library PBTokenComposer {
         IPBTokenPartsStore.Palette quadrantPalette2;
         IPBTokenPartsStore.ImagePart rep;
         IPBTokenPartsStore.ImagePart skill;
-        IPBTokenPartsStore.ImagePart logo3;
+        IPBTokenPartsStore.ImagePart class;
         IPBTokenPartsStore.ImagePart logo4;
     }
 
@@ -42,7 +42,7 @@ library PBTokenComposer {
                 quadrantPalette2: store.getQuadrantPalette(traits.quadrantPalette2Id),
                 rep: store.getRep(traits.repId),
                 skill: store.getSkill(traits.skillId),
-                logo3: store.getLogo3(traits.logo3Id),
+                class: store.getClass(traits.classId),
                 logo4: store.getLogo4(traits.logo4Id)
             });
     }
@@ -75,7 +75,7 @@ library PBTokenComposer {
         string memory logos = string.concat(
             '{"trait_type": "Logo 1","value":"', parts.rep.name, '"},',
             '{"trait_type": "Logo 2","value":"', parts.skill.name, '"},',
-            '{"trait_type": "Logo 3","value":"', parts.logo3.name, '"},',
+            '{"trait_type": "Logo 3","value":"', parts.class.name, '"},',
             '{"trait_type": "Logo 4","value":"', parts.logo4.name, '"}]}'
         );
 
@@ -105,7 +105,7 @@ library PBTokenComposer {
             '<g fill="', parts.quadrantPalette1.primary, '">', parts.rep.svg, parts.logo4.svg, "</g>",
             // quadrants bottom left and top right
             '<g fill="', parts.quadrantPalette2.secondary, '"><path d="M128.353 258.355V271.781C128.353 354.748 240.848 402.841 245.64 404.86L247.604 405.688V258.355H128.353Z" /><path d="M375.611 137.01L257.17 102.912V248.778H375.611V137.01Z" /></g>',
-            '<g fill="', parts.quadrantPalette2.primary, '">', parts.skill.svg, parts.logo3.svg, "</g>"
+            '<g fill="', parts.quadrantPalette2.primary, '">', parts.skill.svg, parts.class.svg, "</g>"
         );
 
         // prettier-ignore

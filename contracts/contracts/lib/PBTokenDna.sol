@@ -16,7 +16,7 @@ library PBTokenDna {
         uint8 quadrantPalette2Id;
         uint8 repId;
         uint8 skillId;
-        uint8 logo3Id;
+        uint8 classId;
         uint8 logo4Id;
     }
 
@@ -35,7 +35,7 @@ library PBTokenDna {
         require(store.quadrantPalettesCount() > 0, "No logo palettes");
         require(store.repsCount() > 0, "No reps");
         require(store.skillsCount() > 0, "No skills");
-        require(store.logos3Count() > 0, "No logos3");
+        require(store.classesCount() > 0, "No classes");
         require(store.logos4Count() > 0, "No logos4");
 
         // not truely random but it won't matter, we want a unique dna based on any number, usually a timestamp
@@ -61,7 +61,7 @@ library PBTokenDna {
             quadrantPalette2Id: uint8((dna >> 56) % store.quadrantPalettesCount()),
             repId: uint8((dna >> 64) % store.repsCount()),
             skillId: uint8((dna >> 72) % store.skillsCount()),
-            logo3Id: uint8((dna >> 80) % store.logos3Count()),
+            classId: uint8((dna >> 80) % store.classesCount()),
             logo4Id: uint8((dna >> 88) % store.logos4Count())
         });
 
@@ -81,7 +81,7 @@ library PBTokenDna {
                 quadrantPalette2Id: uint8((dna >> 56)),
                 repId: uint8((dna >> 64)),
                 skillId: uint8((dna >> 72)),
-                logo3Id: uint8((dna >> 80)),
+                classId: uint8((dna >> 80)),
                 logo4Id: uint8((dna >> 88))
             });
     }
@@ -98,7 +98,7 @@ library PBTokenDna {
             (uint96(img.quadrantPalette2Id) << 56) |
             (uint96(img.repId) << 64) |
             (uint96(img.skillId) << 72) |
-            (uint96(img.logo3Id) << 80) |
+            (uint96(img.classId) << 80) |
             (uint96(img.logo4Id) << 88);
     }
 }

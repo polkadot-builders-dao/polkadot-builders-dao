@@ -362,9 +362,9 @@ export const defineParts = async (tokenPartsContract: PBTokenPartsStore) => {
     if (!traits.crowns.includes(await crown.name)) {
       await tokenPartsContract.addCrown(crown)
     }
-  for (const decoration of DECORATIONS)
-    if (!traits.decorations.includes(await decoration.name)) {
-      await tokenPartsContract.addDecoration(decoration)
+  for (const doodad of DECORATIONS)
+    if (!traits.doodads.includes(await doodad.name)) {
+      await tokenPartsContract.addDoodad(doodad)
     }
   for (const garland of GARLANDS)
     if (!traits.garlands.includes(await garland.name)) {

@@ -9,7 +9,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     Color[] public bgColors;
     Color[] public googlesColors;
     ImagePart[] public crowns;
-    ImagePart[] public decorations;
+    ImagePart[] public doodads;
     ImagePart[] public garlands;
     ImagePart[] public shields;
     Palette[] public logoPalettes;
@@ -30,8 +30,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return crowns.length;
     }
 
-    function decorationsCount() external view returns (uint256) {
-        return decorations.length;
+    function doodadsCount() external view returns (uint256) {
+        return doodads.length;
     }
 
     function garlandsCount() external view returns (uint256) {
@@ -74,8 +74,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return crowns[id];
     }
 
-    function getDecoration(uint8 id) external view returns (ImagePart memory) {
-        return decorations[id];
+    function getDoodad(uint8 id) external view returns (ImagePart memory) {
+        return doodads[id];
     }
 
     function getGarland(uint8 id) external view returns (ImagePart memory) {
@@ -121,9 +121,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         crowns.push(part);
     }
 
-    function addDecoration(ImagePart calldata part) external onlyOwner {
-        //   require(decorations.length < 255, "To many entries");
-        decorations.push(part);
+    function addDoodad(ImagePart calldata part) external onlyOwner {
+        //   require(doodads.length < 255, "To many entries");
+        doodads.push(part);
     }
 
     function addGarland(ImagePart calldata part) external onlyOwner {
@@ -191,7 +191,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
                 getColorNames(bgColors),
                 getColorNames(googlesColors),
                 getImagePartNames(crowns),
-                getImagePartNames(decorations),
+                getImagePartNames(doodads),
                 getImagePartNames(garlands),
                 getImagePartNames(shields),
                 getPaletteNames(logoPalettes),

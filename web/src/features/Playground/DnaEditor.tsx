@@ -48,7 +48,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
     bgColorId,
     googlesColorId,
     crownId,
-    decorationId,
+    doodadId,
     garlandId,
     shieldId,
     logoPalette1,
@@ -112,9 +112,9 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
         onSelect={handleSelect(16)}
       />
       <PartEditor
-        label="Decoration"
-        parts={traits.decorations}
-        selectedIndex={decorationId}
+        label="Doodad"
+        parts={traits.doodads}
+        selectedIndex={doodadId}
         onSelect={handleSelect(24)}
       />
       <PartEditor

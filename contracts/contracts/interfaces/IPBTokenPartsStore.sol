@@ -23,7 +23,7 @@ interface IPBTokenPartsStore {
         string[] bgColors;
         string[] googlesColors;
         string[] crowns;
-        string[] decorations;
+        string[] doodads;
         string[] garlands;
         string[] shields;
         string[] logoPalettes;
@@ -39,7 +39,7 @@ interface IPBTokenPartsStore {
 
     function crownsCount() external view returns (uint256);
 
-    function decorationsCount() external view returns (uint256);
+    function doodadsCount() external view returns (uint256);
 
     function garlandsCount() external view returns (uint256);
 
@@ -61,7 +61,7 @@ interface IPBTokenPartsStore {
 
     function getCrown(uint8 id) external view returns (ImagePart memory);
 
-    function getDecoration(uint8 id) external view returns (ImagePart memory);
+    function getDoodad(uint8 id) external view returns (ImagePart memory);
 
     function getGarland(uint8 id) external view returns (ImagePart memory);
 
@@ -83,7 +83,7 @@ interface IPBTokenPartsStore {
 
     function addCrown(ImagePart calldata part) external;
 
-    function addDecoration(ImagePart calldata part) external;
+    function addDoodad(ImagePart calldata part) external;
 
     function addGarland(ImagePart calldata part) external;
 

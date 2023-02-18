@@ -9,7 +9,7 @@ library PBTokenDna {
         uint8 bgColorId;
         uint8 googlesColorId;
         uint8 crownId;
-        uint8 decorationId;
+        uint8 doodadId;
         uint8 garlandId;
         uint8 shieldId;
         uint8 logoPalette1Id;
@@ -29,7 +29,7 @@ library PBTokenDna {
         require(store.bgColorsCount() > 0, "No bg colors");
         require(store.googlesColorsCount() > 0, "No googles colors");
         require(store.crownsCount() > 0, "No crowns");
-        require(store.decorationsCount() > 0, "No decorations");
+        require(store.doodadsCount() > 0, "No doodads");
         require(store.garlandsCount() > 0, "No garlands");
         require(store.shieldsCount() > 0, "No shields");
         require(store.logoPalettesCount() > 0, "No logo palettes");
@@ -54,7 +54,7 @@ library PBTokenDna {
             bgColorId: uint8(dna % store.bgColorsCount()),
             googlesColorId: uint8((dna >> 8) % store.googlesColorsCount()),
             crownId: uint8((dna >> 16) % store.crownsCount()),
-            decorationId: uint8((dna >> 24) % store.decorationsCount()),
+            doodadId: uint8((dna >> 24) % store.doodadsCount()),
             garlandId: uint8((dna >> 32) % store.garlandsCount()),
             shieldId: uint8((dna >> 40) % store.shieldsCount()),
             logoPalette1Id: uint8((dna >> 48) % store.logoPalettesCount()),
@@ -74,7 +74,7 @@ library PBTokenDna {
                 bgColorId: uint8(dna),
                 googlesColorId: uint8((dna >> 8)),
                 crownId: uint8((dna >> 16)),
-                decorationId: uint8((dna >> 24)),
+                doodadId: uint8((dna >> 24)),
                 garlandId: uint8((dna >> 32)),
                 shieldId: uint8((dna >> 40)),
                 logoPalette1Id: uint8((dna >> 48)),
@@ -91,7 +91,7 @@ library PBTokenDna {
             uint96(img.bgColorId) |
             (uint96(img.googlesColorId) << 8) |
             (uint96(img.crownId) << 16) |
-            (uint96(img.decorationId) << 24) |
+            (uint96(img.doodadId) << 24) |
             (uint96(img.garlandId) << 32) |
             (uint96(img.shieldId) << 40) |
             (uint96(img.logoPalette1Id) << 48) |

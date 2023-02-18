@@ -12,7 +12,7 @@ library PBTokenComposer {
         IPBTokenPartsStore.Color bgColor;
         IPBTokenPartsStore.Color googlesColor;
         IPBTokenPartsStore.ImagePart crown;
-        IPBTokenPartsStore.ImagePart decoration;
+        IPBTokenPartsStore.ImagePart doodad;
         IPBTokenPartsStore.ImagePart garland;
         IPBTokenPartsStore.ImagePart shield;
         IPBTokenPartsStore.Palette logoPalette1;
@@ -35,7 +35,7 @@ library PBTokenComposer {
                 bgColor: store.getBgColor(traits.bgColorId),
                 googlesColor: store.getGooglesColor(traits.googlesColorId),
                 crown: store.getCrown(traits.crownId),
-                decoration: store.getDecoration(traits.decorationId),
+                doodad: store.getDoodad(traits.doodadId),
                 garland: store.getGarland(traits.garlandId),
                 shield: store.getShield(traits.shieldId),
                 logoPalette1: store.getLogoPalette(traits.logoPalette1Id),
@@ -62,7 +62,7 @@ library PBTokenComposer {
             '{"trait_type": "Background","value":"', parts.bgColor.name, '"},',
             '{"trait_type": "Googles","value":"', parts.googlesColor.name, '"},',
             '{"trait_type": "Crown","value":"', parts.crown.name, '"},',
-            '{"trait_type": "Decoration","value":"', parts.decoration.name, '"},'
+            '{"trait_type": "Doodad","value":"', parts.doodad.name, '"},'
         );
 
         // prettier-ignore
@@ -127,7 +127,7 @@ library PBTokenComposer {
                                 parts.shield.svg,
                                 logos,
                                 parts.garland.svg,
-                                parts.decoration.svg,
+                                parts.doodad.svg,
                                 googles,
                                 '</svg>'
                             )

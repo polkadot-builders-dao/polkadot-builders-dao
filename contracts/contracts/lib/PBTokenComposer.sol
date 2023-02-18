@@ -67,16 +67,16 @@ library PBTokenComposer {
 
         // prettier-ignore
         string memory quadrantPalettes = string.concat(
-            '{"trait_type": "Palette 1","value":"', parts.quadrantPalette1.name, '"},',
-            '{"trait_type": "Palette 2","value":"', parts.quadrantPalette2.name, '"},'
+            '{"trait_type": "Quadrant Palette 1","value":"', parts.quadrantPalette1.name, '"},',
+            '{"trait_type": "Quadrant Palette 2","value":"', parts.quadrantPalette2.name, '"},'
         );
 
         // prettier-ignore
         string memory logos = string.concat(
-            '{"trait_type": "Logo 1","value":"', parts.rep.name, '"},',
-            '{"trait_type": "Logo 2","value":"', parts.skill.name, '"},',
-            '{"trait_type": "Logo 3","value":"', parts.class.name, '"},',
-            '{"trait_type": "Logo 4","value":"', parts.trait.name, '"}]}'
+            '{"trait_type": "Rep","value":"', parts.rep.name, '"},',
+            '{"trait_type": "Skill","value":"', parts.skill.name, '"},',
+            '{"trait_type": "Class","value":"', parts.class.name, '"},',
+            '{"trait_type": "Trait","value":"', parts.trait.name, '"}]}'
         );
 
         // prettier-ignore
@@ -85,8 +85,8 @@ library PBTokenComposer {
                     Base64.encode(
                         bytes(
                             string.concat(
-                                '{"name":"Polkadot Builders #', Strings.toString(tokenId), '", ', 
-                                '"description":"This is my description", ',
+                                '{"name":"Polkadot Builder Crest #', Strings.toString(tokenId), '", ', 
+                                '"description":"Official mark of a genuine Polkadot Builder.", ',
                                 '"image": "', getSvgDataUri(parts) , '"',
                                 attributes,
                                 quadrantPalettes,

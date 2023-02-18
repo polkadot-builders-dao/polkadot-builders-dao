@@ -12,7 +12,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     ImagePart[] public doodads;
     ImagePart[] public garlands;
     ImagePart[] public shields;
-    Palette[] public logoPalettes;
+    Palette[] public quadrantPalettes;
     ImagePart[] public logos1;
     ImagePart[] public logos2;
     ImagePart[] public logos3;
@@ -42,8 +42,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return shields.length;
     }
 
-    function logoPalettesCount() external view returns (uint256) {
-        return logoPalettes.length;
+    function quadrantPalettesCount() external view returns (uint256) {
+        return quadrantPalettes.length;
     }
 
     function logos1Count() external view returns (uint256) {
@@ -86,8 +86,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return shields[id];
     }
 
-    function getLogoPalette(uint8 id) external view returns (Palette memory) {
-        return logoPalettes[id];
+    function getQuadrantPalette(uint8 id) external view returns (Palette memory) {
+        return quadrantPalettes[id];
     }
 
     function getLogo1(uint8 id) external view returns (ImagePart memory) {
@@ -136,9 +136,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         shields.push(part);
     }
 
-    function addLogoPalette(Palette calldata palette) external onlyOwner {
-        //    require(logoPalettes.length < 255, "To many entries");
-        logoPalettes.push(palette);
+    function addQuadrantPalette(Palette calldata palette) external onlyOwner {
+        //    require(quadrantPalettes.length < 255, "To many entries");
+        quadrantPalettes.push(palette);
     }
 
     function addLogo1(ImagePart calldata part) external onlyOwner {
@@ -194,7 +194,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
                 getImagePartNames(doodads),
                 getImagePartNames(garlands),
                 getImagePartNames(shields),
-                getPaletteNames(logoPalettes),
+                getPaletteNames(quadrantPalettes),
                 getImagePartNames(logos1),
                 getImagePartNames(logos2),
                 getImagePartNames(logos3),

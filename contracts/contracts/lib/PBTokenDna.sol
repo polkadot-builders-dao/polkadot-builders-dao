@@ -12,8 +12,8 @@ library PBTokenDna {
         uint8 doodadId;
         uint8 garlandId;
         uint8 shieldId;
-        uint8 logoPalette1Id;
-        uint8 logoPalette2Id;
+        uint8 quadrantPalette1Id;
+        uint8 quadrantPalette2Id;
         uint8 logo1Id;
         uint8 logo2Id;
         uint8 logo3Id;
@@ -32,7 +32,7 @@ library PBTokenDna {
         require(store.doodadsCount() > 0, "No doodads");
         require(store.garlandsCount() > 0, "No garlands");
         require(store.shieldsCount() > 0, "No shields");
-        require(store.logoPalettesCount() > 0, "No logo palettes");
+        require(store.quadrantPalettesCount() > 0, "No logo palettes");
         require(store.logos1Count() > 0, "No logos1");
         require(store.logos2Count() > 0, "No logos2");
         require(store.logos3Count() > 0, "No logos3");
@@ -57,8 +57,8 @@ library PBTokenDna {
             doodadId: uint8((dna >> 24) % store.doodadsCount()),
             garlandId: uint8((dna >> 32) % store.garlandsCount()),
             shieldId: uint8((dna >> 40) % store.shieldsCount()),
-            logoPalette1Id: uint8((dna >> 48) % store.logoPalettesCount()),
-            logoPalette2Id: uint8((dna >> 56) % store.logoPalettesCount()),
+            quadrantPalette1Id: uint8((dna >> 48) % store.quadrantPalettesCount()),
+            quadrantPalette2Id: uint8((dna >> 56) % store.quadrantPalettesCount()),
             logo1Id: uint8((dna >> 64) % store.logos1Count()),
             logo2Id: uint8((dna >> 72) % store.logos2Count()),
             logo3Id: uint8((dna >> 80) % store.logos3Count()),
@@ -77,8 +77,8 @@ library PBTokenDna {
                 doodadId: uint8((dna >> 24)),
                 garlandId: uint8((dna >> 32)),
                 shieldId: uint8((dna >> 40)),
-                logoPalette1Id: uint8((dna >> 48)),
-                logoPalette2Id: uint8((dna >> 56)),
+                quadrantPalette1Id: uint8((dna >> 48)),
+                quadrantPalette2Id: uint8((dna >> 56)),
                 logo1Id: uint8((dna >> 64)),
                 logo2Id: uint8((dna >> 72)),
                 logo3Id: uint8((dna >> 80)),
@@ -94,8 +94,8 @@ library PBTokenDna {
             (uint96(img.doodadId) << 24) |
             (uint96(img.garlandId) << 32) |
             (uint96(img.shieldId) << 40) |
-            (uint96(img.logoPalette1Id) << 48) |
-            (uint96(img.logoPalette2Id) << 56) |
+            (uint96(img.quadrantPalette1Id) << 48) |
+            (uint96(img.quadrantPalette2Id) << 56) |
             (uint96(img.logo1Id) << 64) |
             (uint96(img.logo2Id) << 72) |
             (uint96(img.logo3Id) << 80) |

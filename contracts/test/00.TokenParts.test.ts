@@ -112,7 +112,7 @@ describe("PBTokenPartsStore", function () {
         "No logo palettes"
       )
 
-      await tokenPartsContract.addLogoPalette(LOGO_PALETTES[0])
+      await tokenPartsContract.addQuadrantPalette(LOGO_PALETTES[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No logos1"
       )
@@ -151,8 +151,8 @@ describe("PBTokenPartsStore", function () {
       expect(decoded.doodadId).to.eq(3)
       expect(decoded.garlandId).to.eq(0)
       expect(decoded.shieldId).to.eq(0)
-      expect(decoded.logoPalette1Id).to.eq(0)
-      expect(decoded.logoPalette2Id).to.eq(9)
+      expect(decoded.quadrantPalette1Id).to.eq(0)
+      expect(decoded.quadrantPalette2Id).to.eq(9)
       expect(decoded.logo1Id).to.eq(6)
       expect(decoded.logo2Id).to.eq(3)
       expect(decoded.logo3Id).to.eq(3)

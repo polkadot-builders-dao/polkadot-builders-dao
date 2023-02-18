@@ -375,8 +375,8 @@ export const defineParts = async (tokenPartsContract: PBTokenPartsStore) => {
       await tokenPartsContract.addShield(shield)
     }
   for (const palette of LOGO_PALETTES)
-    if (!traits.logoPalettes.includes(await palette.name)) {
-      await tokenPartsContract.addLogoPalette(palette)
+    if (!traits.quadrantPalettes.includes(await palette.name)) {
+      await tokenPartsContract.addQuadrantPalette(palette)
     }
   for (const logo of LOGOS1)
     if (!traits.logos1.includes(await logo.name)) {

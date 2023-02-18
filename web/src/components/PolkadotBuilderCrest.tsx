@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import { ethers } from "ethers"
-import { usePBTokenDetails } from "../lib/usePBTokenDetails"
+import { useCrestDetails } from "../lib/useCrestDetails"
 
 export const PolkadotBuilderCrest = ({
   tokenId,
@@ -11,7 +11,7 @@ export const PolkadotBuilderCrest = ({
   withName?: boolean
   className?: string
 }) => {
-  const { image, metadata } = usePBTokenDetails(tokenId)
+  const { image, metadata } = useCrestDetails(tokenId)
 
   if (!image || !metadata) return null
 

@@ -3,7 +3,7 @@ import { useCallback, useMemo, useRef, useState } from "react"
 import { Id } from "react-toastify"
 import { useChainId } from "wagmi"
 import { showToastAlert } from "../../components/ToastAlert"
-import { usePbAuctionHouseBid, usePbAuctionHouseGetAuction } from "../../contracts/generated"
+import { useAuctionHouseBid, useAuctionHouseGetAuction } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
 import { useWallet } from "../../lib/useWallet"
@@ -11,7 +11,7 @@ import { useWallet } from "../../lib/useWallet"
 export const BidInput = () => {
   const chainId = useChainId()
   const { isConnected, connect } = useWallet()
-  const { data: auction, refetch } = usePbAuctionHouseGetAuction({
+  const { data: auction, refetch } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
   })
 
@@ -30,7 +30,7 @@ export const BidInput = () => {
       : auction?.minBid ?? ethers.BigNumber.from(0)
   }, [auction?.minBid, bid])
 
-  const { writeAsync, data: txResult } = usePbAuctionHouseBid({ mode: "recklesslyUnprepared" })
+  const { writeAsync, data: txResult } = useAuctionHouseBid({ mode: "recklesslyUnprepared" })
   const refInput = useRef<HTMLInputElement>(null)
   const handleBid = useCallback(async () => {
     let toastId: Id | undefined

@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers"
 import { FC, useCallback, useMemo } from "react"
 import { Dropdown } from "../../components/Dropdown"
-import { usePbTokenPartsStoreGetAllParts } from "../../contracts/generated"
+import { usePartsStoreGetAllParts } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 
 type PartEditorProps = {
@@ -40,7 +40,7 @@ type DnaEditorProps = {
 }
 
 export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
-  const { data: parts } = usePbTokenPartsStoreGetAllParts({
+  const { data: parts } = usePartsStoreGetAllParts({
     chainId: CHAIN_ID,
   })
 

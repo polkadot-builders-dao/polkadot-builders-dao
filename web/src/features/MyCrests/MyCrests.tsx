@@ -2,7 +2,7 @@ import { ethers } from "ethers"
 import { useMemo } from "react"
 import { Navigate } from "react-router-dom"
 import { PolkadotBuilderCrest } from "../../components/PolkadotBuilderCrest"
-import { usePbTokenBalanceOf, usePbTokenTokenOfOwnerByIndex } from "../../contracts/generated"
+import { useCrestBalanceOf, useCrestTokenOfOwnerByIndex } from "../../contracts/generated"
 import { useWallet } from "../../lib/useWallet"
 
 export const CrestOfOwnerByIndex = ({
@@ -12,7 +12,7 @@ export const CrestOfOwnerByIndex = ({
   address: `0x${string}`
   index: number
 }) => {
-  const { data: tokenId } = usePbTokenTokenOfOwnerByIndex({
+  const { data: tokenId } = useCrestTokenOfOwnerByIndex({
     args: [address, ethers.BigNumber.from(index)],
   })
 
@@ -21,7 +21,7 @@ export const CrestOfOwnerByIndex = ({
 
 export const MyCrests = () => {
   const { address } = useWallet()
-  const { data: balance } = usePbTokenBalanceOf({
+  const { data: balance } = useCrestBalanceOf({
     args: [address as `0x${string}`],
     enabled: !!address,
   })

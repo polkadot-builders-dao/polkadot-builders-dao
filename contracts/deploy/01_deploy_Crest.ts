@@ -7,32 +7,32 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts()
 
-  const store = await deployments.get("PBTokenPartsStore")
+  const store = await deployments.get("PartsStore")
 
-  const tokenDna = await deploy("PBTokenDna", {
+  const tokenDna = await deploy("DnaManager", {
     from: deployer,
     log: true,
   })
 
-  const composer = await deploy("PBTokenComposer", {
+  const composer = await deploy("TokenGenerator", {
     from: deployer,
     log: true,
     libraries: {
-      PBTokenDna: tokenDna.address,
+      DnaManager: tokenDna.address,
     },
   })
 
-  await deploy("PBToken", {
+  await deploy("Crest", {
     from: deployer,
     // TODO change 2nd param (auction house)
     args: [store.address, deployer, deployer],
     libraries: {
-      PBTokenComposer: composer.address,
-      PBTokenDna: tokenDna.address,
+      TokenGenerator: composer.address,
+      DnaManager: tokenDna.address,
     },
     log: true,
   })
 }
 export default func
-func.tags = ["PBToken"]
-func.dependencies = ["PBTokenPartsStore"]
+func.tags = ["Crest"]
+func.dependencies = ["PartsStore"]

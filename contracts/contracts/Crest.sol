@@ -9,20 +9,12 @@ import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Votes.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import {PBTokenComposer} from "./lib/PBTokenComposer.sol";
-import {PBTokenDna} from "./lib/PBTokenDna.sol";
-import {IPBToken} from "./interfaces/IPBToken.sol";
+import {TokenGenerator} from "./lib/TokenGenerator.sol";
+import {DnaManager} from "./lib/DnaManager.sol";
+import {ICrest} from "./interfaces/ICrest.sol";
 
 /// @custom:security-contact contact@polkadot-builders.xyz
-contract PBToken is
-    ERC721,
-    ERC721Enumerable,
-    ERC721Burnable,
-    Ownable,
-    EIP712,
-    ERC721Votes,
-    IPBToken
-{
+contract Crest is ERC721, ERC721Enumerable, ERC721Burnable, Ownable, EIP712, ERC721Votes, ICrest {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -52,7 +44,7 @@ contract PBToken is
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "This token doesn't exist");
 
-        return PBTokenComposer.getTokenMetadata(store, tokenId, dnaMap[tokenId]);
+        return TokenGenerator.generateTokenURI(store, tokenId, dnaMap[tokenId]);
     }
 
     function setAuctionHouse(address _auctionHouse) public onlyOwner {
@@ -75,13 +67,25 @@ contract PBToken is
         uint256 tokenId = _tokenIdCounter.current();
 
         // Generate and store dna for this token
-        dnaMap[tokenId] = PBTokenDna.generateDna(store, block.timestamp + tokenId);
+        dnaMap[tokenId] = DnaManager.generateDna(store, block.timestamp + tokenId);
 
         // Mint :rock:
         _safeMint(to, tokenId);
     }
 
-    function burn(uint256 tokenId) public virtual override(ERC721Burnable, IPBToken) {
+    function mintSpecific(address to, uint96 dna) public onlyOwner {
+        // Increment counter to get the next tokenId
+        _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter.current();
+
+        // Store dna for this token
+        dnaMap[tokenId] = dna;
+
+        // Mint :rock:
+        _safeMint(to, tokenId);
+    }
+
+    function burn(uint256 tokenId) public virtual override(ERC721Burnable, ICrest) {
         super.burn(tokenId);
     }
 

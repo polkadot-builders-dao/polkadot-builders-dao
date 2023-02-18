@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.17;
 
-interface IPBTokenPartsStore {
+interface IPartsStore {
     struct Color {
         string name;
         string color;
@@ -19,7 +19,7 @@ interface IPBTokenPartsStore {
         string svg;
     }
 
-    struct AvailableParts {
+    struct AllParts {
         string[] bgColors;
         string[] nogglesColors;
         string[] crowns;
@@ -99,5 +99,5 @@ interface IPBTokenPartsStore {
 
     function addTrait(ImagePart calldata part) external;
 
-    function getAllParts() external returns (AvailableParts memory);
+    function getAllParts() external returns (AllParts memory);
 }

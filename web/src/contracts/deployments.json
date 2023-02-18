@@ -1,22 +1,17 @@
 {
-  "PBToken": {
-    "1287": "0x44D3a4d884380327272072051381CcF202aa74B6",
+  "Crest": {
     "31337": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
   },
-  "PBTokenPartsStore": {
-    "1287": "0xAE11251A74b59D8f63787A4419a65cD047148506",
+  "PartsStore": {
     "31337": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
   },
-  "PBAuctionHouse": {
-    "1287": "0x13058132724430A5f61147cC62211176FF257356",
+  "AuctionHouse": {
     "31337": "0xC9a43158891282A2B1475592D5719c001986Aaec"
   },
-  "PBTokenDna": {
-    "1287": "0xcFC251dec86aFaf69Cd8b20a702fE291Da346c20",
+  "DnaManager": {
     "31337": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
   },
-  "PBTokenComposer": {
-    "1287": "0x218110DF2b0B1bDaA54C024eB336952e73ae9Df4",
+  "TokenGenerator": {
     "31337": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
   }
 }

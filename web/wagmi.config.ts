@@ -4,13 +4,7 @@ import { react, hardhat } from "@wagmi/cli/plugins"
 import fs from "fs"
 import path from "path"
 
-const CONTRACTS = [
-  "PBToken",
-  "PBTokenPartsStore",
-  "PBAuctionHouse",
-  "PBTokenDna",
-  "PBTokenComposer",
-] as const
+const CONTRACTS = ["Crest", "PartsStore", "AuctionHouse", "DnaManager", "TokenGenerator"] as const
 
 const getContractsDeployments = () => {
   const deployments = CONTRACTS.reduce(
@@ -23,10 +17,15 @@ const getContractsDeployments = () => {
     if (!fs.lstatSync(dirPath).isDirectory()) return
     const chainId = Number(fs.readFileSync(path.join(dirPath, ".chainId"), "utf8"))
     for (const contract of CONTRACTS) {
-      const address = JSON.parse(
-        fs.readFileSync(path.join(dirPath, `${contract}.json`), "utf8")
-      ).address
-      deployments[contract][chainId] = address
+      console.log("contract", contract, dirPath)
+      try {
+        const address = JSON.parse(
+          fs.readFileSync(path.join(dirPath, `${contract}.json`), "utf8")
+        ).address
+        deployments[contract][chainId] = address
+      } catch (err) {
+        console.warn("Failed to deployment of", contract, "for chain", chainId, "in", dirPath)
+      }
     }
   }
 

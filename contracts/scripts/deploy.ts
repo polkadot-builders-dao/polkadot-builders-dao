@@ -1,34 +1,34 @@
 import { ethers, deployments, getNamedAccounts } from "hardhat"
-import { PBToken } from "../typechain-types"
+import { Crest } from "../typechain-types"
 // TODO delete script in favor of hardhat-deploy ?
 async function main() {
   // wait for hathat to startup
   // await new Promise((resolve) => setTimeout(resolve, 2_000))
   // // deploy store
-  // const PBTokenPartsStore = await ethers.getContractFactory("PBTokenPartsStore")
-  // const store = await PBTokenPartsStore.deploy()
+  // const PartsStore = await ethers.getContractFactory("PartsStore")
+  // const store = await PartsStore.deploy()
   // await store.deployed()
-  // console.log(`PBTokenPartsStore deployed to ${store.address}`)
+  // console.log(`PartsStore deployed to ${store.address}`)
   // // deploy composer library
-  // const PBTokenComposer = await ethers.getContractFactory("PBTokenComposer")
-  // const composer = await PBTokenComposer.deploy()
+  // const TokenGenerator = await ethers.getContractFactory("TokenGenerator")
+  // const composer = await TokenGenerator.deploy()
   // await composer.deployed()
-  // console.log(`PBTokenComposer deployed to ${composer.address}`)
+  // console.log(`TokenGenerator deployed to ${composer.address}`)
   // // deploy token (NFT)
-  // const PBToken = await ethers.getContractFactory("PBToken", {
+  // const Crest = await ethers.getContractFactory("Crest", {
   //   libraries: {
-  //     PBTokenComposer: composer.address,
+  //     TokenGenerator: composer.address,
   //   },
   // })
   // // deploy auction hosue (NFT)
-  // const PBAuctionHouse = await ethers.getContractFactory("PBAuctionHouse", {
+  // const AuctionHouse = await ethers.getContractFactory("AuctionHouse", {
   //   libraries: {
-  //     PBTokenComposer: composer.address,
+  //     TokenGenerator: composer.address,
   //   },
   // })
-  // const token = await PBToken.deploy(store.address)
+  // const token = await Crest.deploy(store.address)
   // await token.deployed()
-  // console.log(`PBToken deployed to ${token.address}`)
+  // console.log(`Crest deployed to ${token.address}`)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

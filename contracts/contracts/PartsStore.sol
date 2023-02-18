@@ -3,9 +3,9 @@ pragma solidity ^0.8.17;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {IPBTokenPartsStore} from "./interfaces/IPBTokenPartsStore.sol";
+import {IPartsStore} from "./interfaces/IPartsStore.sol";
 
-contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
+contract PartsStore is IPartsStore, Ownable {
     Color[] public bgColors;
     Color[] public nogglesColors;
     ImagePart[] public crowns;
@@ -185,9 +185,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return names;
     }
 
-    function getAllParts() external view returns (AvailableParts memory) {
+    function getAllParts() external view returns (AllParts memory) {
         return
-            AvailableParts(
+            AllParts(
                 getColorNames(bgColors),
                 getColorNames(nogglesColors),
                 getImagePartNames(crowns),

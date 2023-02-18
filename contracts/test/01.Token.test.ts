@@ -1,7 +1,7 @@
 import { expect } from "./chai-setup"
 import { setup } from "./utils/setup"
 
-describe("PBToken", function () {
+describe("Crest", function () {
   describe("Deployment", function () {
     it("Should be deployed", async function () {
       const { token } = await setup()

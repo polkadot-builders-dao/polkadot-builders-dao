@@ -1,8 +1,8 @@
 import { BigNumber } from "ethers"
 import { formatEther } from "ethers/lib/utils.js"
-import { usePbAuctionHouseGetAuction } from "../../contracts/generated"
+import { useAuctionHouseGetAuction } from "../../contracts/generated"
 import { shortenAddress } from "../../lib/shortenAddress"
-import { usePBTokenDetails } from "../../lib/usePBTokenDetails"
+
 import { useWallet } from "../../lib/useWallet"
 import { AuctionStart } from "./AuctionStart"
 import { BidInput } from "./BidInput"
@@ -12,6 +12,7 @@ import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
 import { useMemo } from "react"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
+import { useCrestDetails } from "../../lib/useCrestDetails"
 
 const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   if (!date) return null
@@ -91,12 +92,12 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
 export const Auction = () => {
   const { isConnected } = useWallet()
 
-  const { data: auction } = usePbAuctionHouseGetAuction({
+  const { data: auction } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
     watch: true,
   })
 
-  const { image, metadata } = usePBTokenDetails(auction?.tokenId)
+  const { image, metadata } = useCrestDetails(auction?.tokenId)
 
   return (
     <div>

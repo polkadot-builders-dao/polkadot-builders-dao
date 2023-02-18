@@ -1,16 +1,16 @@
 import { useCallback } from "react"
 import { Id } from "react-toastify"
 import { showToastAlert } from "../../components/ToastAlert"
-import { usePbAuctionHouseGetAuction, usePbAuctionHouseStart } from "../../contracts/generated"
+import { useAuctionHouseGetAuction, useAuctionHouseStart } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { useWallet } from "../../lib/useWallet"
 
 export const AuctionStart = () => {
   const { isConnected, connect, address } = useWallet()
 
-  const { data: auction, refetch } = usePbAuctionHouseGetAuction({ chainId: CHAIN_ID })
+  const { data: auction, refetch } = useAuctionHouseGetAuction({ chainId: CHAIN_ID })
 
-  const { writeAsync } = usePbAuctionHouseStart()
+  const { writeAsync } = useAuctionHouseStart()
 
   const handleStart = useCallback(async () => {
     let toastId: Id | undefined

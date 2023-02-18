@@ -2,12 +2,11 @@ import classNames from "classnames"
 import { BigNumber } from "ethers"
 import { FC, useCallback, useMemo, useState } from "react"
 import { useProvider } from "wagmi"
-import { Button } from "../../components/Button"
 import {
-  pbTokenPartsStoreAddress,
-  usePbTokenComposerGetTokenMetadata,
-  usePbTokenDna,
-  usePbTokenPartsStore,
+  partsStoreAddress,
+  useDnaManager,
+  usePartsStore,
+  useTokenGeneratorGenerateTokenUri,
 } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { DnaEditor } from "./DnaEditor"
@@ -15,17 +14,17 @@ import { DnaEditor } from "./DnaEditor"
 export const Playground: FC = () => {
   const [dna, setDna] = useState("0")
   const provider = useProvider({ chainId: CHAIN_ID })
-  const storeContract = usePbTokenPartsStore({
+  const storeContract = usePartsStore({
     signerOrProvider: provider,
     chainId: CHAIN_ID,
   })
-  const dnaContract = usePbTokenDna({
+  const dnaContract = useDnaManager({
     signerOrProvider: provider,
     chainId: CHAIN_ID,
   })
 
-  const { data, error } = usePbTokenComposerGetTokenMetadata({
-    args: [pbTokenPartsStoreAddress[CHAIN_ID], BigNumber.from(0), BigNumber.from(dna)],
+  const { data, error } = useTokenGeneratorGenerateTokenUri({
+    args: [partsStoreAddress[CHAIN_ID], BigNumber.from(0), BigNumber.from(dna)],
     chainId: CHAIN_ID,
   })
 

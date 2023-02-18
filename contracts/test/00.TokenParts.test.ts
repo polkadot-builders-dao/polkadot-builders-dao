@@ -15,7 +15,7 @@ import {
 } from "../util/defineParts"
 import { setup } from "./utils/setup"
 
-describe("PBTokenPartsStore", function () {
+describe("PartsStore", function () {
   describe("Deployment", function () {
     it("Should be deployed", async function () {
       const { tokenPartsContract } = await setup()

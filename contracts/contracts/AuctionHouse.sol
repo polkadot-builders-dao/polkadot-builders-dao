@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.17;
-import "hardhat/console.sol";
-import {IPBToken} from "./interfaces/IPBToken.sol";
+
+import {ICrest} from "./interfaces/ICrest.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
+contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     struct AuctionConfig {
         address treasury;
         address token;
@@ -29,7 +29,7 @@ contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
 
     address treasury;
 
-    IPBToken private token;
+    ICrest private token;
     uint private duration = 1 days;
     uint private extendedDuration = 10 minutes;
     uint private minFirstBid = 1 ether;
@@ -44,7 +44,7 @@ contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     event Bid(uint tokenId, address bidder, uint bid);
     event Start(uint tokenId);
 
-    constructor(IPBToken _token, address _treasury) {
+    constructor(ICrest _token, address _treasury) {
         token = _token;
         treasury = _treasury;
     }

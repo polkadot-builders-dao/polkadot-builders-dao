@@ -13,5 +13,8 @@
   },
   "TokenGenerator": {
     "31337": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+  },
+  "DaoGovernor": {
+    "31337": "0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9"
   }
 }

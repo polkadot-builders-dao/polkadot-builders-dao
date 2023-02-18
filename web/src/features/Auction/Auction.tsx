@@ -97,6 +97,8 @@ export const Auction = () => {
     watch: true,
   })
 
+  console.log({ auction })
+
   const { image, metadata } = useCrestDetails(auction?.tokenId)
 
   return (

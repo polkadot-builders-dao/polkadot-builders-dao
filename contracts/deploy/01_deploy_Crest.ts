@@ -24,7 +24,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy("Crest", {
     from: deployer,
-    // TODO change 2nd param (auction house)
     args: [store.address, deployer, deployer],
     libraries: {
       TokenGenerator: composer.address,

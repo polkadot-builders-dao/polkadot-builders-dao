@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.17;
 
+import "hardhat/console.sol";
 import {ICrest} from "./interfaces/ICrest.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -140,7 +141,6 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
         currentBid = 0;
         bidder = address(0);
         tokenId = token.tokenOfOwnerByIndex(address(this), 0);
-
         emit Start(tokenId);
     }
 

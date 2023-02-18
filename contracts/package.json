@@ -36,7 +36,8 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "dev": "(hardhat node && hardhat deploy --network localhost) & hardhat run scripts/export.ts",
+    "devold": "(hardhat node && hardhat deploy --network localhost) & hardhat run scripts/export.ts",
+    "dev": "hardhat node && hardhat deploy --network localhost",
     "devmode": "hardhat run scripts/devMode.ts --network localhost",
     "devmode:moonbase": "hardhat run scripts/devMode.ts --network moonbase",
     "export": "hardhat clean & hardhat compile & hardhat run scripts/export.ts",

@@ -3,6 +3,7 @@ import { ConnectButton } from "./ConnectButton"
 import { NavLink, To } from "react-router-dom"
 import classNames from "classnames"
 import { DaoLogoColor } from "../assets/logos"
+import { useWallet } from "../lib/useWallet"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (
@@ -21,6 +22,7 @@ const Link = ({ to, children }: { to: To; children: ReactNode }) => {
 }
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
+  const { address } = useWallet()
   return (
     <div>
       <header className="w-full py-5 text-center">
@@ -36,6 +38,11 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             <li>
               <Link to="/playground">Playground</Link>
             </li>
+            {address && (
+              <li>
+                <Link to="/my-crests">My Crests</Link>
+              </li>
+            )}
           </ul>
         </nav>
       </header>

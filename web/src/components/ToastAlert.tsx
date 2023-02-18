@@ -56,7 +56,7 @@ export const showToastAlert = (
     ),
     ...options,
   }
-  console.log("toast", title, subtitle, options)
+
   if (options?.toastId) {
     toast.update(options.toastId, {
       render,

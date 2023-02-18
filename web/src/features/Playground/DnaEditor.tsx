@@ -17,8 +17,6 @@ const PartEditor: FC<PartEditorProps> = ({ label, parts, selectedIndex = 0, onSe
     label: value,
   }))
 
-  console.log(label, parts)
-
   const handleSelect = useCallback(
     (value: string) => {
       onSelect(Number(value))
@@ -85,7 +83,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
       const bnNewValue = BigNumber.from(index).shl(shift)
 
       const newDna = bnDna.sub(bnOldValue).add(bnNewValue).toString()
-      console.log({ old: dna, new: newDna.toString() })
+
       onChange(newDna)
     },
     [dna, onChange]

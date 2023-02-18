@@ -10,9 +10,6 @@ const func: DeployFunction = async function ({
 }: HardhatRuntimeEnvironment) {
   const { deploy, get } = deployments
 
-  //const { deployer, tokenOwner, storeOwner } = await getNamedAccounts()
-
-  // const storeFactory = ethers.getContractFactory("PBTokenPartsStore")
   const store = <PBTokenPartsStore>(
     await ethers.getContractAt("PBTokenPartsStore", (await get("PBTokenPartsStore")).address)
   )

@@ -81,7 +81,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
             </div>
           </div>
         ) : (
-          <div>No one bidded yet.</div>
+          <div>No one has bid yet.</div>
         )}
       </div>
     </div>

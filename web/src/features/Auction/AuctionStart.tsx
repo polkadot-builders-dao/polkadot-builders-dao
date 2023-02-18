@@ -1,7 +1,5 @@
 import { useCallback } from "react"
 import { Id } from "react-toastify"
-import { useProvider } from "wagmi"
-import { Button } from "../../components/Button"
 import { showToastAlert } from "../../components/ToastAlert"
 import { usePbAuctionHouseGetAuction, usePbAuctionHouseStart } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
@@ -12,8 +10,8 @@ export const AuctionStart = () => {
 
   const { data: auction, refetch } = usePbAuctionHouseGetAuction({ chainId: CHAIN_ID })
 
-  const { write, writeAsync, data, error } = usePbAuctionHouseStart()
-  console.log({ auction })
+  const { writeAsync } = usePbAuctionHouseStart()
+
   const handleStart = useCallback(async () => {
     let toastId: Id | undefined
     try {

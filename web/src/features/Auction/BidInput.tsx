@@ -50,9 +50,9 @@ export const BidInput = () => {
       toastId = showToastAlert("loading", "Bid submitted", "Waiting for confirmation...", {
         autoClose: false,
       })
-      console.log("now waiting for confirmation ", toastId)
+
       const receipt = await tx.wait(1)
-      console.log("receipt", receipt)
+
       if (receipt.status)
         showToastAlert("success", "Bid confirmed", "Your bid has been confirmed", {
           toastId,

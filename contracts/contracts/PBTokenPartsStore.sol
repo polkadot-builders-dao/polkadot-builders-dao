@@ -13,7 +13,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     ImagePart[] public garlands;
     ImagePart[] public shields;
     Palette[] public quadrantPalettes;
-    ImagePart[] public logos1;
+    ImagePart[] public reps;
     ImagePart[] public logos2;
     ImagePart[] public logos3;
     ImagePart[] public logos4;
@@ -46,8 +46,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return quadrantPalettes.length;
     }
 
-    function logos1Count() external view returns (uint256) {
-        return logos1.length;
+    function repsCount() external view returns (uint256) {
+        return reps.length;
     }
 
     function logos2Count() external view returns (uint256) {
@@ -90,8 +90,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return quadrantPalettes[id];
     }
 
-    function getLogo1(uint8 id) external view returns (ImagePart memory) {
-        return logos1[id];
+    function getRep(uint8 id) external view returns (ImagePart memory) {
+        return reps[id];
     }
 
     function getLogo2(uint8 id) external view returns (ImagePart memory) {
@@ -141,9 +141,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         quadrantPalettes.push(palette);
     }
 
-    function addLogo1(ImagePart calldata part) external onlyOwner {
-        //    require(logos1.length < 255, "To many entries");
-        logos1.push(part);
+    function addRep(ImagePart calldata part) external onlyOwner {
+        //    require(reps.length < 255, "To many entries");
+        reps.push(part);
     }
 
     function addLogo2(ImagePart calldata part) external onlyOwner {
@@ -195,7 +195,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
                 getImagePartNames(garlands),
                 getImagePartNames(shields),
                 getPaletteNames(quadrantPalettes),
-                getImagePartNames(logos1),
+                getImagePartNames(reps),
                 getImagePartNames(logos2),
                 getImagePartNames(logos3),
                 getImagePartNames(logos4)

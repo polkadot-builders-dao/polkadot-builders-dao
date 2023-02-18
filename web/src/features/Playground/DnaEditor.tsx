@@ -53,7 +53,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
     shieldId,
     quadrantPalette1,
     quadrantPalette2,
-    logo1,
+    rep,
     logo2,
     logo3,
     logo4,
@@ -143,8 +143,8 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
       />
       <PartEditor
         label="Logo 1"
-        parts={traits.logos1}
-        selectedIndex={logo1}
+        parts={traits.reps}
+        selectedIndex={rep}
         onSelect={handleSelect(64)}
       />
       <PartEditor

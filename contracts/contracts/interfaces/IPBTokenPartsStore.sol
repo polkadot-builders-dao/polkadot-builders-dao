@@ -27,7 +27,7 @@ interface IPBTokenPartsStore {
         string[] garlands;
         string[] shields;
         string[] quadrantPalettes;
-        string[] logos1;
+        string[] reps;
         string[] logos2;
         string[] logos3;
         string[] logos4;
@@ -47,7 +47,7 @@ interface IPBTokenPartsStore {
 
     function quadrantPalettesCount() external view returns (uint256);
 
-    function logos1Count() external view returns (uint256);
+    function repsCount() external view returns (uint256);
 
     function logos2Count() external view returns (uint256);
 
@@ -69,7 +69,7 @@ interface IPBTokenPartsStore {
 
     function getQuadrantPalette(uint8 id) external view returns (Palette memory);
 
-    function getLogo1(uint8 id) external view returns (ImagePart memory);
+    function getRep(uint8 id) external view returns (ImagePart memory);
 
     function getLogo2(uint8 id) external view returns (ImagePart memory);
 
@@ -91,7 +91,7 @@ interface IPBTokenPartsStore {
 
     function addQuadrantPalette(Palette calldata palette) external;
 
-    function addLogo1(ImagePart calldata part) external;
+    function addRep(ImagePart calldata part) external;
 
     function addLogo2(ImagePart calldata part) external;
 

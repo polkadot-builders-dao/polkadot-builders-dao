@@ -17,7 +17,7 @@ library PBTokenComposer {
         IPBTokenPartsStore.ImagePart shield;
         IPBTokenPartsStore.Palette quadrantPalette1;
         IPBTokenPartsStore.Palette quadrantPalette2;
-        IPBTokenPartsStore.ImagePart logo1;
+        IPBTokenPartsStore.ImagePart rep;
         IPBTokenPartsStore.ImagePart logo2;
         IPBTokenPartsStore.ImagePart logo3;
         IPBTokenPartsStore.ImagePart logo4;
@@ -40,7 +40,7 @@ library PBTokenComposer {
                 shield: store.getShield(traits.shieldId),
                 quadrantPalette1: store.getQuadrantPalette(traits.quadrantPalette1Id),
                 quadrantPalette2: store.getQuadrantPalette(traits.quadrantPalette2Id),
-                logo1: store.getLogo1(traits.logo1Id),
+                rep: store.getRep(traits.repId),
                 logo2: store.getLogo2(traits.logo2Id),
                 logo3: store.getLogo3(traits.logo3Id),
                 logo4: store.getLogo4(traits.logo4Id)
@@ -73,7 +73,7 @@ library PBTokenComposer {
 
         // prettier-ignore
         string memory logos = string.concat(
-            '{"trait_type": "Logo 1","value":"', parts.logo1.name, '"},',
+            '{"trait_type": "Logo 1","value":"', parts.rep.name, '"},',
             '{"trait_type": "Logo 2","value":"', parts.logo2.name, '"},',
             '{"trait_type": "Logo 3","value":"', parts.logo3.name, '"},',
             '{"trait_type": "Logo 4","value":"', parts.logo4.name, '"}]}'
@@ -102,7 +102,7 @@ library PBTokenComposer {
         string memory logos = string.concat(
             // quadrants top left and bottom right
             '<g fill="', parts.quadrantPalette1.secondary, '"><path d="M128.353 137.01V248.778H247.604V102.688L128.353 137.01Z" /><path d="M257.17 258.355V405.343L258.325 404.86C263.116 402.858 375.594 354.852 375.594 271.798V258.373H257.17V258.355Z" /></g>',
-            '<g fill="', parts.quadrantPalette1.primary, '">', parts.logo1.svg, parts.logo4.svg, "</g>",
+            '<g fill="', parts.quadrantPalette1.primary, '">', parts.rep.svg, parts.logo4.svg, "</g>",
             // quadrants bottom left and top right
             '<g fill="', parts.quadrantPalette2.secondary, '"><path d="M128.353 258.355V271.781C128.353 354.748 240.848 402.841 245.64 404.86L247.604 405.688V258.355H128.353Z" /><path d="M375.611 137.01L257.17 102.912V248.778H375.611V137.01Z" /></g>',
             '<g fill="', parts.quadrantPalette2.primary, '">', parts.logo2.svg, parts.logo3.svg, "</g>"

@@ -20,7 +20,7 @@ library PBTokenComposer {
         IPBTokenPartsStore.ImagePart rep;
         IPBTokenPartsStore.ImagePart skill;
         IPBTokenPartsStore.ImagePart class;
-        IPBTokenPartsStore.ImagePart logo4;
+        IPBTokenPartsStore.ImagePart trait;
     }
 
     function getImageParts(
@@ -43,7 +43,7 @@ library PBTokenComposer {
                 rep: store.getRep(traits.repId),
                 skill: store.getSkill(traits.skillId),
                 class: store.getClass(traits.classId),
-                logo4: store.getLogo4(traits.logo4Id)
+                trait: store.getTrait(traits.traitId)
             });
     }
 
@@ -76,7 +76,7 @@ library PBTokenComposer {
             '{"trait_type": "Logo 1","value":"', parts.rep.name, '"},',
             '{"trait_type": "Logo 2","value":"', parts.skill.name, '"},',
             '{"trait_type": "Logo 3","value":"', parts.class.name, '"},',
-            '{"trait_type": "Logo 4","value":"', parts.logo4.name, '"}]}'
+            '{"trait_type": "Logo 4","value":"', parts.trait.name, '"}]}'
         );
 
         // prettier-ignore
@@ -102,7 +102,7 @@ library PBTokenComposer {
         string memory logos = string.concat(
             // quadrants top left and bottom right
             '<g fill="', parts.quadrantPalette1.secondary, '"><path d="M128.353 137.01V248.778H247.604V102.688L128.353 137.01Z" /><path d="M257.17 258.355V405.343L258.325 404.86C263.116 402.858 375.594 354.852 375.594 271.798V258.373H257.17V258.355Z" /></g>',
-            '<g fill="', parts.quadrantPalette1.primary, '">', parts.rep.svg, parts.logo4.svg, "</g>",
+            '<g fill="', parts.quadrantPalette1.primary, '">', parts.rep.svg, parts.trait.svg, "</g>",
             // quadrants bottom left and top right
             '<g fill="', parts.quadrantPalette2.secondary, '"><path d="M128.353 258.355V271.781C128.353 354.748 240.848 402.841 245.64 404.86L247.604 405.688V258.355H128.353Z" /><path d="M375.611 137.01L257.17 102.912V248.778H375.611V137.01Z" /></g>',
             '<g fill="', parts.quadrantPalette2.primary, '">', parts.skill.svg, parts.class.svg, "</g>"

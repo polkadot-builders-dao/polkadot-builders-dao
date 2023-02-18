@@ -17,7 +17,7 @@ library PBTokenDna {
         uint8 repId;
         uint8 skillId;
         uint8 classId;
-        uint8 logo4Id;
+        uint8 traitId;
     }
 
     /**
@@ -36,7 +36,7 @@ library PBTokenDna {
         require(store.repsCount() > 0, "No reps");
         require(store.skillsCount() > 0, "No skills");
         require(store.classesCount() > 0, "No classes");
-        require(store.logos4Count() > 0, "No logos4");
+        require(store.traitsCount() > 0, "No traits");
 
         // not truely random but it won't matter, we want a unique dna based on any number, usually a timestamp
         uint rand = uint(keccak256(abi.encodePacked(seed)));
@@ -62,7 +62,7 @@ library PBTokenDna {
             repId: uint8((dna >> 64) % store.repsCount()),
             skillId: uint8((dna >> 72) % store.skillsCount()),
             classId: uint8((dna >> 80) % store.classesCount()),
-            logo4Id: uint8((dna >> 88) % store.logos4Count())
+            traitId: uint8((dna >> 88) % store.traitsCount())
         });
 
         return getDnaFromImage(image);
@@ -82,7 +82,7 @@ library PBTokenDna {
                 repId: uint8((dna >> 64)),
                 skillId: uint8((dna >> 72)),
                 classId: uint8((dna >> 80)),
-                logo4Id: uint8((dna >> 88))
+                traitId: uint8((dna >> 88))
             });
     }
 
@@ -99,6 +99,6 @@ library PBTokenDna {
             (uint96(img.repId) << 64) |
             (uint96(img.skillId) << 72) |
             (uint96(img.classId) << 80) |
-            (uint96(img.logo4Id) << 88);
+            (uint96(img.traitId) << 88);
     }
 }

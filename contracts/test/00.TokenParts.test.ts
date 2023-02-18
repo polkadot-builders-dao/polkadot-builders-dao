@@ -129,10 +129,10 @@ describe("PBTokenPartsStore", function () {
 
       await tokenPartsContract.addClass(LOGOS1[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
-        "No logos4"
+        "No traits"
       )
 
-      await tokenPartsContract.addLogo4(LOGOS1[0])
+      await tokenPartsContract.addTrait(LOGOS1[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).not.to.be.reverted
     })
 
@@ -156,7 +156,7 @@ describe("PBTokenPartsStore", function () {
       expect(decoded.repId).to.eq(6)
       expect(decoded.skillId).to.eq(3)
       expect(decoded.classId).to.eq(3)
-      expect(decoded.logo4Id).to.eq(6)
+      expect(decoded.traitId).to.eq(6)
     })
 
     it("Should have valid colors", async function () {

@@ -56,7 +56,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
     rep,
     skill,
     class,
-    logo4,
+    trait,
   ] = useMemo(() => {
     const bnDna = BigNumber.from(dna)
     return [
@@ -161,8 +161,8 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
       />
       <PartEditor
         label="Logo 4"
-        parts={traits.logos4}
-        selectedIndex={logo4}
+        parts={traits.traits}
+        selectedIndex={trait}
         onSelect={handleSelect(88)}
       />
     </div>

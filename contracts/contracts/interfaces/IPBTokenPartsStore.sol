@@ -30,7 +30,7 @@ interface IPBTokenPartsStore {
         string[] reps;
         string[] skills;
         string[] classes;
-        string[] logos4;
+        string[] traits;
     }
 
     function bgColorsCount() external view returns (uint256);
@@ -53,7 +53,7 @@ interface IPBTokenPartsStore {
 
     function classesCount() external view returns (uint256);
 
-    function logos4Count() external view returns (uint256);
+    function traitsCount() external view returns (uint256);
 
     function getBgColor(uint8 id) external view returns (Color memory);
 
@@ -75,7 +75,7 @@ interface IPBTokenPartsStore {
 
     function getClass(uint8 id) external view returns (ImagePart memory);
 
-    function getLogo4(uint8 id) external view returns (ImagePart memory);
+    function getTrait(uint8 id) external view returns (ImagePart memory);
 
     function addBgColor(Color calldata color) external;
 
@@ -97,7 +97,7 @@ interface IPBTokenPartsStore {
 
     function addClass(ImagePart calldata part) external;
 
-    function addLogo4(ImagePart calldata part) external;
+    function addTrait(ImagePart calldata part) external;
 
     function getAllTraits() external returns (AvailableTraits memory);
 }

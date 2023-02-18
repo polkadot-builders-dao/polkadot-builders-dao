@@ -8,7 +8,7 @@ import {
   defineParts,
   GARLANDS,
   GOOGLES_COLORS,
-  LOGOS1,
+  REPS,
   LOGO_PALETTES,
   SHIELDS,
 } from "../util/defineParts"
@@ -117,22 +117,22 @@ describe("PBTokenPartsStore", function () {
         "No reps"
       )
 
-      await tokenPartsContract.addRep(LOGOS1[0])
+      await tokenPartsContract.addRep(REPS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No skills"
       )
 
-      await tokenPartsContract.addSkill(LOGOS1[0])
+      await tokenPartsContract.addSkill(REPS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No classes"
       )
 
-      await tokenPartsContract.addClass(LOGOS1[0])
+      await tokenPartsContract.addClass(REPS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).to.be.revertedWith(
         "No traits"
       )
 
-      await tokenPartsContract.addTrait(LOGOS1[0])
+      await tokenPartsContract.addTrait(REPS[0])
       await expect(tokenDna.generateDna(tokenPartsContract.address, seed)).not.to.be.reverted
     })
 
@@ -146,7 +146,7 @@ describe("PBTokenPartsStore", function () {
 
       const decoded = await tokenDna.getImageFromDna(dna)
       expect(decoded.bgColorId).to.eq(2)
-      expect(decoded.googlesColorId).to.eq(2)
+      expect(decoded.googlesColorId).to.eq(0)
       expect(decoded.crownId).to.eq(4)
       expect(decoded.doodadId).to.eq(3)
       expect(decoded.garlandId).to.eq(0)
@@ -163,7 +163,7 @@ describe("PBTokenPartsStore", function () {
       const { tokenPartsContract } = await setup({ provisionParts: true })
 
       const firstBgColor = await tokenPartsContract.bgColors(0)
-      expect(firstBgColor.name).to.equal("#0F3B4A")
+      expect(firstBgColor.name).to.equal("Green")
       expect(firstBgColor.color).to.equal("#0F3B4A")
     })
   })

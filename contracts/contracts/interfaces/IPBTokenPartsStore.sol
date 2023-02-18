@@ -19,7 +19,7 @@ interface IPBTokenPartsStore {
         string svg;
     }
 
-    struct AvailableTraits {
+    struct AvailableParts {
         string[] bgColors;
         string[] googlesColors;
         string[] crowns;
@@ -99,5 +99,5 @@ interface IPBTokenPartsStore {
 
     function addTrait(ImagePart calldata part) external;
 
-    function getAllTraits() external returns (AvailableTraits memory);
+    function getAllParts() external returns (AvailableParts memory);
 }

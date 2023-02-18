@@ -185,9 +185,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return names;
     }
 
-    function getAllTraits() external view returns (AvailableTraits memory) {
+    function getAllParts() external view returns (AvailableParts memory) {
         return
-            AvailableTraits(
+            AvailableParts(
                 getColorNames(bgColors),
                 getColorNames(googlesColors),
                 getImagePartNames(crowns),

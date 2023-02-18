@@ -14,7 +14,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     ImagePart[] public shields;
     Palette[] public quadrantPalettes;
     ImagePart[] public reps;
-    ImagePart[] public logos2;
+    ImagePart[] public skills;
     ImagePart[] public logos3;
     ImagePart[] public logos4;
 
@@ -50,8 +50,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return reps.length;
     }
 
-    function logos2Count() external view returns (uint256) {
-        return logos2.length;
+    function skillsCount() external view returns (uint256) {
+        return skills.length;
     }
 
     function logos3Count() external view returns (uint256) {
@@ -94,8 +94,8 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return reps[id];
     }
 
-    function getLogo2(uint8 id) external view returns (ImagePart memory) {
-        return logos2[id];
+    function getSkill(uint8 id) external view returns (ImagePart memory) {
+        return skills[id];
     }
 
     function getLogo3(uint8 id) external view returns (ImagePart memory) {
@@ -146,9 +146,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         reps.push(part);
     }
 
-    function addLogo2(ImagePart calldata part) external onlyOwner {
-        //    require(logos2.length < 255, "To many entries");
-        logos2.push(part);
+    function addSkill(ImagePart calldata part) external onlyOwner {
+        //    require(skills.length < 255, "To many entries");
+        skills.push(part);
     }
 
     function addLogo3(ImagePart calldata part) external onlyOwner {
@@ -196,7 +196,7 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
                 getImagePartNames(shields),
                 getPaletteNames(quadrantPalettes),
                 getImagePartNames(reps),
-                getImagePartNames(logos2),
+                getImagePartNames(skills),
                 getImagePartNames(logos3),
                 getImagePartNames(logos4)
             );

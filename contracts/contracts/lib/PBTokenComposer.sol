@@ -18,7 +18,7 @@ library PBTokenComposer {
         IPBTokenPartsStore.Palette quadrantPalette1;
         IPBTokenPartsStore.Palette quadrantPalette2;
         IPBTokenPartsStore.ImagePart rep;
-        IPBTokenPartsStore.ImagePart logo2;
+        IPBTokenPartsStore.ImagePart skill;
         IPBTokenPartsStore.ImagePart logo3;
         IPBTokenPartsStore.ImagePart logo4;
     }
@@ -41,7 +41,7 @@ library PBTokenComposer {
                 quadrantPalette1: store.getQuadrantPalette(traits.quadrantPalette1Id),
                 quadrantPalette2: store.getQuadrantPalette(traits.quadrantPalette2Id),
                 rep: store.getRep(traits.repId),
-                logo2: store.getLogo2(traits.logo2Id),
+                skill: store.getSkill(traits.skillId),
                 logo3: store.getLogo3(traits.logo3Id),
                 logo4: store.getLogo4(traits.logo4Id)
             });
@@ -74,7 +74,7 @@ library PBTokenComposer {
         // prettier-ignore
         string memory logos = string.concat(
             '{"trait_type": "Logo 1","value":"', parts.rep.name, '"},',
-            '{"trait_type": "Logo 2","value":"', parts.logo2.name, '"},',
+            '{"trait_type": "Logo 2","value":"', parts.skill.name, '"},',
             '{"trait_type": "Logo 3","value":"', parts.logo3.name, '"},',
             '{"trait_type": "Logo 4","value":"', parts.logo4.name, '"}]}'
         );
@@ -105,7 +105,7 @@ library PBTokenComposer {
             '<g fill="', parts.quadrantPalette1.primary, '">', parts.rep.svg, parts.logo4.svg, "</g>",
             // quadrants bottom left and top right
             '<g fill="', parts.quadrantPalette2.secondary, '"><path d="M128.353 258.355V271.781C128.353 354.748 240.848 402.841 245.64 404.86L247.604 405.688V258.355H128.353Z" /><path d="M375.611 137.01L257.17 102.912V248.778H375.611V137.01Z" /></g>',
-            '<g fill="', parts.quadrantPalette2.primary, '">', parts.logo2.svg, parts.logo3.svg, "</g>"
+            '<g fill="', parts.quadrantPalette2.primary, '">', parts.skill.svg, parts.logo3.svg, "</g>"
         );
 
         // prettier-ignore

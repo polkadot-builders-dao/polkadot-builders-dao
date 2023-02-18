@@ -54,7 +54,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
     quadrantPalette1,
     quadrantPalette2,
     rep,
-    logo2,
+    skill,
     logo3,
     logo4,
   ] = useMemo(() => {
@@ -149,8 +149,8 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
       />
       <PartEditor
         label="Logo 2"
-        parts={traits.logos2}
-        selectedIndex={logo2}
+        parts={traits.skills}
+        selectedIndex={skill}
         onSelect={handleSelect(72)}
       />
       <PartEditor

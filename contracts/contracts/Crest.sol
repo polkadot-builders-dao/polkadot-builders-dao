@@ -35,7 +35,7 @@ contract Crest is ERC721, ERC721Enumerable, ERC721Burnable, Ownable, EIP712, ERC
         address _store,
         address _auctionHouse,
         address _founders
-    ) ERC721("Polkadot Builders", "PBT") EIP712("Polkadot Builders", "1") {
+    ) ERC721("Polkadot Builder Crest", "PBC") EIP712("Polkadot Builder Crest", "1") {
         store = _store;
         auctionHouse = _auctionHouse;
         founders = _founders;

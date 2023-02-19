@@ -29,7 +29,15 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   ])
   await Promise.all(mints.map((m) => m.wait()))
 
-  await crest.setAuctionHouse(deployed.address)
+  const auctionHouse = await ethers.getContractAt("AuctionHouse", deployed.address)
+  // set practical defaults for dev & test, real value will be defined by governance before launch
+  const configs = await Promise.all([
+    auctionHouse.setDuration(180),
+    auctionHouse.setExtendedDuration(60),
+    auctionHouse.setMinFirstBid(ethers.utils.parseEther("0.1")),
+    crest.setAuctionHouse(deployed.address),
+  ])
+  await Promise.all(configs.map((tx) => tx.wait()))
 }
 export default func
 func.tags = ["AuctionHouse"]

@@ -1,6 +1,6 @@
 import { BigNumber } from "ethers"
 import { formatEther } from "ethers/lib/utils.js"
-import { useAuctionHouseGetAuction } from "../../contracts/generated"
+import { useAuctionHouseGetAuction, useAuctionHouseGetConfig } from "../../contracts/generated"
 import { shortenAddress } from "../../lib/shortenAddress"
 
 import { useWallet } from "../../lib/useWallet"
@@ -10,7 +10,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow"
 import { CHAIN_ID } from "../../lib/settings"
 import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
 import { useCrestDetails } from "../../lib/useCrestDetails"
 
@@ -92,12 +92,22 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
 export const Auction = () => {
   const { isConnected } = useWallet()
 
+  const { data: config } = useAuctionHouseGetConfig({
+    chainId: CHAIN_ID,
+  })
+
   const { data: auction } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
     watch: true,
   })
 
-  console.log({ auction })
+  useEffect(() => {
+    console.log({ auction })
+  }, [auction])
+
+  useEffect(() => {
+    console.log({ config })
+  }, [config])
 
   const { image, metadata } = useCrestDetails(auction?.tokenId)
 

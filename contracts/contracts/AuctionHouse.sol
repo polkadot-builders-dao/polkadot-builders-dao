@@ -130,7 +130,7 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
         else if (tokenId > 0) token.burn(tokenId);
 
         // send the bid amount to the treasury
-        safeSendEther(payable(treasury), currentBid);
+        if (currentBid > 0) safeSendEther(payable(treasury), currentBid);
 
         // mint a new token
         token.mint();

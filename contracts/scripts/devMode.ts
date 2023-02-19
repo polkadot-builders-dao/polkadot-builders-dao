@@ -3,9 +3,9 @@ import { ethers, deployments, getNamedAccounts } from "hardhat"
 async function main() {
   const { deployer } = await getNamedAccounts()
 
-  const depAuctionHouse = await deployments.get("PBAuctionHouse")
+  const depAuctionHouse = await deployments.get("AuctionHouse")
 
-  const auctionHouse = await ethers.getContractAt("PBAuctionHouse", depAuctionHouse.address)
+  const auctionHouse = await ethers.getContractAt("AuctionHouse", depAuctionHouse.address)
 
   console.log("auction house", await auctionHouse.getConfig(), deployer)
   await auctionHouse.setDuration(180)

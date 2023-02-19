@@ -1,19 +1,17 @@
 import { useCallback } from "react"
 import { Id } from "react-toastify"
-import { useProvider } from "wagmi"
-import { Button } from "../../components/Button"
 import { showToastAlert } from "../../components/ToastAlert"
-import { usePbAuctionHouseGetAuction, usePbAuctionHouseStart } from "../../contracts/generated"
+import { useAuctionHouseGetAuction, useAuctionHouseStart } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { useWallet } from "../../lib/useWallet"
 
 export const AuctionStart = () => {
   const { isConnected, connect, address } = useWallet()
 
-  const { data: auction, refetch } = usePbAuctionHouseGetAuction({ chainId: CHAIN_ID })
+  const { data: auction, refetch } = useAuctionHouseGetAuction({ chainId: CHAIN_ID })
 
-  const { write, writeAsync, data, error } = usePbAuctionHouseStart()
-  console.log({ auction })
+  const { writeAsync } = useAuctionHouseStart()
+
   const handleStart = useCallback(async () => {
     let toastId: Id | undefined
     try {
@@ -35,7 +33,7 @@ export const AuctionStart = () => {
           autoClose: 3000,
         })
       else
-        showToastAlert("success", "Failed", "Failed to initialize auction", {
+        showToastAlert("error", "Failed", "Failed to initialize auction", {
           toastId,
           autoClose: 10000,
         })

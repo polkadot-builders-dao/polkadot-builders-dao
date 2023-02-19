@@ -1,34 +1,34 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
-import "hardhat/console.sol";
+
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "../interfaces/IPBTokenPartsStore.sol";
+import "../interfaces/IPartsStore.sol";
 import {Base64} from "base64-sol/base64.sol";
-import {PBTokenDna} from "./PBTokenDna.sol";
+import {DnaManager} from "./DnaManager.sol";
 
 // @custom:security-contact contact@polkadot-builders.xyz
-library PBTokenComposer {
+library TokenGenerator {
     struct ImageParts {
-        IPBTokenPartsStore.Color bgColor;
-        IPBTokenPartsStore.Color nogglesColor;
-        IPBTokenPartsStore.ImagePart crown;
-        IPBTokenPartsStore.ImagePart doodad;
-        IPBTokenPartsStore.ImagePart garland;
-        IPBTokenPartsStore.ImagePart shield;
-        IPBTokenPartsStore.Palette quadrantPalette1;
-        IPBTokenPartsStore.Palette quadrantPalette2;
-        IPBTokenPartsStore.ImagePart rep;
-        IPBTokenPartsStore.ImagePart skill;
-        IPBTokenPartsStore.ImagePart class;
-        IPBTokenPartsStore.ImagePart trait;
+        IPartsStore.Color bgColor;
+        IPartsStore.Color nogglesColor;
+        IPartsStore.ImagePart crown;
+        IPartsStore.ImagePart doodad;
+        IPartsStore.ImagePart garland;
+        IPartsStore.ImagePart shield;
+        IPartsStore.Palette quadrantPalette1;
+        IPartsStore.Palette quadrantPalette2;
+        IPartsStore.ImagePart rep;
+        IPartsStore.ImagePart skill;
+        IPartsStore.ImagePart class;
+        IPartsStore.ImagePart trait;
     }
 
     function getImageParts(
         address storeAddress,
         uint96 dna
     ) public view returns (ImageParts memory) {
-        IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
-        PBTokenDna.TokenTraits memory traits = PBTokenDna.getImageFromDna(dna);
+        IPartsStore store = IPartsStore(storeAddress);
+        DnaManager.TokenTraits memory traits = DnaManager.getImageFromDna(dna);
 
         return
             ImageParts({
@@ -47,7 +47,7 @@ library PBTokenComposer {
             });
     }
 
-    function getTokenMetadata(
+    function generateTokenURI(
         address storeAddress,
         uint256 tokenId,
         uint96 dna

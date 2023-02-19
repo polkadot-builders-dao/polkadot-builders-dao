@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.17;
+
 import "hardhat/console.sol";
-import {IPBToken} from "./interfaces/IPBToken.sol";
+import {ICrest} from "./interfaces/ICrest.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
+contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     struct AuctionConfig {
         address treasury;
         address token;
@@ -29,7 +30,7 @@ contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
 
     address treasury;
 
-    IPBToken private token;
+    ICrest private token;
     uint private duration = 1 days;
     uint private extendedDuration = 10 minutes;
     uint private minFirstBid = 1 ether;
@@ -44,7 +45,7 @@ contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     event Bid(uint tokenId, address bidder, uint bid);
     event Start(uint tokenId);
 
-    constructor(IPBToken _token, address _treasury) {
+    constructor(ICrest _token, address _treasury) {
         token = _token;
         treasury = _treasury;
     }
@@ -129,7 +130,7 @@ contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
         else if (tokenId > 0) token.burn(tokenId);
 
         // send the bid amount to the treasury
-        safeSendEther(payable(treasury), currentBid);
+        if (currentBid > 0) safeSendEther(payable(treasury), currentBid);
 
         // mint a new token
         token.mint();
@@ -140,7 +141,6 @@ contract PBAuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
         currentBid = 0;
         bidder = address(0);
         tokenId = token.tokenOfOwnerByIndex(address(this), 0);
-
         emit Start(tokenId);
     }
 

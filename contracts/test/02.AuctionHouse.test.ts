@@ -6,7 +6,7 @@ import { mine, time } from "@nomicfoundation/hardhat-network-helpers"
 
 const ONE_DAY = 86400 * 1000
 
-describe("PBAuctionHouse", function () {
+describe("AuctionHouse", function () {
   describe("Deployment", function () {
     it("Should be deployed", async function () {
       const { auctionHouse } = await setupFull()

@@ -11,6 +11,9 @@ import { WalletProvider } from "./lib/useWallet"
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
 import { PlaygroundPage } from "./routes/PlaygroundPage"
 import { HomePage } from "./routes/HomePage"
+import { MyCrestsPage } from "./routes/MyCrestsPage"
+import { ContractsPage } from "./routes/ContractsPage"
+import { GovernancePage } from "./routes/GovernancePage"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -20,6 +23,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/playground" element={<PlaygroundPage />} />
+            <Route path="/governance" element={<GovernancePage />} />
+            <Route path="/my-crests" element={<MyCrestsPage />} />
+            <Route path="/contracts" element={<ContractsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <ToastContainer hideProgressBar closeOnClick pauseOnHover closeButton={false} />

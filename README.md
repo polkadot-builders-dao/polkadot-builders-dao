@@ -1,5 +1,14 @@
 # Polkadot Builders
 
-[![Build and Deploy](https://github.com/polkadot-builders-dao/polkadot-builders-dao/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/polkadot-builders-dao/polkadot-builders-dao/actions/workflows/gh-pages.yml)
+## Prerequisites
 
-Public URL : [https://polkadot-builders-dao.github.io/polkadot-builders-dao/](https://polkadot-builders-dao.github.io/polkadot-builders-dao/)
+- Node v16.19.0
+- Docker
+- [Squid CLI](https://docs.subsquid.io/squid-cli/installation/)
+
+## LFG
+
+```bash
+yarn
+yarn dev
+```

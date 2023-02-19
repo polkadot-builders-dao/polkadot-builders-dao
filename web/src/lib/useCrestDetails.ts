@@ -1,12 +1,12 @@
 import { BigNumber, BigNumberish } from "ethers"
 import { useMemo } from "react"
-import { usePbTokenTokenUri } from "../contracts/generated"
+import { useCrestTokenUri } from "../contracts/generated"
 import { CHAIN_ID } from "./settings"
 
-export const usePBTokenDetails = (tokenId?: BigNumberish) => {
+export const useCrestDetails = (tokenId?: BigNumberish) => {
   const id = tokenId ? BigNumber.from(tokenId) : BigNumber.from(0)
 
-  const call = usePbTokenTokenUri({
+  const call = useCrestTokenUri({
     args: [id],
     enabled: id.gt(0),
     chainId: CHAIN_ID,

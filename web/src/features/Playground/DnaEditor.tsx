@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers"
 import { FC, useCallback, useMemo } from "react"
 import { Dropdown } from "../../components/Dropdown"
-import { usePbTokenPartsStoreGetAllParts } from "../../contracts/generated"
+import { usePartsStoreGetAllParts } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 
 type PartEditorProps = {
@@ -16,8 +16,6 @@ const PartEditor: FC<PartEditorProps> = ({ label, parts, selectedIndex = 0, onSe
     value: i.toString(),
     label: value,
   }))
-
-  console.log(label, parts)
 
   const handleSelect = useCallback(
     (value: string) => {
@@ -42,7 +40,7 @@ type DnaEditorProps = {
 }
 
 export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
-  const { data: parts } = usePbTokenPartsStoreGetAllParts({
+  const { data: parts } = usePartsStoreGetAllParts({
     chainId: CHAIN_ID,
   })
 
@@ -85,7 +83,7 @@ export const DnaEditor: FC<DnaEditorProps> = ({ dna, onChange }) => {
       const bnNewValue = BigNumber.from(index).shl(shift)
 
       const newDna = bnDna.sub(bnOldValue).add(bnNewValue).toString()
-      console.log({ old: dna, new: newDna.toString() })
+
       onChange(newDna)
     },
     [dna, onChange]

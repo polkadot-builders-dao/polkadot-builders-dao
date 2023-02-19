@@ -1,8 +1,8 @@
 import { BigNumber } from "ethers"
 import { formatEther } from "ethers/lib/utils.js"
-import { usePbAuctionHouseGetAuction } from "../../contracts/generated"
+import { useAuctionHouseGetAuction, useAuctionHouseGetConfig } from "../../contracts/generated"
 import { shortenAddress } from "../../lib/shortenAddress"
-import { usePBTokenDetails } from "../../lib/usePBTokenDetails"
+
 import { useWallet } from "../../lib/useWallet"
 import { AuctionStart } from "./AuctionStart"
 import { BidInput } from "./BidInput"
@@ -10,8 +10,9 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow"
 import { CHAIN_ID } from "../../lib/settings"
 import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
+import { useCrestDetails } from "../../lib/useCrestDetails"
 
 const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   if (!date) return null
@@ -81,7 +82,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
             </div>
           </div>
         ) : (
-          <div>No one bidded yet.</div>
+          <div>No one has bid yet.</div>
         )}
       </div>
     </div>
@@ -91,12 +92,24 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
 export const Auction = () => {
   const { isConnected } = useWallet()
 
-  const { data: auction } = usePbAuctionHouseGetAuction({
+  const { data: config } = useAuctionHouseGetConfig({
+    chainId: CHAIN_ID,
+  })
+
+  const { data: auction } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
     watch: true,
   })
 
-  const { image, metadata } = usePBTokenDetails(auction?.tokenId)
+  useEffect(() => {
+    console.log({ auction })
+  }, [auction])
+
+  useEffect(() => {
+    console.log({ config })
+  }, [config])
+
+  const { image, metadata } = useCrestDetails(auction?.tokenId)
 
   return (
     <div>

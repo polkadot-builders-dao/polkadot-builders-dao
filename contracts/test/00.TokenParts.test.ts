@@ -15,7 +15,7 @@ import {
 } from "../util/defineParts"
 import { setup } from "./utils/setup"
 
-describe("PBTokenPartsStore", function () {
+describe("PartsStore", function () {
   describe("Deployment", function () {
     it("Should be deployed", async function () {
       const { tokenPartsContract } = await setup()
@@ -115,7 +115,7 @@ describe("PBTokenPartsStore", function () {
       const { tokenPartsContract } = await setup({ provisionParts: true })
 
       const firstBgColor = await tokenPartsContract.bgColors(0)
-      expect(firstBgColor.name).to.equal("Green")
+      expect(firstBgColor.name).to.equal("Teal")
       expect(firstBgColor.color).to.equal("#0F3B4A")
     })
   })

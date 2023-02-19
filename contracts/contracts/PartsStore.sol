@@ -3,9 +3,9 @@ pragma solidity ^0.8.17;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {IPBTokenPartsStore} from "./interfaces/IPBTokenPartsStore.sol";
+import {IPartsStore} from "./interfaces/IPartsStore.sol";
 
-contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
+contract PartsStore is IPartsStore, Ownable {
     Color[] public bgColors;
     Color[] public nogglesColors;
     ImagePart[] public crowns;
@@ -107,57 +107,57 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
     }
 
     function addBgColor(Color calldata color) external onlyOwner {
-        //    require(bgColors.length < 255, "To many entries");
+        require(bgColors.length < 255, "To many entries");
         bgColors.push(color);
     }
 
     function addNogglesColor(Color calldata color) external onlyOwner {
-        //    require(nogglesColors.length < 255, "To many entries");
+        require(nogglesColors.length < 255, "To many entries");
         nogglesColors.push(color);
     }
 
     function addCrown(ImagePart calldata part) external onlyOwner {
-        //   require(crowns.length < 255, "To many entries");
+        require(crowns.length < 255, "To many entries");
         crowns.push(part);
     }
 
     function addDoodad(ImagePart calldata part) external onlyOwner {
-        //   require(doodads.length < 255, "To many entries");
+        require(doodads.length < 255, "To many entries");
         doodads.push(part);
     }
 
     function addGarland(ImagePart calldata part) external onlyOwner {
-        //  require(garlands.length < 255, "To many entries");
+        require(garlands.length < 255, "To many entries");
         garlands.push(part);
     }
 
     function addShield(ImagePart calldata part) external onlyOwner {
-        //   require(shields.length < 255, "To many entries");
+        require(shields.length < 255, "To many entries");
         shields.push(part);
     }
 
     function addQuadrantPalette(Palette calldata palette) external onlyOwner {
-        //    require(quadrantPalettes.length < 255, "To many entries");
+        require(quadrantPalettes.length < 255, "To many entries");
         quadrantPalettes.push(palette);
     }
 
     function addRep(ImagePart calldata part) external onlyOwner {
-        //    require(reps.length < 255, "To many entries");
+        require(reps.length < 255, "To many entries");
         reps.push(part);
     }
 
     function addSkill(ImagePart calldata part) external onlyOwner {
-        //    require(skills.length < 255, "To many entries");
+        require(skills.length < 255, "To many entries");
         skills.push(part);
     }
 
     function addClass(ImagePart calldata part) external onlyOwner {
-        //    require(classes.length < 255, "To many entries");
+        require(classes.length < 255, "To many entries");
         classes.push(part);
     }
 
     function addTrait(ImagePart calldata part) external onlyOwner {
-        //   require(traits.length < 255, "To many entries");
+        require(traits.length < 255, "To many entries");
         traits.push(part);
     }
 
@@ -185,9 +185,9 @@ contract PBTokenPartsStore is IPBTokenPartsStore, Ownable {
         return names;
     }
 
-    function getAllParts() external view returns (AvailableParts memory) {
+    function getAllParts() external view returns (AllParts memory) {
         return
-            AvailableParts(
+            AllParts(
                 getColorNames(bgColors),
                 getColorNames(nogglesColors),
                 getImagePartNames(crowns),

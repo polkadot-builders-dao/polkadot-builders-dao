@@ -7,10 +7,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts()
 
-  await deploy("PBTokenPartsStore", {
+  await deploy("PartsStore", {
     from: deployer,
     log: true,
   })
 }
 export default func
-func.tags = ["PBTokenPartsStore"]
+func.tags = ["PartsStore"]

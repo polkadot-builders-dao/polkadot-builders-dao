@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "hardhat/console.sol";
-import {IPBTokenPartsStore} from "../interfaces/IPBTokenPartsStore.sol";
+import {IPartsStore} from "../interfaces/IPartsStore.sol";
 
-library PBTokenDna {
+library DnaManager {
     struct TokenTraits {
         uint8 bgColorId;
         uint8 nogglesColorId;
@@ -24,7 +23,7 @@ library PBTokenDna {
      * @dev using an address as param type to prevent 'invalid type' error when executing tests
      */
     function generateDna(address storeAddress, uint256 seed) public view returns (uint96) {
-        IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
+        IPartsStore store = IPartsStore(storeAddress);
 
         require(store.bgColorsCount() > 0, "No bg colors");
         require(store.nogglesColorsCount() > 0, "No noggles colors");
@@ -48,7 +47,7 @@ library PBTokenDna {
      * @dev using an address as param type to prevent 'invalid type' error when executing tests
      */
     function reduceDna(address storeAddress, uint96 dna) private view returns (uint96) {
-        IPBTokenPartsStore store = IPBTokenPartsStore(storeAddress);
+        IPartsStore store = IPartsStore(storeAddress);
 
         TokenTraits memory image = TokenTraits({
             bgColorId: uint8(dna % store.bgColorsCount()),

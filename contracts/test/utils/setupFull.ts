@@ -1,24 +1,18 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { deployments, getNamedAccounts } from "hardhat"
 import { HardhatRuntimeEnvironment } from "hardhat/types"
-import {
-  PBAuctionHouse,
-  PBToken,
-  PBTokenComposer,
-  PBTokenDna,
-  PBTokenPartsStore,
-} from "../../typechain-types"
+import { AuctionHouse, Crest, TokenGenerator, DnaManager, PartsStore } from "../../typechain-types"
 
 type SetupOptions = {
   //provisionParts: boolean
 }
 
 type SetupOutput = {
-  tokenPartsContract: PBTokenPartsStore
-  tokenDna: PBTokenDna
-  composer: PBTokenComposer
-  token: PBToken
-  auctionHouse: PBAuctionHouse
+  tokenPartsContract: PartsStore
+  tokenDna: DnaManager
+  composer: TokenGenerator
+  token: Crest
+  auctionHouse: AuctionHouse
   users: {
     deployer: string
     dao: string
@@ -39,8 +33,8 @@ type SetupOutput = {
 export const setupFull = deployments.createFixture<SetupOutput, SetupOptions>(
   async (hre, options) => {
     const { ethers } = hre
-    const { PBAuctionHouse, PBTokenPartsStore, PBTokenDna, PBTokenComposer, PBToken } =
-      await deployments.fixture("PBAuctionHouse")
+    const { AuctionHouse, PartsStore, DnaManager, TokenGenerator, Crest } =
+      await deployments.fixture("AuctionHouse")
 
     const { deployer, dao, founders, user1, user2 } = await getNamedAccounts()
     const users = { deployer, dao, founders, user1, user2 }
@@ -52,30 +46,30 @@ export const setupFull = deployments.createFixture<SetupOutput, SetupOptions>(
       user2: await ethers.getSigner(user2),
     }
     const contracts = {
-      tokenPartsContract: (await ethers.getContractFactory("PBTokenPartsStore")).attach(
-        PBTokenPartsStore.address
-      ) as PBTokenPartsStore,
-      tokenDna: (await ethers.getContractFactory("PBTokenDna")).attach(
-        PBTokenDna.address
-      ) as PBTokenDna,
+      tokenPartsContract: (await ethers.getContractFactory("PartsStore")).attach(
+        PartsStore.address
+      ) as PartsStore,
+      tokenDna: (await ethers.getContractFactory("DnaManager")).attach(
+        DnaManager.address
+      ) as DnaManager,
       composer: (
-        await ethers.getContractFactory("PBTokenComposer", {
+        await ethers.getContractFactory("TokenGenerator", {
           libraries: {
-            PBTokenDna: PBTokenDna.address,
+            DnaManager: DnaManager.address,
           },
         })
-      ).attach(PBTokenComposer.address) as PBTokenComposer,
-      auctionHouse: (await ethers.getContractFactory("PBAuctionHouse")).attach(
-        PBAuctionHouse.address
-      ) as PBAuctionHouse,
+      ).attach(TokenGenerator.address) as TokenGenerator,
+      auctionHouse: (await ethers.getContractFactory("AuctionHouse")).attach(
+        AuctionHouse.address
+      ) as AuctionHouse,
       token: (
-        await ethers.getContractFactory("PBToken", {
+        await ethers.getContractFactory("Crest", {
           libraries: {
-            PBTokenDna: PBTokenDna.address,
-            PBTokenComposer: PBTokenComposer.address,
+            DnaManager: DnaManager.address,
+            TokenGenerator: TokenGenerator.address,
           },
         })
-      ).attach(PBToken.address) as PBToken,
+      ).attach(Crest.address) as Crest,
     }
 
     return {

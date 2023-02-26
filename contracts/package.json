@@ -44,7 +44,7 @@
     "compile": "hardhat compile",
     "test": "NODE_ENV=test && hardhat test",
     "test:watch": "NODE_ENV=test && nodemon -x 'hardhat test'",
-    "coverage": "hardhat coverage",
+    "coverage": "NODE_ENV=test hardhat coverage",
     "deploy:localhost": "hardhat deploy --network localhost",
     "deploy:moonbase": "hardhat deploy --network moonbase",
     "verify:moonbase": "hardhat etherscan-verify --network moonbase --solc-input --sleep",

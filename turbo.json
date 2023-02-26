@@ -3,10 +3,12 @@
   "globalEnv": [
     "DEPLOYER_MOONBEAM",
     "DEPLOYER_MOONBASE",
+    "FOUNDERS_MOONBASE",
+    "FOUNDERS_MOONBEAM",
+    "DAO_MOONBASE",
+    "DAO_MOONBEAM",
     "MOONSCAN_API_KEY",
     "VITE_CHAIN_ID",
-    "FOUNDERS",
-    "DAO",
     "NODE_ENV"
   ],
   "pipeline": {

@@ -2,7 +2,6 @@ import { HardhatRuntimeEnvironment } from "hardhat/types"
 import { DeployFunction } from "hardhat-deploy/types"
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  console.time("DEPLOYMENT AuctionHouse_Config_PROD")
   const { deployments, ethers } = hre
 
   const Crest = await deployments.get("Crest")
@@ -19,8 +18,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   console.log("associating auction house with crest")
   await (await crest.setAuctionHouse(AuctionHouse.address)).wait()
-
-  console.timeEnd("DEPLOYMENT AuctionHouse_Config_PROD")
 }
 export default func
 func.tags = ["AuctionHouse_Config_PROD"]

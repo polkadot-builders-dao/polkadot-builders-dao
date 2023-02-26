@@ -18,20 +18,14 @@ import { deployments, ethers } from "hardhat"
 describe("PartsStore", function () {
   describe("Deployment", function () {
     it("Should be deployed", async function () {
-      console.time("PartsStore_Deploy")
       const { PartsStore } = await deployments.fixture(["PartsStore_Deploy"])
-      console.timeEnd("PartsStore_Deploy")
       const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
 
-      //  const { tokenPartsContract } = await setup()
-      console.log("address", partsStore.address)
       expect(partsStore.address).exist
     })
 
     it("Shouln't generate dna if no bg color defined", async function () {
-      console.time("Crest_Deploy")
       const { DnaManager, PartsStore } = await deployments.fixture(["Crest_Deploy"])
-      console.timeEnd("Crest_Deploy")
       const dnaManager = await ethers.getContractAt("DnaManager", DnaManager.address)
 
       await expect(
@@ -40,9 +34,7 @@ describe("PartsStore", function () {
     })
 
     it("Shouln't generate dna if no noggles color defined", async function () {
-      console.time("Crest_Deploy")
       const { DnaManager, PartsStore } = await deployments.fixture(["Crest_Deploy"])
-      console.timeEnd("Crest_Deploy")
       const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
       const dnaManager = await ethers.getContractAt("DnaManager", DnaManager.address)
       const seed = BigNumber.from("165189498146486486")
@@ -94,12 +86,10 @@ describe("PartsStore", function () {
     })
 
     it("Should generate accurate dna", async function () {
-      console.time("Crest_Deploy,PartsStore_Provision")
       const { DnaManager, PartsStore } = await deployments.fixture([
         "Crest_Deploy",
         "PartsStore_Provision",
       ])
-      console.timeEnd("Crest_Deploy,PartsStore_Provision")
       const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
       const dnaManager = await ethers.getContractAt("DnaManager", DnaManager.address)
 
@@ -124,14 +114,90 @@ describe("PartsStore", function () {
     })
 
     it("Should have valid colors", async function () {
-      console.time("PartsStore_Provision")
-      const { PartsStore } = await deployments.fixture(["PartsStore_Provision"])
-      console.timeEnd("PartsStore_Provision")
+      const { PartsStore } = await deployments.fixture(["Crest_Deploy", "PartsStore_Provision"])
       const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
 
-      const firstBgColor = await partsStore.bgColors(0)
+      const firstBgColor = await partsStore.getBgColor(0)
       expect(firstBgColor.name).to.equal("Teal")
       expect(firstBgColor.color).to.equal("#0F3B4A")
+    })
+
+    it("Should be able to add more if unlocked", async function () {
+      const { PartsStore } = await deployments.fixture(["Crest_Deploy", "PartsStore_Provision"])
+      const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
+
+      await expect(partsStore.addBgColor(BG_COLORS[0])).not.to.be.reverted
+      await expect(partsStore.addNogglesColor(NOOGLES_COLORS[0])).not.to.be.reverted
+      await expect(partsStore.addCrown(CROWNS[0])).not.to.be.reverted
+      await expect(partsStore.addDoodad(DOODADS[0])).not.to.be.reverted
+      await expect(partsStore.addGarland(GARLANDS[0])).not.to.be.reverted
+      await expect(partsStore.addShield(SHIELDS[0])).not.to.be.reverted
+      await expect(partsStore.addQuadrantPalette(LOGO_PALETTES[0])).not.to.be.reverted
+      await expect(partsStore.addRep(REPS[0])).not.to.be.reverted
+      await expect(partsStore.addSkill(SKILLS[0])).not.to.be.reverted
+      await expect(partsStore.addClass(CLASSES[0])).not.to.be.reverted
+      await expect(partsStore.addTrait(TRAITS[0])).not.to.be.reverted
+    })
+
+    it("Should not be able to add more if locked", async function () {
+      const { PartsStore } = await deployments.fixture(["Crest_Deploy", "PartsStore_Provision"])
+      const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
+
+      await partsStore.lock()
+
+      await expect(partsStore.addBgColor(BG_COLORS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addNogglesColor(NOOGLES_COLORS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addCrown(CROWNS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addDoodad(DOODADS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addGarland(GARLANDS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addShield(SHIELDS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addQuadrantPalette(LOGO_PALETTES[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addRep(REPS[0])).to.be.revertedWith("PartsStore: contract is locked")
+      await expect(partsStore.addSkill(SKILLS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addClass(CLASSES[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+      await expect(partsStore.addTrait(TRAITS[0])).to.be.revertedWith(
+        "PartsStore: contract is locked"
+      )
+    })
+
+    it("Should have all parts", async function () {
+      const { PartsStore } = await deployments.fixture(["Crest_Deploy", "PartsStore_Provision"])
+      const partsStore = await ethers.getContractAt("PartsStore", PartsStore.address)
+
+      const checkCollectionParts = (parts: string[], collection: { name: string }[]) => {
+        for (let i = 0; i < collection.length; i++) expect(parts[i]).to.eq(collection[i].name)
+      }
+
+      const allParts = await partsStore.getAllParts()
+      checkCollectionParts(allParts.bgColors, BG_COLORS as { name: string }[])
+      checkCollectionParts(allParts.nogglesColors, NOOGLES_COLORS as { name: string }[])
+      checkCollectionParts(allParts.crowns, CROWNS as { name: string }[])
+      checkCollectionParts(allParts.doodads, DOODADS as { name: string }[])
+      checkCollectionParts(allParts.garlands, GARLANDS as { name: string }[])
+      checkCollectionParts(allParts.shields, SHIELDS as { name: string }[])
+      checkCollectionParts(allParts.quadrantPalettes, LOGO_PALETTES as { name: string }[])
+      checkCollectionParts(allParts.reps, REPS as { name: string }[])
+      checkCollectionParts(allParts.skills, SKILLS as { name: string }[])
+      checkCollectionParts(allParts.classes, CLASSES as { name: string }[])
+      checkCollectionParts(allParts.traits, TRAITS as { name: string }[])
     })
   })
 })

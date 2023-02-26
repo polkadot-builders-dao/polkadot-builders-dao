@@ -2,7 +2,6 @@ import { HardhatRuntimeEnvironment } from "hardhat/types"
 import { DeployFunction } from "hardhat-deploy/types"
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  console.time("DEPLOYMENT AuctionHouse_Deploy")
   const { deployments, getNamedAccounts, ethers } = hre
   const { deploy } = deployments
 
@@ -16,8 +15,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [crest.address, deployer],
     log: true,
   })
-
-  console.timeEnd("DEPLOYMENT AuctionHouse_Deploy")
 }
 export default func
 func.tags = ["AuctionHouse_Deploy"]

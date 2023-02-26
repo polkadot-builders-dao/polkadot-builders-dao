@@ -22,6 +22,23 @@ contract PartsStore is IPartsStore, Ownable {
     ImagePart[] public classes;
     ImagePart[] public traits;
 
+    bool public locked = false;
+
+    /**
+     * @dev Modifier to check if the contract is locked
+     */
+    modifier onlyUnlocked() {
+        require(!locked, "PartsStore: contract is locked");
+        _;
+    }
+
+    /**
+     * @dev Locks the store from further additions
+     */
+    function lock() external onlyOwner {
+        locked = true;
+    }
+
     /**
      * @dev Returns the count of background colors
      * @return the count of background colors
@@ -215,8 +232,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of background colors is already at the maximum (255).
      */
-    function addBgColor(Color calldata color) external onlyOwner {
-        require(bgColors.length < 255, "To many entries");
+    function addBgColor(Color calldata color) external onlyOwner onlyUnlocked {
         bgColors.push(color);
     }
 
@@ -226,8 +242,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of Noggles colors is already at the maximum (255).
      */
-    function addNogglesColor(Color calldata color) external onlyOwner {
-        require(nogglesColors.length < 255, "To many entries");
+    function addNogglesColor(Color calldata color) external onlyOwner onlyUnlocked {
         nogglesColors.push(color);
     }
 
@@ -237,8 +252,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of crowns is already at the maximum (255).
      */
-    function addCrown(ImagePart calldata part) external onlyOwner {
-        require(crowns.length < 255, "To many entries");
+    function addCrown(ImagePart calldata part) external onlyOwner onlyUnlocked {
         crowns.push(part);
     }
 
@@ -248,8 +262,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of doodads is already at the maximum (255).
      */
-    function addDoodad(ImagePart calldata part) external onlyOwner {
-        require(doodads.length < 255, "To many entries");
+    function addDoodad(ImagePart calldata part) external onlyOwner onlyUnlocked {
         doodads.push(part);
     }
 
@@ -259,8 +272,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of garlands is already at the maximum (255).
      */
-    function addGarland(ImagePart calldata part) external onlyOwner {
-        require(garlands.length < 255, "To many entries");
+    function addGarland(ImagePart calldata part) external onlyOwner onlyUnlocked {
         garlands.push(part);
     }
 
@@ -270,8 +282,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of shields is already at the maximum (255).
      */
-    function addShield(ImagePart calldata part) external onlyOwner {
-        require(shields.length < 255, "To many entries");
+    function addShield(ImagePart calldata part) external onlyOwner onlyUnlocked {
         shields.push(part);
     }
 
@@ -281,8 +292,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of quadrant palettes is already at the maximum (255).
      */
-    function addQuadrantPalette(Palette calldata palette) external onlyOwner {
-        require(quadrantPalettes.length < 255, "To many entries");
+    function addQuadrantPalette(Palette calldata palette) external onlyOwner onlyUnlocked {
         quadrantPalettes.push(palette);
     }
 
@@ -292,8 +302,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of reps is already at the maximum (255).
      */
-    function addRep(ImagePart calldata part) external onlyOwner {
-        require(reps.length < 255, "To many entries");
+    function addRep(ImagePart calldata part) external onlyOwner onlyUnlocked {
         reps.push(part);
     }
 
@@ -303,8 +312,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of skills is already at the maximum (255).
      */
-    function addSkill(ImagePart calldata part) external onlyOwner {
-        require(skills.length < 255, "To many entries");
+    function addSkill(ImagePart calldata part) external onlyOwner onlyUnlocked {
         skills.push(part);
     }
 
@@ -314,8 +322,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of classes is already at the maximum (255).
      */
-    function addClass(ImagePart calldata part) external onlyOwner {
-        require(classes.length < 255, "To many entries");
+    function addClass(ImagePart calldata part) external onlyOwner onlyUnlocked {
         classes.push(part);
     }
 
@@ -325,8 +332,7 @@ contract PartsStore is IPartsStore, Ownable {
      * @notice Only the contract owner can call this function.
      * @dev Throws an error if the number of traits is already at the maximum (255).
      */
-    function addTrait(ImagePart calldata part) external onlyOwner {
-        require(traits.length < 255, "To many entries");
+    function addTrait(ImagePart calldata part) external onlyOwner onlyUnlocked {
         traits.push(part);
     }
 

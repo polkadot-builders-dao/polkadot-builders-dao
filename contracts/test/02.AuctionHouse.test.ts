@@ -1,9 +1,8 @@
 import { expect } from "./chai-setup"
-import { setupFull } from "./utils/setupFull"
 import { deployments, ethers, getNamedAccounts, network } from "hardhat"
 
 import { parseEther } from "ethers/lib/utils"
-import { mine, time } from "@nomicfoundation/hardhat-network-helpers"
+import { time } from "@nomicfoundation/hardhat-network-helpers"
 import { FOUNDERS_MINTS } from "../util/contants"
 
 const ONE_DAY = 86400 * 1000
@@ -146,6 +145,60 @@ describe("AuctionHouse", function () {
 
       const state2 = await auctionHouse.getAuction()
       expect(state2.isFinished).to.eq(true)
+    })
+
+    it("Should send rewards to founders", async function () {
+      const { AuctionHouse, Crest } = await deployments.fixture([
+        "FoundersMint_TEST",
+        "AuctionHouse_Config_TEST",
+      ])
+      const crest = await ethers.getContractAt("Crest", Crest.address)
+      const auctionHouse = await ethers.getContractAt("AuctionHouse", AuctionHouse.address)
+
+      const { user1, deployer, founders } = await getNamedAccounts()
+      console.log({ user1, deployer, founders, auctionHouse: auctionHouse.address })
+      const user1Signer = await ethers.getSigner(user1)
+
+      for (let i = 0; i < 20; i++) {
+        await auctionHouse.connect(user1Signer).start()
+        await auctionHouse.connect(user1Signer).bid({ value: parseEther("1") })
+        await time.increase(ONE_DAY)
+      }
+
+      expect(await crest.ownerOf(10)).to.eq(founders)
+      expect(await crest.ownerOf(20)).to.eq(founders)
+    })
+
+    it("Should be able to change founders address", async function () {
+      const { AuctionHouse, Crest } = await deployments.fixture([
+        "FoundersMint_TEST",
+        "AuctionHouse_Config_TEST",
+      ])
+      const crest = await ethers.getContractAt("Crest", Crest.address)
+      const auctionHouse = await ethers.getContractAt("AuctionHouse", AuctionHouse.address)
+
+      const { user1, user2, deployer, founders } = await getNamedAccounts()
+      console.log({ user1, deployer, founders, auctionHouse: auctionHouse.address })
+      const user1Signer = await ethers.getSigner(user1)
+
+      for (let i = 0; i < 10; i++) {
+        await auctionHouse.connect(user1Signer).start()
+        await auctionHouse.connect(user1Signer).bid({ value: parseEther("1") })
+        await time.increase(ONE_DAY)
+      }
+
+      expect(await crest.ownerOf(10)).to.eq(founders)
+
+      // change address
+      await crest.setFounders(user2)
+
+      for (let i = 0; i < 10; i++) {
+        await auctionHouse.connect(user1Signer).start()
+        await auctionHouse.connect(user1Signer).bid({ value: parseEther("1") })
+        await time.increase(ONE_DAY)
+      }
+
+      expect(await crest.ownerOf(20)).to.eq(user2)
     })
   })
 })

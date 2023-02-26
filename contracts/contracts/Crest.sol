@@ -92,17 +92,26 @@ contract Crest is ERC721, ERC721Enumerable, ERC721Burnable, Ownable, EIP712, ERC
     }
 
     /**
-     * @notice Mints a new token to the auction house.
+     * @notice Sets the address of the founders account.
+     * @dev Only the contract owner can call this function.
+     * @param _founders The address of the founders account.
+     */
+    function setFounders(address _founders) public onlyOwner {
+        founders = _founders;
+    }
+
+    /**
+     * @notice Mints a new token for the auction house.
      * @dev Only the auction house contract can call this function.
      */
     function mint() public {
         require(msg.sender == auctionHouse, "Only auction house contract can mint");
 
-        _mintOne(auctionHouse);
-
         // Mint a token for founders every 10 mints, until there are 2000 minted
         uint256 currentId = _tokenIdCounter.current();
-        if (currentId <= 2000 && currentId % 10 == 0) _mintOne(founders);
+        if (currentId <= 2000 && currentId % 10 == 9) _mintOne(founders);
+
+        _mintOne(auctionHouse);
     }
 
     function _mintOne(address to) internal {

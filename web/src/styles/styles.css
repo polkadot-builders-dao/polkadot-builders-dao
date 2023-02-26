@@ -31,7 +31,8 @@
 }
 
 @layer base {
-  button {
+  button.primary,
+  button.secondary {
     @apply h-10 shrink-0 rounded border-none bg-neutral-600 py-1 px-4 text-white focus-visible:outline-none focus-visible:ring-[1px];
   }
   button.secondary {

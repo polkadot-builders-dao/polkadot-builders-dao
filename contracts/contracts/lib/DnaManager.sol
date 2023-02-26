@@ -3,8 +3,12 @@ pragma solidity ^0.8.17;
 
 import {IPartsStore} from "../interfaces/IPartsStore.sol";
 
+/**
+ * @title DnaManager
+ * @notice Library to generate and manipulate DNA of Polkadot Builder Crests NFTs.
+ */
 library DnaManager {
-    struct TokenTraits {
+    struct DecomposedDna {
         uint8 bgColorId;
         uint8 nogglesColorId;
         uint8 crownId;
@@ -20,7 +24,10 @@ library DnaManager {
     }
 
     /**
-     * @dev using an address as param type to prevent 'invalid type' error when executing tests
+     * @dev Generates a unique DNA for an NFT based on a provided seed.
+     * @param storeAddress Address of the parts store.
+     * @param seed The seed to generate the DNA.
+     * @return The generated DNA as a uint96 value.
      */
     function generateDna(address storeAddress, uint256 seed) public view returns (uint96) {
         IPartsStore store = IPartsStore(storeAddress);
@@ -44,12 +51,15 @@ library DnaManager {
     }
 
     /**
-     * @dev using an address as param type to prevent 'invalid type' error when executing tests
+     * @dev Reduces the given DNA to its corresponding traits.
+     * @param storeAddress Address of the parts store.
+     * @param dna The DNA to reduce.
+     * @return The reduced DNA as a uint96 value.
      */
     function reduceDna(address storeAddress, uint96 dna) private view returns (uint96) {
         IPartsStore store = IPartsStore(storeAddress);
 
-        TokenTraits memory image = TokenTraits({
+        DecomposedDna memory image = DecomposedDna({
             bgColorId: uint8(dna % store.bgColorsCount()),
             nogglesColorId: uint8((dna >> 8) % store.nogglesColorsCount()),
             crownId: uint8((dna >> 16) % store.crownsCount()),
@@ -64,12 +74,17 @@ library DnaManager {
             traitId: uint8((dna >> 88) % store.traitsCount())
         });
 
-        return getDnaFromImage(image);
+        return composeDna(image);
     }
 
-    function getImageFromDna(uint96 dna) public pure returns (TokenTraits memory) {
+    /**
+     * @dev Gets the traits of a given DNA.
+     * @param dna The DNA to get the traits from.
+     * @return The traits of the DNA.
+     */
+    function decomposeDna(uint96 dna) public pure returns (DecomposedDna memory) {
         return
-            TokenTraits({
+            DecomposedDna({
                 bgColorId: uint8(dna),
                 nogglesColorId: uint8((dna >> 8)),
                 crownId: uint8((dna >> 16)),
@@ -85,19 +100,24 @@ library DnaManager {
             });
     }
 
-    function getDnaFromImage(TokenTraits memory img) public pure returns (uint96 dna) {
+    /**
+     * @dev Gets the DNA of a given traits.
+     * @param decomposedDna The traits to get the DNA from.
+     * @return The DNA of the traits.
+     */
+    function composeDna(DecomposedDna memory decomposedDna) public pure returns (uint96) {
         return
-            uint96(img.bgColorId) |
-            (uint96(img.nogglesColorId) << 8) |
-            (uint96(img.crownId) << 16) |
-            (uint96(img.doodadId) << 24) |
-            (uint96(img.garlandId) << 32) |
-            (uint96(img.shieldId) << 40) |
-            (uint96(img.quadrantPalette1Id) << 48) |
-            (uint96(img.quadrantPalette2Id) << 56) |
-            (uint96(img.repId) << 64) |
-            (uint96(img.skillId) << 72) |
-            (uint96(img.classId) << 80) |
-            (uint96(img.traitId) << 88);
+            uint96(decomposedDna.bgColorId) |
+            (uint96(decomposedDna.nogglesColorId) << 8) |
+            (uint96(decomposedDna.crownId) << 16) |
+            (uint96(decomposedDna.doodadId) << 24) |
+            (uint96(decomposedDna.garlandId) << 32) |
+            (uint96(decomposedDna.shieldId) << 40) |
+            (uint96(decomposedDna.quadrantPalette1Id) << 48) |
+            (uint96(decomposedDna.quadrantPalette2Id) << 56) |
+            (uint96(decomposedDna.repId) << 64) |
+            (uint96(decomposedDna.skillId) << 72) |
+            (uint96(decomposedDna.classId) << 80) |
+            (uint96(decomposedDna.traitId) << 88);
     }
 }

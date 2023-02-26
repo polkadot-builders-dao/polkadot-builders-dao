@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -6,7 +7,11 @@ import "../interfaces/IPartsStore.sol";
 import {Base64} from "base64-sol/base64.sol";
 import {DnaManager} from "./DnaManager.sol";
 
-// @custom:security-contact contact@polkadot-builders.xyz
+/**
+ * @title TokenGenerator
+ * @notice Library to generate token URIs for Polkadot Builder Crests NFTs.
+ * @custom:security-contact contact@polkadot-builders.xyz
+ */
 library TokenGenerator {
     struct ImageParts {
         IPartsStore.Color bgColor;
@@ -23,30 +28,43 @@ library TokenGenerator {
         IPartsStore.ImagePart trait;
     }
 
+    /**
+     * @dev Loads the parts to display in the SVG, for a given DNA
+     * @param storeAddress Address of the parts store.
+     * @param dna The DNA of the NFT.
+     * @return The the parts to display in the SVG.
+     */
     function getImageParts(
         address storeAddress,
         uint96 dna
     ) public view returns (ImageParts memory) {
         IPartsStore store = IPartsStore(storeAddress);
-        DnaManager.TokenTraits memory traits = DnaManager.getImageFromDna(dna);
+        DnaManager.DecomposedDna memory decomposedDna = DnaManager.decomposeDna(dna);
 
         return
             ImageParts({
-                bgColor: store.getBgColor(traits.bgColorId),
-                nogglesColor: store.getNogglesColor(traits.nogglesColorId),
-                crown: store.getCrown(traits.crownId),
-                doodad: store.getDoodad(traits.doodadId),
-                garland: store.getGarland(traits.garlandId),
-                shield: store.getShield(traits.shieldId),
-                quadrantPalette1: store.getQuadrantPalette(traits.quadrantPalette1Id),
-                quadrantPalette2: store.getQuadrantPalette(traits.quadrantPalette2Id),
-                rep: store.getRep(traits.repId),
-                skill: store.getSkill(traits.skillId),
-                class: store.getClass(traits.classId),
-                trait: store.getTrait(traits.traitId)
+                bgColor: store.getBgColor(decomposedDna.bgColorId),
+                nogglesColor: store.getNogglesColor(decomposedDna.nogglesColorId),
+                crown: store.getCrown(decomposedDna.crownId),
+                doodad: store.getDoodad(decomposedDna.doodadId),
+                garland: store.getGarland(decomposedDna.garlandId),
+                shield: store.getShield(decomposedDna.shieldId),
+                quadrantPalette1: store.getQuadrantPalette(decomposedDna.quadrantPalette1Id),
+                quadrantPalette2: store.getQuadrantPalette(decomposedDna.quadrantPalette2Id),
+                rep: store.getRep(decomposedDna.repId),
+                skill: store.getSkill(decomposedDna.skillId),
+                class: store.getClass(decomposedDna.classId),
+                trait: store.getTrait(decomposedDna.traitId)
             });
     }
 
+    /**
+     * @dev Generates a token URI for an Polkadot Builders Crest NFT based on a provided DNA.
+     * @param storeAddress Address of the parts store.
+     * @param tokenId The ID of the NFT.
+     * @param dna The DNA of the NFT.
+     * @return The generated token URI as a string.
+     */
     function generateTokenURI(
         address storeAddress,
         uint256 tokenId,
@@ -97,6 +115,11 @@ library TokenGenerator {
                 );
     }
 
+    /**
+     * @dev Generates the SVG data URI for an Polkadot Builders Crest NFT based on a provided DNA.
+     * @param parts The parts to embed into the NFT.
+     * @return The generated SVG data URI as a string.
+     */
     function getSvgDataUri(ImageParts memory parts) private pure returns (string memory) {
         // prettier-ignore
         string memory logos = string.concat(

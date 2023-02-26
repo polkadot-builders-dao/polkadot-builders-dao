@@ -36,5 +36,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // await Promise.all(batch2.map((tx) => tx.wait()))
 }
 export default func
-func.tags = ["DaoGovernor"]
-func.dependencies = ["AuctionHouse"]
+func.tags = ["DaoGovernor_Deploy_TEST"]
+func.dependencies = ["AuctionHouse_Deploy_TEST"]

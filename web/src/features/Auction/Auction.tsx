@@ -10,9 +10,12 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow"
 import { CHAIN_ID } from "../../lib/settings"
 import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
 import { useCrestDetails } from "../../lib/useCrestDetails"
+import { AuctionHistoryButton } from "./AuctionHistoryButton"
+import Jazzicon from "react-jazzicon/dist/Jazzicon"
+import { jsNumberForAddress } from "react-jazzicon"
 
 const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   if (!date) return null
@@ -36,6 +39,8 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
     () => Number(formatEther(auction.currentBid)).toFixed(2),
     [auction.currentBid]
   )
+
+  console.log(auction)
 
   return (
     <div className="flex h-full flex-col">
@@ -68,21 +73,30 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
       <div>
         {auction.currentBid?.gt(0) ? (
           <div>
-            <div className="text-neutral-500">{auction.isFinished ? "Winner" : "Latest bid"}</div>
-            <div className="flex w-full justify-between text-lg">
-              <div>
-                {shortenAddress(auction.bidder, 4, 4)}{" "}
-                {auction.bidder === address ? (
-                  <span className="text-polkadot-500">(you)</span>
-                ) : null}
+            <div className="flex w-full items-center ">
+              <div className="grow text-neutral-500">
+                {auction.isFinished ? "Winner" : "Latest bid"}
               </div>
-              <div>
+              <AuctionHistoryButton
+                className="text-polkadot-400 hover:text-polkadot-300 font-light"
+                tokenId={auction.tokenId}
+              />
+            </div>
+            <div className="flex w-full justify-between text-lg">
+              <div className="flex items-center gap-1">
+                <Jazzicon seed={jsNumberForAddress(auction.bidder)} />
+                {shortenAddress(auction.bidder, 4, 4)}{" "}
+                {/* {auction.bidder === address ? (
+                  <span className="text-polkadot-500">(you)</span>
+                ) : null} */}
+              </div>
+              <div className="text-neutral-200">
                 {currentBid} {currency?.symbol}
               </div>
             </div>
           </div>
         ) : (
-          <div>No one has bid yet.</div>
+          <div>No one has bid.</div>
         )}
       </div>
     </div>
@@ -96,9 +110,10 @@ export const Auction = () => {
     chainId: CHAIN_ID,
   })
 
+  const [watch, setWatch] = useState(true)
   const { data: auction } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
-    watch: true,
+    watch,
   })
 
   useEffect(() => {

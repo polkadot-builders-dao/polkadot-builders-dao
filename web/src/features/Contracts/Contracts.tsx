@@ -95,45 +95,45 @@ const AuctionHouseConfig = () => {
   )
 }
 
-const GovernanceConfig = () => {
-  const governor = useDaoGovernor()
+// const GovernanceConfig = () => {
+//   const governor = useDaoGovernor()
 
-  const { data: countingMode } = useDaoGovernorCountingMode({
-    chainId: CHAIN_ID,
-  })
-  const { data: ballotTypeHash } = useDaoGovernorBallotTypehash({
-    chainId: CHAIN_ID,
-  })
-  const { data: quorumNum } = useDaoGovernorQuorumNumerator({
-    chainId: CHAIN_ID,
-  })
-  const { data: quorumDen } = useDaoGovernorQuorumDenominator({
-    chainId: CHAIN_ID,
-  })
-  const { data: token } = useDaoGovernorToken()
-  const { data: votinDelay } = useDaoGovernorVotingDelay()
-  const { data: votinPeriod } = useDaoGovernorVotingPeriod()
+//   const { data: countingMode } = useDaoGovernorCountingMode({
+//     chainId: CHAIN_ID,
+//   })
+//   const { data: ballotTypeHash } = useDaoGovernorBallotTypehash({
+//     chainId: CHAIN_ID,
+//   })
+//   const { data: quorumNum } = useDaoGovernorQuorumNumerator({
+//     chainId: CHAIN_ID,
+//   })
+//   const { data: quorumDen } = useDaoGovernorQuorumDenominator({
+//     chainId: CHAIN_ID,
+//   })
+//   const { data: token } = useDaoGovernorToken()
+//   const { data: votinDelay } = useDaoGovernorVotingDelay()
+//   const { data: votinPeriod } = useDaoGovernorVotingPeriod()
 
-  return (
-    <Section title="Governance">
-      <SectionRow title="Address" className="font-mono font-bold">
-        {governor?.address}
-      </SectionRow>
-      <SectionRow title="Counting Mode">{countingMode}</SectionRow>
-      <SectionRow title="Ballot Type Hash" className="font-mono font-bold">
-        {ballotTypeHash}
-      </SectionRow>
-      <SectionRow title="Token" className="font-mono font-bold">
-        {token}
-      </SectionRow>
-      <SectionRow title="Quorum">
-        {quorumNum?.toString()} / {quorumDen?.toString()}
-      </SectionRow>
-      <SectionRow title="Voting Delay">{votinDelay?.toString()} blocks</SectionRow>
-      <SectionRow title="Voting Period">{votinPeriod?.toString()} seconds</SectionRow>
-    </Section>
-  )
-}
+//   return (
+//     <Section title="Governance">
+//       <SectionRow title="Address" className="font-mono font-bold">
+//         {governor?.address}
+//       </SectionRow>
+//       <SectionRow title="Counting Mode">{countingMode}</SectionRow>
+//       <SectionRow title="Ballot Type Hash" className="font-mono font-bold">
+//         {ballotTypeHash}
+//       </SectionRow>
+//       <SectionRow title="Token" className="font-mono font-bold">
+//         {token}
+//       </SectionRow>
+//       <SectionRow title="Quorum">
+//         {quorumNum?.toString()} / {quorumDen?.toString()}
+//       </SectionRow>
+//       <SectionRow title="Voting Delay">{votinDelay?.toString()} blocks</SectionRow>
+//       <SectionRow title="Voting Period">{votinPeriod?.toString()} seconds</SectionRow>
+//     </Section>
+//   )
+// }
 
 const CrestConfig = () => {
   const crest = useCrest()
@@ -195,7 +195,7 @@ export const Contracts = () => {
   return (
     <div>
       <PageHead title="Contracts" subtitle="Review contracts settings" />
-      <GovernanceConfig />
+      {/* <GovernanceConfig /> */}
       <AuctionHouseConfig />
       <CrestConfig />
       <PartsStoreConfig />

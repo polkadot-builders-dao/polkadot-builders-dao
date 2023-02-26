@@ -17,10 +17,22 @@ const config: HardhatUserConfig = {
   },
   namedAccounts: {
     deployer: 0,
-    founders: 1,
-    dao: 2,
-    user1: 3,
-    user2: 4,
+    founders: {
+      default: 1,
+      1287: process.env.FOUNDERS_MOONBASE,
+      1284: process.env.FOUNDERS_MOONBEAM,
+    },
+    dao: {
+      default: 2,
+      1287: process.env.DAO_MOONBASE,
+      1284: process.env.DAO_MOONBEAM,
+    },
+    user1: {
+      default: 3,
+    },
+    user2: {
+      default: 4,
+    },
   },
   networks: {
     hardhat: {
@@ -41,20 +53,46 @@ const config: HardhatUserConfig = {
       chainId: 1287,
       saveDeployments: true,
       url: "https://rpc.api.moonbase.moonbeam.network",
-      accounts: [process.env.DEPLOYER_MOONBASE],
+      // TODO change so we need only 1 private key
+      accounts: [
+        process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+      ],
+      verify: {
+        etherscan: {
+          apiKey: process.env.MOONSCAN_API_KEY,
+          apiUrl: "https://api-moonbase.moonscan.io",
+        },
+      },
     },
     moonbeam: {
       chainId: 1284,
       saveDeployments: true,
       url: "https://rpc.api.moonbeam.network",
-      accounts: [process.env.DEPLOYER_MOONBEAM],
+      // TODO change so we need only 1 private key
+      accounts: [
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+      ],
+      verify: {
+        etherscan: {
+          apiKey: process.env.MOONSCAN_API_KEY,
+          apiUrl: "https://api-moonbeam.moonscan.io",
+        },
+      },
     },
   },
-  etherscan: {
-    apiKey: {
-      moonbeam: process.env.MOONSCAN_API_KEY,
-    },
-  },
+  // etherscan: {
+  //   apiKey: {
+  //     moonbeam: process.env.MOONSCAN_API_KEY,
+  //   },
+  // },
   // gasReporter: {
   //   enabled: true,
   //   gasPrice: 21,

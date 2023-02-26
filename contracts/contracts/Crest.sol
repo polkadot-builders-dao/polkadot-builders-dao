@@ -31,6 +31,8 @@ contract Crest is ERC721, ERC721Enumerable, ERC721Burnable, Ownable, EIP712, ERC
     // Stores the DNA of each token
     mapping(uint256 => uint96) public dnaMap;
 
+    string private _contractURI = "https://polkadot-builders.xyz/external/crest-contracts-uri.json";
+
     constructor(
         address _store,
         address _auctionHouse,
@@ -39,6 +41,14 @@ contract Crest is ERC721, ERC721Enumerable, ERC721Burnable, Ownable, EIP712, ERC
         store = _store;
         auctionHouse = _auctionHouse;
         founders = _founders;
+    }
+
+    function contractURI() public view returns (string memory) {
+        return _contractURI;
+    }
+
+    function setContractURI(string memory _uri) public onlyOwner {
+        _contractURI = _uri;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {

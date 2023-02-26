@@ -96,7 +96,7 @@ describe("PartsStore", function () {
         BigNumber.from("165189498146486486")
       )
 
-      const decoded = await tokenDna.getImageFromDna(dna)
+      const decoded = await tokenDna.decomposeDna(dna)
       expect(decoded.bgColorId).to.eq(2)
       expect(decoded.nogglesColorId).to.eq(0)
       expect(decoded.crownId).to.eq(4)

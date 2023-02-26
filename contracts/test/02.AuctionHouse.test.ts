@@ -6,6 +6,9 @@ import { mine, time } from "@nomicfoundation/hardhat-network-helpers"
 
 const ONE_DAY = 86400 * 1000
 
+// founders have 2 tokens
+const FIRST_TOKEN_ID = 3
+
 describe("AuctionHouse", function () {
   describe("Deployment", function () {
     it("Should be deployed", async function () {
@@ -24,7 +27,7 @@ describe("AuctionHouse", function () {
       await auctionHouse.connect(user1).start()
 
       const { tokenId: newTokenId } = await auctionHouse.getAuction()
-      expect(newTokenId).to.equal(1)
+      expect(newTokenId).to.equal(FIRST_TOKEN_ID) // 2 founders have a token already
     })
 
     it("Should not stop before end date", async function () {
@@ -52,15 +55,15 @@ describe("AuctionHouse", function () {
         hre,
       } = await setupFull()
 
-      await expect(token.tokenURI(1)).to.be.revertedWith("This token doesn't exist")
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).to.be.revertedWith("This token doesn't exist")
 
       await auctionHouse.connect(user1).start()
-      await expect(token.tokenURI(1)).not.to.be.reverted
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).not.to.be.reverted
 
       await time.increase(ONE_DAY)
       await auctionHouse.connect(user1).start()
 
-      await expect(token.tokenURI(1)).to.be.revertedWith("This token doesn't exist")
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).to.be.revertedWith("This token doesn't exist")
     })
 
     it("Should not burn if there are bid", async function () {
@@ -71,10 +74,10 @@ describe("AuctionHouse", function () {
         hre,
       } = await setupFull()
 
-      await expect(token.tokenURI(1)).to.be.revertedWith("This token doesn't exist")
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).to.be.revertedWith("This token doesn't exist")
 
       await auctionHouse.connect(user1).start()
-      await expect(token.tokenURI(1)).not.to.be.reverted
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).not.to.be.reverted
 
       await auctionHouse.connect(user1).bid({ value: parseEther("1") })
       expect(await token.balanceOf(user1.address)).to.eq(0)
@@ -94,10 +97,10 @@ describe("AuctionHouse", function () {
         hre,
       } = await setupFull()
 
-      await expect(token.tokenURI(1)).to.be.revertedWith("This token doesn't exist")
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).to.be.revertedWith("This token doesn't exist")
 
       await auctionHouse.connect(user1).start()
-      await expect(token.tokenURI(1)).not.to.be.reverted
+      await expect(token.tokenURI(FIRST_TOKEN_ID)).not.to.be.reverted
 
       await auctionHouse.connect(user1).bid({ value: parseEther("1") })
       expect(await token.balanceOf(user1.address)).to.eq(0)

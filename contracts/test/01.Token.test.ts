@@ -112,7 +112,6 @@ describe("Crest", function () {
       // supports IERC721 Interface
       const erc721 = IERC721__factory.createInterface()
       const iderc721 = getInterfaceId(erc721).xor(iderc165)
-      console.log(iderc721.toHexString())
       expect(await crest.supportsInterface(iderc721.toHexString()), "IERC721").to.eq(true)
 
       // supports IERC721Enumerable Interface

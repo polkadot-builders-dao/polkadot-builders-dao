@@ -21,6 +21,7 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     struct AuctionConfig {
         address treasury;
         address token;
+        address glmr;
         uint duration;
         uint extendedDuration;
         uint minFirstBid;
@@ -129,6 +130,7 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
             AuctionConfig(
                 treasury,
                 address(token),
+                address(glmr),
                 duration,
                 extendedDuration,
                 minFirstBid,

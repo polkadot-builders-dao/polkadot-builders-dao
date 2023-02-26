@@ -7,6 +7,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts()
 
+  console.log(deployer)
+
   await deploy("PartsStore", {
     from: deployer,
     log: true,

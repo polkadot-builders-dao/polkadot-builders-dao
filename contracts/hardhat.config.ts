@@ -16,11 +16,7 @@ const config: HardhatUserConfig = {
     },
   },
   namedAccounts: {
-    deployer: {
-      default: 0,
-      1287: process.env.DEPLOYER_MOONBASE,
-      1284: process.env.DEPLOYER_MOONBEAM,
-    },
+    deployer: 0,
     founders: {
       default: 1,
       1287: process.env.FOUNDERS_MOONBASE,
@@ -31,8 +27,12 @@ const config: HardhatUserConfig = {
       1287: process.env.DAO_MOONBASE,
       1284: process.env.DAO_MOONBEAM,
     },
-    user1: 3,
-    user2: 4,
+    user1: {
+      default: 3,
+    },
+    user2: {
+      default: 4,
+    },
   },
   networks: {
     hardhat: {
@@ -53,11 +53,14 @@ const config: HardhatUserConfig = {
       chainId: 1287,
       saveDeployments: true,
       url: "https://rpc.api.moonbase.moonbeam.network",
-      // accounts: [
-      //   process.env.DEPLOYER_MOONBASE,
-      //   process.env.FOUNDERS_MOONBASE,
-      //   process.env.DAO_MOONBASE,
-      // ],
+      // TODO change so we need only 1 private key
+      accounts: [
+        process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+        // process.env.DEPLOYER_MOONBASE,
+      ],
       verify: {
         etherscan: {
           apiKey: process.env.MOONSCAN_API_KEY,
@@ -69,11 +72,14 @@ const config: HardhatUserConfig = {
       chainId: 1284,
       saveDeployments: true,
       url: "https://rpc.api.moonbeam.network",
-      // accounts: [
-      //   process.env.DEPLOYER_MOONBEAM,
-      //   process.env.FOUNDERS_MOONBEAM,
-      //   process.env.DAO_MOONBEAM,
-      // ],
+      // TODO change so we need only 1 private key
+      accounts: [
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+        process.env.DEPLOYER_MOONBEAM,
+      ],
       verify: {
         etherscan: {
           apiKey: process.env.MOONSCAN_API_KEY,

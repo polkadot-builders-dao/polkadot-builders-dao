@@ -33,8 +33,10 @@ type SetupOutput = {
 export const setupFull = deployments.createFixture<SetupOutput, SetupOptions>(
   async (hre, options) => {
     const { ethers } = hre
+    console.time("get fixture AuctionHouse_Deploy_TEST")
     const { AuctionHouse, PartsStore, DnaManager, TokenGenerator, Crest } =
-      await deployments.fixture("AuctionHouse")
+      await deployments.fixture("AuctionHouse_Deploy_TEST")
+    console.timeEnd("get fixture AuctionHouse_Deploy_TEST")
 
     const { deployer, dao, founders, user1, user2 } = await getNamedAccounts()
     const users = { deployer, dao, founders, user1, user2 }

@@ -7,7 +7,11 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 
-/// @custom:security-contact contact@polkadotbuilders.xyz
+/**
+ * @title DaoGovernor
+ * @author Polkadot Builders
+ * @notice This contract allows for execution of DAO proposals. Still WIP, unused at this time.
+ */
 contract DaoGovernor is
     Governor,
     GovernorSettings,

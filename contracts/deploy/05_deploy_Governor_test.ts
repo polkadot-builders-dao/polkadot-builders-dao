@@ -5,6 +5,7 @@ import { DeployFunction } from "hardhat-deploy/types"
 // most of the code for that is here as comments
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  console.time("DEPLOYMENT AuctionHouse_PROD")
   const { deployments, getNamedAccounts, ethers } = hre
   const { deploy } = deployments
 
@@ -34,7 +35,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   //   crest.transferOwnership(governor.address),
   // ])
   // await Promise.all(batch2.map((tx) => tx.wait()))
+  console.timeEnd("DEPLOYMENT AuctionHouse_PROD")
 }
 export default func
-func.tags = ["DaoGovernor"]
-func.dependencies = ["AuctionHouse"]
+func.tags = ["DaoGovernor_Deploy_TEST"]
+func.dependencies = ["AuctionHouse_Deploy_TEST"]

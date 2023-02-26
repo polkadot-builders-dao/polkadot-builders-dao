@@ -4,14 +4,16 @@ import { defineParts } from "../util/defineParts"
 import { PartsStore } from "../typechain-types"
 
 const func: DeployFunction = async function ({ deployments, ethers }: HardhatRuntimeEnvironment) {
-  const { get } = deployments
+  console.time("DEPLOYMENT PartsStore_Provision")
 
-  const store = <PartsStore>(
-    await ethers.getContractAt("PartsStore", (await get("PartsStore")).address)
-  )
+  const PartsStore = await deployments.get("PartsStore")
+
+  const store = <PartsStore>await ethers.getContractAt("PartsStore", PartsStore.address)
 
   await defineParts(store)
+
+  console.timeEnd("DEPLOYMENT PartsStore_Provision")
 }
 export default func
-func.tags = ["ProvisionParts"]
-func.dependencies = ["Crest"]
+func.tags = ["PartsStore_Provision"]
+func.dependencies = ["PartsStore_Deploy"]

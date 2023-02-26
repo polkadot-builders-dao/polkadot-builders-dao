@@ -45,7 +45,7 @@
     "test": "NODE_ENV=test && hardhat test",
     "test:watch": "NODE_ENV=test && nodemon -x 'hardhat test'",
     "coverage": "hardhat coverage",
-    "deploy": "hardhat deploy",
+    "deploy:localhost": "hardhat deploy --network localhost",
     "deploy:moonbase": "hardhat deploy --network moonbase",
     "verify:moonbase": "hardhat etherscan-verify --network moonbase --solc-input --sleep",
     "sourcify:moonbase": "hardhat sourcify --network moonbase",
@@ -60,6 +60,7 @@
     ],
     "watch": [
       "contracts",
+      "deploy",
       "test"
     ],
     "ext": "ts,sol"

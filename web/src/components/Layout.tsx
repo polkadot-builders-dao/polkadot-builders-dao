@@ -28,9 +28,12 @@ const Link = ({ to, children }: { to: To; children: ReactNode }) => {
 
 const Treasury = () => {
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
-  const { data: config } = useAuctionHouseGetConfig()
+  const { data: config } = useAuctionHouseGetConfig({
+    chainId: CHAIN_ID,
+  })
   const { data: balance } = useBalance({
     address: config?.treasury,
+    chainId: CHAIN_ID,
   })
 
   console.log("balance", { balance })

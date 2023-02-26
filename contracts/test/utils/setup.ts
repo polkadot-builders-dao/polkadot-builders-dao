@@ -26,8 +26,8 @@ type SetupOutput = {
 export const setup = deployments.createFixture<SetupOutput, SetupOptions>(async (hre, options) => {
   const { ethers } = hre
   const { PartsStore, DnaManager, TokenGenerator, Crest } = options?.provisionParts
-    ? await deployments.fixture("ProvisionParts")
-    : await deployments.fixture("Crest")
+    ? await deployments.fixture("PartsStore_Provision")
+    : await deployments.fixture("Crest_Deploy")
 
   //const { AuctionHouse } = await deployments.fixture("AuctionHouse")
 

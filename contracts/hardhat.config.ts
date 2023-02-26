@@ -42,19 +42,31 @@ const config: HardhatUserConfig = {
       saveDeployments: true,
       url: "https://rpc.api.moonbase.moonbeam.network",
       accounts: [process.env.DEPLOYER_MOONBASE],
+      verify: {
+        etherscan: {
+          apiKey: process.env.MOONSCAN_API_KEY,
+          apiUrl: "https://api-moonbase.moonscan.io",
+        },
+      },
     },
     moonbeam: {
       chainId: 1284,
       saveDeployments: true,
       url: "https://rpc.api.moonbeam.network",
       accounts: [process.env.DEPLOYER_MOONBEAM],
+      verify: {
+        etherscan: {
+          apiKey: process.env.MOONSCAN_API_KEY,
+          apiUrl: "https://api-moonbeam.moonscan.io",
+        },
+      },
     },
   },
-  etherscan: {
-    apiKey: {
-      moonbeam: process.env.MOONSCAN_API_KEY,
-    },
-  },
+  // etherscan: {
+  //   apiKey: {
+  //     moonbeam: process.env.MOONSCAN_API_KEY,
+  //   },
+  // },
   // gasReporter: {
   //   enabled: true,
   //   gasPrice: 21,

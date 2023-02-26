@@ -47,6 +47,8 @@
     "coverage": "hardhat coverage",
     "deploy": "hardhat deploy",
     "deploy:moonbase": "hardhat deploy --network moonbase",
+    "verify:moonbase": "hardhat etherscan-verify --network moonbase --solc-input --sleep",
+    "sourcify:moonbase": "hardhat sourcify --network moonbase",
     "lint": "eslint .",
     "clean": "hardhat clean"
   },

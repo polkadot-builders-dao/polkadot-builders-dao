@@ -8,6 +8,7 @@ import { useAuctionHouseGetConfig } from "../contracts/generated"
 import { useBalance } from "wagmi"
 import { supportedChains } from "../lib/wagmi/supportedChains"
 import { CHAIN_ID } from "../lib/settings"
+import { useBlockExplorerUrl } from "../lib/useBlockExplorerUrl"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (
@@ -22,13 +23,6 @@ const Link = ({ to, children }: { to: To; children: ReactNode }) => {
     >
       {children}
     </NavLink>
-  )
-}
-
-const useBlockExplorerUrl = (chainId: number) => {
-  return useMemo(
-    () => supportedChains.find((c) => c.id === chainId)?.blockExplorers?.[0]?.url,
-    [chainId]
   )
 }
 

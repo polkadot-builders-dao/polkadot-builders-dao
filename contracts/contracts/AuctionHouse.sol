@@ -41,8 +41,8 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
         bool isFinished;
     }
 
-    address treasury;
-    IERC20 glmr = IERC20(0x0000000000000000000000000000000000000802);
+    address public treasury;
+    IERC20 public glmr = IERC20(0x0000000000000000000000000000000000000802);
 
     ICrest private token;
     uint private duration = 1 days;
@@ -172,7 +172,6 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     function bid() external payable nonReentrant {
         require(block.timestamp >= startTime, "Auction hasn't started yet");
         require(block.timestamp <= endTime, "Auction has ended");
-        require(msg.value >= minFirstBid, "Bid amount is too low");
         require(msg.value >= getCurrentMinBid(), "Bid amount is too low");
 
         // refund previous bidder
@@ -223,7 +222,7 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
      */
     function safeSendEther(address payable _to, uint _amount) private {
         (bool sent, ) = _to.call{value: _amount}("");
-        // transfer may fail if the recipient is a contract, if so, send GLMR on precompiled ERC20 contract
+        // transfer may fail if the recipient is a contract. If so, send GLMR over precompiled ERC20 contract
         if (!sent) glmr.transfer(_to, _amount);
     }
 

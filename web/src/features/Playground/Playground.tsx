@@ -1,87 +1,49 @@
 import classNames from "classnames"
-import { BigNumber } from "ethers"
-import { FC, useCallback, useMemo, useState } from "react"
-import { useProvider } from "wagmi"
-import {
-  partsStoreAddress,
-  useDnaManager,
-  usePartsStore,
-  useTokenGeneratorGenerateTokenUri,
-} from "../../contracts/generated"
-import { CHAIN_ID } from "../../lib/settings"
-import { DnaEditor } from "./DnaEditor"
+import { FC } from "react"
+import { LayoutBackground } from "../../components/LayoutBackground"
+import { usePlayground } from "./context"
 
 export const Playground: FC = () => {
-  const [dna, setDna] = useState("0")
-  const provider = useProvider({ chainId: CHAIN_ID })
-  const storeContract = usePartsStore({
-    signerOrProvider: provider,
-    chainId: CHAIN_ID,
-  })
-  const dnaContract = useDnaManager({
-    signerOrProvider: provider,
-    chainId: CHAIN_ID,
-  })
-
-  const { data, error } = useTokenGeneratorGenerateTokenUri({
-    args: [partsStoreAddress[CHAIN_ID], BigNumber.from(0), BigNumber.from(dna)],
-    chainId: CHAIN_ID,
-  })
-
-  const { image, metadata } = useMemo(() => {
-    if (typeof data !== "string") return { image: undefined, metadata: undefined }
-    const json = atob(data.replace("data:application/json;base64,", ""))
-    const { image, ...metadata } = JSON.parse(json)
-    return { image, metadata }
-  }, [data])
-
-  const handleRandom = useCallback(async () => {
-    try {
-      if (!dnaContract || !storeContract) return
-
-      const test = await dnaContract.generateDna(storeContract.address, BigNumber.from(Date.now()))
-
-      setDna(test.toString())
-    } catch (err) {
-      console.error(err)
-    }
-  }, [dnaContract, storeContract])
-
+  const { image, metadata, handleRandom, error } = usePlayground()
   return (
-    <div>
-      <div className="flex items-center">
+    <div className="pb-6">
+      <div className="flex flex-wrap items-center gap-4">
         <div className="grow">
           <h1 className="text-3xl font-bold text-neutral-300">Playground</h1>
-          <div className="text-neutral-500">DNA {dna}</div>
         </div>
         <button type="button" onClick={handleRandom} className="btn primary">
           Random
         </button>
       </div>
       <div className="my-8 flex w-full flex-col gap-8">
-        <DnaEditor dna={dna} onChange={setDna} />
-        <div className="flex w-full gap-8">
+        <div className="flex w-full flex-col items-center justify-center gap-8 sm:flex-row">
           <div
             className={classNames(
-              "h-80 w-80 rounded-xl bg-neutral-800 ",
+              "flex flex-col items-center justify-center",
+              "max-w-[300px]",
               !image && "animate-pulse"
             )}
           >
-            {image && <img alt="" src={image} className="rounded-xl" />}
+            {image && (
+              <img
+                alt=""
+                src={image}
+                className="inline-block aspect-square w-full max-w-[300px] rounded-xl"
+              />
+            )}
           </div>
-          <div className="grow">
-            <pre
-              className={classNames(
-                "h-80 overflow-auto rounded-xl bg-neutral-800 p-4 text-sm",
-                !metadata && "animate-pulse"
-              )}
-            >
-              {metadata && JSON.stringify(metadata, undefined, 2)}
-            </pre>
-          </div>
+          <pre
+            className={classNames(
+              "h-80 min-w-0 max-w-full grow overflow-auto rounded-xl bg-neutral-800 p-4 text-sm",
+              !metadata && "animate-pulse"
+            )}
+          >
+            {metadata && JSON.stringify(metadata, undefined, 2)}
+          </pre>
         </div>
       </div>
       <div className="text-red-500">{error?.message}</div>
+      <LayoutBackground metadata={metadata} />
     </div>
   )
 }

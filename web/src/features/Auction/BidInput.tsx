@@ -77,7 +77,7 @@ export const BidInput = () => {
   if (!auction || auction.isFinished) return null
 
   return (
-    <div className="inline-flex w-96 items-center gap-2">
+    <div className="inline-flex w-full items-center gap-2">
       <div className="inline-flex h-10 grow items-center overflow-hidden rounded bg-neutral-700 px-2 outline-neutral-600 focus-within:outline">
         <input
           ref={refInput}
@@ -90,7 +90,7 @@ export const BidInput = () => {
         <div>{currency?.symbol}</div>
       </div>
       <button className="btn primary" onClick={handleBid}>
-        Place Bid
+        <span className="hidden sm:inline">Place</span> Bid
       </button>
     </div>
   )

@@ -31,20 +31,22 @@ export const HomePageContent = () => (
       <h2 className="mb-4 text-2xl font-bold text-neutral-300">Summary</h2>
       <div>
         <ul className="list-disc pl-5">
-          <li>
-            Polkadot Builders artwork is in the
-            <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain.</a>
-          </li>
+          <li>All Crest holders are members of Polkadot Builders DAO.</li>
+          <li>One Crest is equal to one vote.</li>
           <li>One crest is trustlessly auctioned every 24 hours, forever.</li>
           <li>100% of crest auction proceeds are trustlessly sent to the treasury.</li>
           <li>Settlement of one auction kicks off the next.</li>
-          <li>All Crest holders are members of Polkadot Builders DAO.</li>
-          <li>One Crest is equal to one vote.</li>
-          <li>The treasury is controlled exclusively by Polkadot Builders via governance.</li>
-          <li>Artwork is generative and stored directly on-chain (not IPFS).</li>
           <li>No explicit rules exist for attribute scarcity; all Crests are equally rare.</li>
           <li>
             Founders receive rewards in the form of Crests (10% of supply for first 2000 crests).
+          </li>
+          <li>
+            The treasury will be controlled exclusively by Polkadot Builders via governance - WIP
+          </li>
+          <li>Artwork is generative and stored directly on-chain (not IPFS).</li>
+          <li>
+            Polkadot Builders artwork is in the
+            <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain.</a>
           </li>
         </ul>
       </div>

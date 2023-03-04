@@ -119,7 +119,12 @@ export const AuctionHistoryButton: FC<AuctionHistoryButton> = ({
   return (
     <>
       <button type="button" className={className} onClick={open}>
-        {children ?? <>View bids history</>}
+        {children ?? (
+          <>
+            <span className="hidden sm:inline">View bids history</span>
+            <span className="inline sm:hidden">Bids history</span>
+          </>
+        )}
       </button>
       <Drawer title="Auction History" show={isOpen} onDismiss={close} lightDismiss>
         <AuctionHistory tokenId={tokenId} />

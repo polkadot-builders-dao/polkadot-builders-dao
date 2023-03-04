@@ -3,6 +3,7 @@ import { FC, useCallback, useRef } from "react"
 import { shortenAddress } from "../lib/shortenAddress"
 import { useHoverDirty } from "react-use"
 import { useWallet } from "../lib/useWallet"
+import Jazzicon, { jsNumberForAddress } from "react-jazzicon"
 
 type ConnectButtonProps = {
   className?: string
@@ -22,10 +23,17 @@ export const ConnectButton: FC<ConnectButtonProps> = ({ className }) => {
   return (
     <button
       onClick={handleClick}
-      className={classNames("btn w-40", isConnected ? "secondary" : "primary")}
+      className={classNames("btn", isConnected ? "secondary" : "primary")}
       type="button"
     >
-      {address ? shortenAddress(address as string, 4, 4) : "Connect"}
+      {address ? (
+        <div className="flex w-full items-center justify-center gap-2">
+          <Jazzicon diameter={20} seed={jsNumberForAddress(address)} />
+          <span className="hidden sm:block">{shortenAddress(address as string, 4, 4)}</span>
+        </div>
+      ) : (
+        "Connect"
+      )}
     </button>
   )
 

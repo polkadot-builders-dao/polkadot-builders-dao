@@ -17,7 +17,7 @@ library TokenGenerator {
         IPartsStore.Color bgColor;
         IPartsStore.Color nogglesColor;
         IPartsStore.ImagePart crown;
-        IPartsStore.ImagePart doodad;
+        IPartsStore.ImagePart doodads;
         IPartsStore.ImagePart garland;
         IPartsStore.ImagePart shield;
         IPartsStore.Palette quadrantPalette1;
@@ -46,7 +46,7 @@ library TokenGenerator {
                 bgColor: store.getBgColor(decomposedDna.bgColorId),
                 nogglesColor: store.getNogglesColor(decomposedDna.nogglesColorId),
                 crown: store.getCrown(decomposedDna.crownId),
-                doodad: store.getDoodad(decomposedDna.doodadId),
+                doodads: store.getDoodad(decomposedDna.doodadId),
                 garland: store.getGarland(decomposedDna.garlandId),
                 shield: store.getShield(decomposedDna.shieldId),
                 quadrantPalette1: store.getQuadrantPalette(decomposedDna.quadrantPalette1Id),
@@ -80,7 +80,7 @@ library TokenGenerator {
             '{"trait_type": "Background","value":"', parts.bgColor.name, '"},',
             '{"trait_type": "Noggles","value":"', parts.nogglesColor.name, '"},',
             '{"trait_type": "Crown","value":"', parts.crown.name, '"},',
-            '{"trait_type": "Doodad","value":"', parts.doodad.name, '"},'
+            '{"trait_type": "Doodads","value":"', parts.doodads.name, '"},'
         );
 
         // prettier-ignore
@@ -150,7 +150,7 @@ library TokenGenerator {
                                 parts.shield.svg,
                                 logos,
                                 parts.garland.svg,
-                                parts.doodad.svg,
+                                parts.doodads.svg,
                                 noggles,
                                 '</svg>'
                             )

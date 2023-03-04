@@ -16,6 +16,7 @@ import { useCrestDetails } from "../../lib/useCrestDetails"
 import { AuctionHistoryButton } from "./AuctionHistoryButton"
 import Jazzicon from "react-jazzicon/dist/Jazzicon"
 import { jsNumberForAddress } from "react-jazzicon"
+import { LayoutBackground } from "../../components/LayoutBackground"
 
 const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
   if (!date) return null
@@ -40,10 +41,8 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
     [auction.currentBid]
   )
 
-  console.log(auction)
-
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-[300px] w-full max-w-[500px] flex-col rounded-xl bg-black/40 p-4">
       <div className="text-neutral-500">{auctionDate}</div>
       <h1 className="text-3xl font-bold text-neutral-300">
         Polkadot Builder #{auction.tokenId.toNumber()}
@@ -53,26 +52,26 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
           <div>Auction has ended.</div>
         </div>
       ) : (
-        <div className="mt-8 flex gap-8">
+        <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:gap-8 ">
           <div>
             <div className="text-neutral-500">Current bid</div>
             <div className="text-xl">
               {currentBid} {currency?.symbol}
             </div>
           </div>
-          <div className="my-1 border-r border-current opacity-50"></div>
+          <div className="my-1 hidden border-r border-current opacity-50 sm:block"></div>
           <div>
             <div className="text-neutral-500">Auction ends in</div>
             <div className="text-xl ">{<Countdown date={dateEnd} />}</div>
           </div>
         </div>
       )}
-      <div className="flex grow items-center">
+      <div className="my-4 flex grow items-center">
         <BidInput />
       </div>
       <div>
         {auction.currentBid?.gt(0) ? (
-          <div>
+          <div className="text-sm sm:text-base">
             <div className="flex w-full items-center ">
               <div className="grow text-neutral-500">
                 {auction.isFinished ? "Winner" : "Latest bid"}
@@ -82,10 +81,15 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
                 tokenId={auction.tokenId}
               />
             </div>
-            <div className="flex w-full justify-between text-lg">
+            <div className="flex w-full justify-between sm:text-lg">
               <div className="flex items-center gap-1">
-                <Jazzicon seed={jsNumberForAddress(auction.bidder)} />
-                {shortenAddress(auction.bidder, 4, 4)}{" "}
+                <span className="inline-block sm:hidden">
+                  <Jazzicon diameter={12} seed={jsNumberForAddress(auction.bidder)} />
+                </span>
+                <span className="hidden sm:inline-block">
+                  <Jazzicon diameter={16} seed={jsNumberForAddress(auction.bidder)} />
+                </span>
+                <span>{shortenAddress(auction.bidder, 4, 4)}</span>
                 {/* {auction.bidder === address ? (
                   <span className="text-polkadot-500">(you)</span>
                 ) : null} */}
@@ -95,58 +99,54 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
               </div>
             </div>
           </div>
-        ) : (
-          <div>No one has bid.</div>
-        )}
+        ) : null}
       </div>
     </div>
   )
 }
 
 export const Auction = () => {
-  const { isConnected } = useWallet()
-
-  const { data: config } = useAuctionHouseGetConfig({
-    chainId: CHAIN_ID,
-  })
-
-  const [watch, setWatch] = useState(true)
   const { data: auction } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
-    watch,
+    watch: true,
   })
-
-  useEffect(() => {
-    console.log({ auction })
-  }, [auction])
-
-  useEffect(() => {
-    console.log({ config })
-  }, [config])
 
   const { image, metadata } = useCrestDetails(auction?.tokenId)
 
+  // keep prev value until all data is fetched for the new auction
+  // this allows for smooth UI transition
+  const [auctionData, setAuctionData] = useState<{
+    auction: NonNullable<typeof auction>
+    image: NonNullable<typeof image>
+    metadata: NonNullable<typeof metadata>
+  }>()
+  useEffect(() => {
+    if (auction && image && metadata) setAuctionData({ auction, image, metadata })
+  }, [auction, image, metadata])
+
   return (
     <div>
-      <div className="flex items-center">
-        <div className="grow">
-          <h1 className="text-3xl font-bold text-neutral-300">Current auction</h1>
-          <div className="text-neutral-500">Place your bid, fren!</div>
-        </div>
-        <AuctionStart />
-      </div>
-      {!!auction && !!image && !!metadata && (
-        <div>
-          <div className="my-8 flex justify-center gap-12">
-            <div className="h-[300px] w-[300px] shrink-0 rounded-xl bg-slate-500">
-              {image && <img className="h-[300px] w-[300px] rounded-xl" src={image} alt="" />}
-            </div>
-            <div>
-              <AuctionDetails auction={auction} />
-            </div>
+      <div>
+        <div className="grid min-h-[300px] w-full grid-cols-1 justify-evenly gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-2 lg:gap-12">
+          <div className="flex flex-col items-center justify-center">
+            {auctionData && (
+              <img
+                className="inline-block aspect-square w-full max-w-[300px] rounded-xl"
+                src={auctionData.image}
+                alt=""
+              />
+            )}
+          </div>
+          <div className="lg-col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
+            {auctionData && <AuctionDetails auction={auctionData.auction} />}
           </div>
         </div>
-      )}
+      </div>
+      <div className="flex h-24 items-center justify-center">
+        <AuctionStart />
+      </div>
+
+      {auctionData && <LayoutBackground metadata={auctionData.metadata} />}
     </div>
   )
 }

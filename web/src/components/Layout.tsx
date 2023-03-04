@@ -6,9 +6,9 @@ import { DaoLogoColor } from "../assets/logos"
 import { useWallet } from "../lib/useWallet"
 import { useAuctionHouseGetConfig } from "../contracts/generated"
 import { useBalance } from "wagmi"
-import { supportedChains } from "../lib/wagmi/supportedChains"
 import { CHAIN_ID } from "../lib/settings"
 import { useBlockExplorerUrl } from "../lib/useBlockExplorerUrl"
+import { IconBrandDiscord } from "@tabler/icons-react"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (
@@ -49,9 +49,10 @@ const Treasury = () => {
     <a
       title={`${balance.formatted} ${balance.symbol}`}
       href={url}
-      className="flex items-center gap-2 rounded border border-neutral-600 bg-neutral-900 px-2 py-2 text-xs hover:bg-neutral-800"
+      //className="flex items-center gap-2 rounded border border-white/20 bg-black/30 px-2 py-2 text-xs text-neutral-200 hover:bg-black/10"
+      className="btn secondary flex items-center gap-2 text-xs"
     >
-      <div>Treasury</div>
+      <div className="hidden sm:block">Treasury</div>
       <div>
         {Number(balance.formatted).toFixed()} {balance.symbol}
       </div>
@@ -62,15 +63,22 @@ const Treasury = () => {
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { address } = useWallet()
   return (
-    <div>
+    <div id="layout" className="">
       <header className="w-full py-5 text-center">
-        <div className="inline-flex h-10 w-full max-w-5xl items-center justify-between gap-4 px-6">
+        <div className="inline-flex h-10 w-full max-w-5xl items-center justify-between gap-4 px-3 sm:px-6">
           <div className="flex items-center gap-4">
             <DaoLogoColor className="text-5xl" />
             <Treasury />
           </div>
-
-          <ConnectButton className="w-48" />
+          <div className="flex items-center gap-4">
+            <a
+              href="https://discord.gg/AKnhvdazUm"
+              className="btn secondary flex flex-col justify-center"
+            >
+              <IconBrandDiscord className="inline-block" />
+            </a>
+            <ConnectButton className="w-48" />
+          </div>
         </div>
         <nav>
           <ul className="mx-auto flex w-full max-w-5xl gap-4 px-6">
@@ -88,7 +96,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
           </ul>
         </nav>
       </header>
-      <section className="animate-fade-in container mx-auto my-4 w-full max-w-5xl px-6">
+      <section className="animate-fade-in container mx-auto my-4 w-full max-w-5xl px-3 sm:px-6">
         {children}
       </section>
     </div>

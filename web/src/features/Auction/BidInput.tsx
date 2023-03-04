@@ -89,7 +89,7 @@ export const BidInput = () => {
         />
         <div>{currency?.symbol}</div>
       </div>
-      <button className="primary" onClick={handleBid}>
+      <button className="btn primary" onClick={handleBid}>
         Place Bid
       </button>
     </div>

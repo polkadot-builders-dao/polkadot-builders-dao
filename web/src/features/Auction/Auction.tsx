@@ -137,8 +137,8 @@ export const Auction = () => {
       </div>
       {!!auction && !!image && !!metadata && (
         <div>
-          <div className="my-8 flex justify-center gap-12">
-            <div className="h-[300px] w-[300px] shrink-0 rounded-xl bg-slate-500">
+          <div className="my-8 flex w-full justify-evenly gap-12">
+            <div className="h-[300px] w-[300px] shrink-0 rounded-xl bg-slate-500 text-center">
               {image && <img className="h-[300px] w-[300px] rounded-xl" src={image} alt="" />}
             </div>
             <div>

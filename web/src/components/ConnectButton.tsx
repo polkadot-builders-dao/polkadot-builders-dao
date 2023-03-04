@@ -22,7 +22,7 @@ export const ConnectButton: FC<ConnectButtonProps> = ({ className }) => {
   return (
     <button
       onClick={handleClick}
-      className={classNames("w-40", isConnected ? "secondary" : "primary")}
+      className={classNames("btn w-40", isConnected ? "secondary" : "primary")}
       type="button"
     >
       {address ? shortenAddress(address as string, 4, 4) : "Connect"}

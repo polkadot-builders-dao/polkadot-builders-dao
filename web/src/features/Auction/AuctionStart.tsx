@@ -51,7 +51,7 @@ export const AuctionStart = () => {
   if (!auction || !auction.isFinished) return null
 
   return (
-    <button type="button" className="primary" onClick={handleStart}>
+    <button type="button" className="btn primary" onClick={handleStart}>
       {auction.bidder === address ? "Claim" : "Next"}
     </button>
   )

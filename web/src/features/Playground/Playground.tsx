@@ -54,7 +54,7 @@ export const Playground: FC = () => {
           <h1 className="text-3xl font-bold text-neutral-300">Playground</h1>
           <div className="text-neutral-500">DNA {dna}</div>
         </div>
-        <button type="button" onClick={handleRandom} className="primary">
+        <button type="button" onClick={handleRandom} className="btn primary">
           Random
         </button>
       </div>

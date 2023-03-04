@@ -30,15 +30,14 @@
   }
 }
 
-@layer base {
-  button.primary,
-  button.secondary {
+@layer components {
+  .btn {
     @apply h-10 shrink-0 rounded border-none bg-neutral-600 py-1 px-4 text-white focus-visible:outline-none focus-visible:ring-[1px];
   }
-  button.secondary {
-    @apply bg-neutral-700  ring-neutral-500;
+  .btn.primary {
+    @apply bg-polkadot-500 ring-polkadot-100 hover:bg-polkadot-400;
   }
-  button.primary {
-    @apply bg-polkadot-500 ring-polkadot-300;
+  .btn.secondary {
+    @apply bg-neutral-700  ring-neutral-500 hover:bg-neutral-600;
   }
 }

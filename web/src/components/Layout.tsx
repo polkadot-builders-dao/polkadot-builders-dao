@@ -9,6 +9,7 @@ import { useBalance } from "wagmi"
 import { supportedChains } from "../lib/wagmi/supportedChains"
 import { CHAIN_ID } from "../lib/settings"
 import { useBlockExplorerUrl } from "../lib/useBlockExplorerUrl"
+import { IconBrandDiscord } from "@tabler/icons-react"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (
@@ -69,8 +70,15 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             <DaoLogoColor className="text-5xl" />
             <Treasury />
           </div>
-
-          <ConnectButton className="w-48" />
+          <div className="flex items-center gap-4">
+            <a
+              href="https://discord.gg/AKnhvdazUm"
+              className="btn secondary flex flex-col justify-center"
+            >
+              <IconBrandDiscord className="inline-block" />
+            </a>
+            <ConnectButton className="w-48" />
+          </div>
         </div>
         <nav>
           <ul className="mx-auto flex w-full max-w-5xl gap-4 px-6">
@@ -88,7 +96,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
           </ul>
         </nav>
       </header>
-      <section className="animate-fade-in container mx-auto my-4 w-full max-w-5xl px-6">
+      <section className="animate-fade-in container mx-auto my-4 w-full max-w-5xl px-6 pb-10">
         {children}
       </section>
     </div>

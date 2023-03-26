@@ -131,7 +131,7 @@ export const Auction = () => {
           <div className="flex flex-col items-center justify-center">
             {auctionData && (
               <img
-                className="inline-block aspect-square w-full max-w-[300px] rounded-xl"
+                className="inline-block aspect-square w-full max-w-[300px] rounded-xl lg:max-w-[400px]"
                 src={auctionData.image}
                 alt=""
               />
@@ -141,9 +141,9 @@ export const Auction = () => {
             {auctionData && <AuctionDetails auction={auctionData.auction} />}
           </div>
         </div>
-      </div>
-      <div className="flex h-24 items-center justify-center">
-        <AuctionStart />
+        <div className="flex h-24 items-center justify-center md:justify-end">
+          <AuctionStart />
+        </div>
       </div>
 
       {auctionData && <LayoutBackground metadata={auctionData.metadata} />}

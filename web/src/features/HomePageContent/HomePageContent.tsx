@@ -11,7 +11,7 @@ export const HomePageContent = () => (
       </div>
     </section>
     <section className="mt-12">
-      <h2 className="mb-4 text-2xl font-bold text-neutral-300">Wtf?</h2>
+      <h2 className="mb-4 text-2xl font-bold text-neutral-300">wtf?</h2>
       <div>
         <p className="my-4">
           We believe there are a lot of skilled people in the ecosystem that WANT to build, but

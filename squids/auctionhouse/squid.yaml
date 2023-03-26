@@ -1,24 +1,25 @@
 manifestVersion: subsquid.io/v0.1
 name: auctionhouse
 version: 1
-description: 'A squid indexer generated from an ABI template  '
-build: 
+description: |-
+  A squid indexer generated from an ABI template
+build:
 deploy:
   addons:
-    postgres: 
+    postgres:
   processor:
-    cmd:
-      - node
-      - lib/processor
+    cmd: ["node", "lib/processor"]
   api:
     cmd:
-      - npx
-      - squid-graphql-server
-      - '--dumb-cache'
-      - in-memory
-      - '--dumb-cache-ttl'
-      - '1000'
-      - '--dumb-cache-size'
-      - '100'
-      - '--dumb-cache-max-age'
-      - '1000'
+      [
+        "npx",
+        "squid-graphql-server",
+        "--dumb-cache",
+        "in-memory",
+        "--dumb-cache-ttl",
+        "1000",
+        "--dumb-cache-size",
+        "100",
+        "--dumb-cache-max-age",
+        "1000",
+      ]

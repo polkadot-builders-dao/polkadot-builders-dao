@@ -21,17 +21,13 @@ type BidEvent = {
   id: string
   bid: string
   bidder: string
-  block: {
-    number: number
-    timestamp: string
-  }
-  transaction: {
-    hash: string
-  }
+  blockNumber: number
+  blockTimestamp: string
+  transactionHash: string
 }
 
 type AuctionHistoryResults = {
-  bidEvents: BidEvent[]
+  contractEventBids: BidEvent[]
 }
 
 const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
@@ -46,17 +42,13 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
         "http://localhost:4350/graphql",
         gql`
           query MyQuery {
-            bidEvents(where: { tokenId_eq: ${tokenId.toString()} }, orderBy: id_DESC) {
+            contractEventBids(where: { tokenId_eq: ${tokenId.toString()} }, orderBy: id_DESC) {
               id
               bid
               bidder
-              block {
-                number
-                timestamp
-              }
-              transaction {
-                hash
-              }
+              blockNumber
+              blockTimestamp
+              transactionHash
             }
           }
         `
@@ -76,8 +68,8 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
   console.log("auctionHistory", data)
   return (
     <div>
-      {data?.bidEvents.map((bidEvent) => {
-        const date = new Date(bidEvent.block.timestamp)
+      {data?.contractEventBids.map((bidEvent) => {
+        const date = new Date(bidEvent.blockTimestamp)
         return (
           <div
             key={bidEvent.id}
@@ -95,7 +87,7 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
                 <div className="leading-tight">
                   {date.toLocaleDateString()} {date.toLocaleTimeString()}
                 </div>
-                <a target="_blank" href={`${blockExplorerUrl}/tx/${bidEvent.transaction.hash}`}>
+                <a target="_blank" href={`${blockExplorerUrl}/tx/${bidEvent.transactionHash}`}>
                   <IconExternalLink className="inline h-4" />
                 </a>
               </div>
@@ -103,6 +95,7 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
           </div>
         )
       })}
+      {data?.contractEventBids?.length === 0 && <div className="px-4 py-2">No bid found</div>}
     </div>
   )
 }

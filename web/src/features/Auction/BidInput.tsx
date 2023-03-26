@@ -31,6 +31,7 @@ export const BidInput = () => {
   }, [auction?.minBid, bid])
 
   const { writeAsync, data: txResult } = useAuctionHouseBid({ mode: "recklesslyUnprepared" })
+  const [isProcessing, setIsProcessing] = useState(false)
   const refInput = useRef<HTMLInputElement>(null)
   const handleBid = useCallback(async () => {
     let toastId: Id | undefined
@@ -40,6 +41,7 @@ export const BidInput = () => {
         return
       }
 
+      setIsProcessing(true)
       const tx = await writeAsync({
         recklesslySetUnpreparedOverrides: {
           value: bnBid,
@@ -66,12 +68,17 @@ export const BidInput = () => {
       refetch()
     } catch (err) {
       console.error("Cannot bid", { err })
-      showToastAlert("error", "Cannot bid", (err as Error).message, {
+
+      let errorMessage = (err as Error).message
+      if (errorMessage.includes("evm error: OutOfFund")) errorMessage = "Insufficient funds"
+
+      showToastAlert("error", "Cannot bid", errorMessage, {
         toastId,
         autoClose: 3000,
       })
       refetch()
     }
+    setIsProcessing(false)
   }, [bnBid, connect, isConnected, refetch, writeAsync])
 
   if (!auction || auction.isFinished) return null
@@ -89,7 +96,7 @@ export const BidInput = () => {
         />
         <div>{currency?.symbol}</div>
       </div>
-      <button className="btn primary" onClick={handleBid}>
+      <button className="btn primary" onClick={handleBid} disabled={isProcessing}>
         <span className="hidden sm:inline">Place</span> Bid
       </button>
     </div>

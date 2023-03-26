@@ -23,7 +23,7 @@ export const functions = {
     getAuction: new Func<[], {}, ([tokenId: ethers.BigNumber, startTime: ethers.BigNumber, endTime: ethers.BigNumber, currentBid: ethers.BigNumber, bidder: string, minBid: ethers.BigNumber, isFinished: boolean] & {tokenId: ethers.BigNumber, startTime: ethers.BigNumber, endTime: ethers.BigNumber, currentBid: ethers.BigNumber, bidder: string, minBid: ethers.BigNumber, isFinished: boolean})>(
         abi, '0x7327df25'
     ),
-    getConfig: new Func<[], {}, ([treasury: string, token: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber] & {treasury: string, token: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber})>(
+    getConfig: new Func<[], {}, ([treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber] & {treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber})>(
         abi, '0xc3f909d4'
     ),
     onERC721Received: new Func<[_: string, _: string, _: ethers.BigNumber, _: string], {}, string>(
@@ -40,6 +40,9 @@ export const functions = {
     ),
     setExtendedDuration: new Func<[_extendedDuration: ethers.BigNumber], {_extendedDuration: ethers.BigNumber}, []>(
         abi, '0xb535ef80'
+    ),
+    setGLMR: new Func<[_glmr: string], {_glmr: string}, []>(
+        abi, '0x8b058715'
     ),
     setMinBidIncrementPercent: new Func<[_minBidIncrementPercent: ethers.BigNumber], {_minBidIncrementPercent: ethers.BigNumber}, []>(
         abi, '0xe0f0815c'
@@ -64,7 +67,7 @@ export class Contract extends ContractBase {
         return this.eth_call(functions.getAuction, [])
     }
 
-    getConfig(): Promise<([treasury: string, token: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber] & {treasury: string, token: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber})> {
+    getConfig(): Promise<([treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber] & {treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber})> {
         return this.eth_call(functions.getConfig, [])
     }
 

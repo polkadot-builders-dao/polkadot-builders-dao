@@ -1,134 +1,200 @@
 type Block @entity {
     id: ID!
     number: Int! @index
-    timestamp: DateTime!
-    transactions: [Transaction!]! @derivedFrom(field: "block")
+    timestamp: DateTime! @index
 }
 
 type Transaction @entity {
     id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
     hash: String! @index
-    block: Block!
-    contract: String
+    to: String @index
+    from: String @index
+    success: Boolean @index
 }
 
 interface Event @query {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String!
+    blockNumber: Int!
+    blockTimestamp: DateTime!
+    transactionHash: String!
+    contract: String!
+    eventName: String!
 }
 
-type BidEvent implements Event @entity {
+interface Function @query {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
+    blockNumber: Int!
+    blockTimestamp: DateTime!
+    transactionHash: String!
+    contract: String!
+    functionName: String!
+    functionValue: BigInt
+    functionSuccess: Boolean
+}
+
+type ContractEventBid implements Event @entity {
+    id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
     tokenId: BigInt!
     bidder: String!
     bid: BigInt!
 }
 
-type OwnershipTransferredEvent implements Event @entity {
+type ContractEventOwnershipTransferred implements Event @entity @index(fields: ["previousOwner", "newOwner"]) {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
     previousOwner: String! @index
     newOwner: String! @index
 }
 
-type StartEvent implements Event @entity {
+type ContractEventStart implements Event @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
     tokenId: BigInt!
 }
 
-interface Function @query {
+type ContractFunctionBid implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
 }
 
-type BidFunction implements Function @entity {
+type ContractFunctionOnErc721Received implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    arg0: String!
+    arg1: String!
+    arg2: BigInt!
+    arg3: String!
 }
 
-type OnErc721ReceivedFunction implements Function @entity {
+type ContractFunctionRenounceOwnership implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    arg0: String
-    arg1: String
-    arg2: BigInt
-    arg3: String
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
 }
 
-type RenounceOwnershipFunction implements Function @entity {
+type ContractFunctionSetDuration implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    duration: BigInt!
 }
 
-type SetDurationFunction implements Function @entity {
+type ContractFunctionSetExtendedDuration implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    duration: BigInt
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    extendedDuration: BigInt!
 }
 
-type SetExtendedDurationFunction implements Function @entity {
+type ContractFunctionSetGlmr implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    extendedDuration: BigInt
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    glmr: String!
 }
 
-type SetMinBidIncrementPercentFunction implements Function @entity {
+type ContractFunctionSetMinBidIncrementPercent implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    minBidIncrementPercent: BigInt
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    minBidIncrementPercent: BigInt!
 }
 
-type SetMinFirstBidFunction implements Function @entity {
+type ContractFunctionSetMinFirstBid implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    minFirstBid: BigInt
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    minFirstBid: BigInt!
 }
 
-type SetTreasuryFunction implements Function @entity {
+type ContractFunctionSetTreasury implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    treasury: String
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    treasury: String!
 }
 
-type StartFunction implements Function @entity {
+type ContractFunctionStart implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
 }
 
-type TransferOwnershipFunction implements Function @entity {
+type ContractFunctionTransferOwnership implements Function @entity {
     id: ID!
-    block: Block!
-    transaction: Transaction!
-    name: String! @index
-    newOwner: String
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+    newOwner: String!
 }

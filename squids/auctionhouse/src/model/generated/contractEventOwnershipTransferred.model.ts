@@ -1,8 +1,9 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
 
+@Index_(["previousOwner", "newOwner"], {unique: false})
 @Entity_()
-export class Transaction {
-    constructor(props?: Partial<Transaction>) {
+export class ContractEventOwnershipTransferred {
+    constructor(props?: Partial<ContractEventOwnershipTransferred>) {
         Object.assign(this, props)
     }
 
@@ -19,17 +20,20 @@ export class Transaction {
 
     @Index_()
     @Column_("text", {nullable: false})
-    hash!: string
+    transactionHash!: string
 
     @Index_()
-    @Column_("text", {nullable: true})
-    to!: string | undefined | null
+    @Column_("text", {nullable: false})
+    contract!: string
 
     @Index_()
-    @Column_("text", {nullable: true})
-    from!: string | undefined | null
+    @Column_("text", {nullable: false})
+    eventName!: string
+
+    @Column_("text", {nullable: false})
+    previousOwner!: string
 
     @Index_()
-    @Column_("bool", {nullable: true})
-    success!: boolean | undefined | null
+    @Column_("text", {nullable: false})
+    newOwner!: string
 }

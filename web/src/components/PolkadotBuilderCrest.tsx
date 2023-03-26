@@ -17,7 +17,12 @@ export const PolkadotBuilderCrest = ({
 
   return (
     <div className={className}>
-      <img className={classNames("h-[300px] w-[300px] rounded-xl")} src={image} alt="" />
+      <img
+        loading="lazy"
+        className={classNames("h-[300px] w-[300px] rounded-xl")}
+        src={image}
+        alt=""
+      />
       {withName && <div className="mt-2 text-center">{metadata?.name}</div>}
     </div>
   )

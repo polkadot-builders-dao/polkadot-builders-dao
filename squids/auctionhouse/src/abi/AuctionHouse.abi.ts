@@ -136,6 +136,10 @@ export const ABI_JSON = [
                         "name": "token"
                     },
                     {
+                        "type": "address",
+                        "name": "glmr"
+                    },
+                    {
                         "type": "uint256",
                         "name": "duration"
                     },
@@ -224,6 +228,19 @@ export const ABI_JSON = [
             {
                 "type": "uint256",
                 "name": "_extendedDuration"
+            }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "setGLMR",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_glmr"
             }
         ],
         "outputs": []

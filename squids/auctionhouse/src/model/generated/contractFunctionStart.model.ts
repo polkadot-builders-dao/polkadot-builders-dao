@@ -1,8 +1,9 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import * as marshal from "./marshal"
 
 @Entity_()
-export class Transaction {
-    constructor(props?: Partial<Transaction>) {
+export class ContractFunctionStart {
+    constructor(props?: Partial<ContractFunctionStart>) {
         Object.assign(this, props)
     }
 
@@ -19,17 +20,20 @@ export class Transaction {
 
     @Index_()
     @Column_("text", {nullable: false})
-    hash!: string
+    transactionHash!: string
 
     @Index_()
-    @Column_("text", {nullable: true})
-    to!: string | undefined | null
+    @Column_("text", {nullable: false})
+    contract!: string
 
     @Index_()
-    @Column_("text", {nullable: true})
-    from!: string | undefined | null
+    @Column_("text", {nullable: false})
+    functionName!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
+    functionValue!: bigint | undefined | null
 
     @Index_()
     @Column_("bool", {nullable: true})
-    success!: boolean | undefined | null
+    functionSuccess!: boolean | undefined | null
 }

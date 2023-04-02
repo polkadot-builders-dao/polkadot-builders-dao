@@ -76,8 +76,8 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             >
               <IconBrandDiscord className="inline-block" />
             </a>
-            <div className="[&_button]:bg-neutral-500">
-              <ConnectButton accountStatus="avatar" />
+            <div className="btn-connect-wrapper">
+              <ConnectButton accountStatus="avatar" label="Connect" />
             </div>
           </div>
         </div>

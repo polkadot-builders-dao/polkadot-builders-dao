@@ -11,7 +11,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const AuctionHouse = await deployments.get("AuctionHouse")
   const auctionHouse = await ethers.getContractAt("AuctionHouse", AuctionHouse.address)
 
-  // set practical defaults for dev & test, real value will be defined by governance before launch
+  // set practical defaults for dev & test, real value will be defined before launch
   await (await auctionHouse.setDuration(180)).wait()
   await (await auctionHouse.setExtendedDuration(60)).wait()
   await (await auctionHouse.setMinFirstBid(ethers.utils.parseEther("0.1"))).wait()

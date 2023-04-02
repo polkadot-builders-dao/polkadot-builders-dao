@@ -2,7 +2,6 @@ import "@rainbow-me/rainbowkit/styles.css"
 import "react-toastify/dist/ReactToastify.min.css"
 import "./styles/styles.css"
 
-import "./lib/polyfills"
 import React from "react"
 import ReactDOM from "react-dom/client"
 import { ToastContainer } from "react-toastify"

@@ -41,10 +41,10 @@ export const ConnectButton: FC<ConnectButtonProps> = ({ className }) => {
     <button
       ref={refButton}
       className={classNames(
-        "relative inline-flex items-center gap-2 overflow-hidden rounded-xl py-2 px-4 font-normal transition-colors",
+        "relative inline-flex items-center gap-2 overflow-hidden rounded-xl px-4 py-2 font-normal transition-colors",
         isConnected
           ? "bg-neutral-800 text-neutral-400"
-          : "bg-neutral-500 text-black hover:bg-neutral-400",
+          : "bg-neutral-500 text-neutral-950 hover:bg-neutral-400",
         className
       )}
       onClick={handleClick}
@@ -54,7 +54,7 @@ export const ConnectButton: FC<ConnectButtonProps> = ({ className }) => {
       </span>
       <div
         className={classNames(
-          "absolute top-0 left-0 flex h-full w-full items-center justify-center gap-2 bg-white  text-center text-black opacity-0 transition-opacity",
+          "absolute left-0 top-0 flex h-full w-full items-center justify-center gap-2 bg-white  text-center text-neutral-950 opacity-0 transition-opacity",
           isConnected && !isJustAfterConnect && isHovered && "opacity-100"
         )}
       >

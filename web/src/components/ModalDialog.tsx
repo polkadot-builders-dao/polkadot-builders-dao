@@ -33,7 +33,7 @@ export const ModalDialog: FC<ModalDialogProps> = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 z-20 bg-black/25 backdrop-blur-md" />
+          <div className="fixed inset-0 z-20 bg-neutral-950/25 backdrop-blur-md" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-30 overflow-y-auto">
@@ -52,7 +52,7 @@ export const ModalDialog: FC<ModalDialogProps> = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md cursor-default space-y-4 overflow-hidden rounded-2xl border border-neutral-100 bg-white p-8 text-center text-black shadow-xl transition-all dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
+              <Dialog.Panel className="w-full max-w-md cursor-default space-y-4 overflow-hidden rounded-2xl border border-neutral-100 bg-white p-8 text-center text-neutral-950 shadow-xl transition-all dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
                 <Dialog.Title
                   as="h3"
                   className="text-center text-2xl font-semibold leading-6 dark:text-white"

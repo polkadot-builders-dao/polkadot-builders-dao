@@ -1,12 +1,9 @@
-import { BigNumber } from "ethers"
 import { formatEther } from "ethers/lib/utils.js"
-import { useAuctionHouseGetAuction, useAuctionHouseGetConfig } from "../../contracts/generated"
+import { useAuctionHouseGetAuction } from "../../contracts/generated"
 import { shortenAddress } from "../../lib/shortenAddress"
 
-import { useWallet } from "../../lib/useWallet"
 import { AuctionStart } from "./AuctionStart"
 import { BidInput } from "./BidInput"
-import formatDistanceToNow from "date-fns/formatDistanceToNow"
 import { CHAIN_ID } from "../../lib/settings"
 import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
@@ -18,18 +15,7 @@ import Jazzicon from "react-jazzicon/dist/Jazzicon"
 import { jsNumberForAddress } from "react-jazzicon"
 import { LayoutBackground } from "../../components/LayoutBackground"
 
-const displayBigNumberAsDate = (date?: BigNumber, distanceToNow = false) => {
-  if (!date) return null
-
-  const dt = new Date(date.toNumber() * 1000)
-
-  if (distanceToNow) return formatDistanceToNow(dt, { includeSeconds: true, addSuffix: true })
-
-  return `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`
-}
-
 const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
-  const { address } = useWallet()
   const currency = useNativeCurrency(CHAIN_ID)
   const auctionDate = useMemo(
     () => new Date(auction.startTime.toNumber() * 1000).toLocaleDateString(),
@@ -42,7 +28,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
   )
 
   return (
-    <div className="flex min-h-[300px] w-full max-w-[500px] flex-col rounded-xl bg-black/40 p-4">
+    <div className="flex min-h-[300px] w-full max-w-[500px] flex-col rounded-xl bg-neutral-950/40 p-4">
       <div className="text-neutral-500">{auctionDate}</div>
       <h1 className="text-3xl font-bold text-neutral-300">
         Polkadot Builder #{auction.tokenId.toNumber()}
@@ -90,9 +76,6 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
                   <Jazzicon diameter={16} seed={jsNumberForAddress(auction.bidder)} />
                 </span>
                 <span>{shortenAddress(auction.bidder, 4, 4)}</span>
-                {/* {auction.bidder === address ? (
-                  <span className="text-polkadot-500">(you)</span>
-                ) : null} */}
               </div>
               <div className="text-neutral-200">
                 {currentBid} {currency?.symbol}

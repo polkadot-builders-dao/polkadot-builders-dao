@@ -1,6 +1,6 @@
-import "./styles/styles.css"
-import "react-toastify/dist/ReactToastify.min.css"
 import "@rainbow-me/rainbowkit/styles.css"
+import "react-toastify/dist/ReactToastify.min.css"
+import "./styles/styles.css"
 
 // import { configureChains, createClient, WagmiConfig } from "wagmi"
 // import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains"

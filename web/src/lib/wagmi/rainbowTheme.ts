@@ -1,6 +1,24 @@
 import { darkTheme, Theme } from "@rainbow-me/rainbowkit"
 
-export const rainbowTheme = darkTheme({})
+const dark = darkTheme({
+  accentColor: "#E6007A",
+  accentColorForeground: "#fafafa",
+  borderRadius: "small",
+})
+
+console.log("dark", dark)
+
+export const rainbowTheme: Theme = {
+  ...dark,
+  colors: {
+    ...dark.colors,
+    connectButtonBackground: "#171717",
+    connectButtonInnerBackground: "#262626",
+  },
+  fonts: {
+    body: "inherit",
+  },
+}
 
 //     : Theme = {
 //   blurs: {

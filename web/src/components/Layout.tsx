@@ -35,8 +35,6 @@ const Treasury = () => {
     chainId: CHAIN_ID,
   })
 
-  console.log("balance", { balance })
-
   const url = useMemo(() => {
     if (!blockExplorerUrl) return "https://perdu.com"
     return `${blockExplorerUrl}/address/${config?.treasury}}`

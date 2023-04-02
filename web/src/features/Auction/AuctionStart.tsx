@@ -17,7 +17,6 @@ export const AuctionStart = () => {
   const handleStart = useCallback(async () => {
     let toastId: Id | undefined
     try {
-      console.log({ openConnectModal, isConnected })
       if (!isConnected) {
         openConnectModal?.()
         return

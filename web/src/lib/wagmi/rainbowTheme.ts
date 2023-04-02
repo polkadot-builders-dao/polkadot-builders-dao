@@ -6,8 +6,6 @@ const dark = darkTheme({
   borderRadius: "small",
 })
 
-console.log("dark", dark)
-
 export const rainbowTheme: Theme = {
   ...dark,
   colors: {

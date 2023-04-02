@@ -30,8 +30,6 @@ type AuctionHistoryResults = {
 }
 
 const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
-  console.log("auction history")
-
   const currency = useNativeCurrency(CHAIN_ID)
 
   const { data, error } = useQuery({
@@ -64,7 +62,6 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
       </div>
     )
 
-  console.log("auctionHistory", data)
   return (
     <div>
       {data?.contractEventBids.map((bidEvent) => {

@@ -16,7 +16,6 @@
     opacity: 0.5;
   }
   ::-webkit-scrollbar-thumb {
-    /*box-shadow: inset 0 0 10px 10px currentColor;*/
     box-shadow: inset 0 0 10px 10px theme(colors.neutral.700);
     border: solid 3px transparent;
     border-radius: 8px;

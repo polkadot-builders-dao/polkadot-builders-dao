@@ -1,16 +1,17 @@
+import { useConnectModal } from "@rainbow-me/rainbowkit"
 import { ethers } from "ethers"
 import { useCallback, useMemo, useRef, useState } from "react"
 import { Id } from "react-toastify"
-import { useChainId } from "wagmi"
+import { useAccount, useChainId } from "wagmi"
 import { showToastAlert } from "../../components/ToastAlert"
 import { useAuctionHouseBid, useAuctionHouseGetAuction } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
-import { useWallet } from "../../lib/useWallet"
 
 export const BidInput = () => {
   const chainId = useChainId()
-  const { isConnected, connect } = useWallet()
+  const { openConnectModal } = useConnectModal()
+  const { isConnected } = useAccount()
   const { data: auction, refetch } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
   })
@@ -30,14 +31,14 @@ export const BidInput = () => {
       : auction?.minBid ?? ethers.BigNumber.from(0)
   }, [auction?.minBid, bid])
 
-  const { writeAsync, data: txResult } = useAuctionHouseBid({ mode: "recklesslyUnprepared" })
+  const { writeAsync } = useAuctionHouseBid({ mode: "recklesslyUnprepared" })
   const [isProcessing, setIsProcessing] = useState(false)
   const refInput = useRef<HTMLInputElement>(null)
   const handleBid = useCallback(async () => {
     let toastId: Id | undefined
     try {
       if (!isConnected) {
-        connect()
+        openConnectModal?.()
         return
       }
 
@@ -79,7 +80,7 @@ export const BidInput = () => {
       refetch()
     }
     setIsProcessing(false)
-  }, [bnBid, connect, isConnected, refetch, writeAsync])
+  }, [bnBid, openConnectModal, isConnected, refetch, writeAsync])
 
   if (!auction || auction.isFinished) return null
 

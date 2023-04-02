@@ -13,6 +13,7 @@ export const talismanWallet = ({
   name: "Talisman",
   iconUrl: async () => (await import("./logos/talisman.svg")).default,
   iconBackground: "#fd4848",
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   installed: typeof window !== "undefined" && !!(window as any).talismanEth?.isTalisman,
   downloadUrls: {
     browserExtension: "https://talisman.xyz/download",

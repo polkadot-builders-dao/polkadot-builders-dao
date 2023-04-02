@@ -1,12 +1,14 @@
+import { useConnectModal } from "@rainbow-me/rainbowkit"
 import { useCallback } from "react"
 import { Id } from "react-toastify"
+import { useAccount } from "wagmi"
 import { showToastAlert } from "../../components/ToastAlert"
 import { useAuctionHouseGetAuction, useAuctionHouseStart } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
-import { useWallet } from "../../lib/useWallet"
 
 export const AuctionStart = () => {
-  const { isConnected, connect, address } = useWallet()
+  const { openConnectModal } = useConnectModal()
+  const { isConnected, address } = useAccount()
 
   const { data: auction, refetch } = useAuctionHouseGetAuction({ chainId: CHAIN_ID })
 
@@ -15,8 +17,9 @@ export const AuctionStart = () => {
   const handleStart = useCallback(async () => {
     let toastId: Id | undefined
     try {
+      console.log({ openConnectModal, isConnected })
       if (!isConnected) {
-        connect()
+        openConnectModal?.()
         return
       }
 
@@ -46,7 +49,7 @@ export const AuctionStart = () => {
       })
       refetch()
     }
-  }, [connect, isConnected, refetch, writeAsync])
+  }, [isConnected, openConnectModal, refetch, writeAsync])
 
   if (!auction || !auction.isFinished) return null
 

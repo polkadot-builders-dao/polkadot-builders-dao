@@ -1,9 +1,9 @@
 import { ethers } from "ethers"
 import { useMemo } from "react"
 import { Navigate } from "react-router-dom"
+import { useAccount } from "wagmi"
 import { PolkadotBuilderCrest } from "../../components/PolkadotBuilderCrest"
 import { useCrestBalanceOf, useCrestTokenOfOwnerByIndex } from "../../contracts/generated"
-import { useWallet } from "../../lib/useWallet"
 
 export const CrestOfOwnerByIndex = ({
   address,
@@ -20,7 +20,7 @@ export const CrestOfOwnerByIndex = ({
 }
 
 export const MyCrests = () => {
-  const { address } = useWallet()
+  const { address } = useAccount()
   const { data: balance } = useCrestBalanceOf({
     args: [address as `0x${string}`],
     enabled: !!address,

@@ -1,11 +1,9 @@
 import { FC, PropsWithChildren, ReactNode, useMemo } from "react"
-// import { ConnectButton } from "./ConnectButton"
 import { NavLink, To } from "react-router-dom"
 import classNames from "classnames"
 import { DaoLogoColor } from "../assets/logos"
-import { useWallet } from "../lib/useWallet"
 import { useAuctionHouseGetConfig } from "../contracts/generated"
-import { useBalance } from "wagmi"
+import { useAccount, useBalance } from "wagmi"
 import { CHAIN_ID } from "../lib/settings"
 import { useBlockExplorerUrl } from "../lib/useBlockExplorerUrl"
 import { IconBrandDiscord } from "@tabler/icons-react"
@@ -62,7 +60,7 @@ const Treasury = () => {
 }
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
-  const { address } = useWallet()
+  const { address } = useAccount()
   return (
     <div id="layout" className="">
       <header className="w-full py-5 text-center">
@@ -78,7 +76,9 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             >
               <IconBrandDiscord className="inline-block" />
             </a>
-            <ConnectButton accountStatus="avatar" />
+            <div className="[&_button]:bg-neutral-500">
+              <ConnectButton accountStatus="avatar" />
+            </div>
           </div>
         </div>
         <nav>

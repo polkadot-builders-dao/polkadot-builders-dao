@@ -4,6 +4,7 @@ pragma solidity ^0.8.17;
 
 import {ICrest} from "./interfaces/ICrest.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -14,7 +15,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @dev This contract allows for the creation and execution of auctions for Polkadot Builder Crests NFTs.
  * @custom:security-contact contact@polkadot-builders.xyz
  */
-contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
+contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver, Pausable {
     /**
      * @dev AuctionConfig struct containing auction configuration parameters
      */
@@ -67,6 +68,22 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
     constructor(ICrest _token, address _treasury) {
         token = _token;
         treasury = _treasury;
+    }
+
+    /**
+     * @notice Disallows new auctions to be created
+     * @dev Pauses the contract
+     */
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    /**
+     * @notice Allows new auctions to be created
+     * @dev Unpauses the contract
+     */
+    function unpause() external onlyOwner {
+        _unpause();
     }
 
     /**
@@ -191,7 +208,7 @@ contract AuctionHouse is Ownable, ReentrancyGuard, IERC721Receiver {
      * @notice Ends previous auction and starts a new one.
      * @dev Ends previous auction and starts a new one.
      */
-    function start() external nonReentrant {
+    function start() external nonReentrant whenNotPaused {
         require(block.timestamp > endTime, "Auction hasn't ended yet");
 
         // send the token to the latest winner

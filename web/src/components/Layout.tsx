@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, ReactNode, useMemo } from "react"
-import { ConnectButton } from "./ConnectButton"
+// import { ConnectButton } from "./ConnectButton"
 import { NavLink, To } from "react-router-dom"
 import classNames from "classnames"
 import { DaoLogoColor } from "../assets/logos"
@@ -9,6 +9,7 @@ import { useBalance } from "wagmi"
 import { CHAIN_ID } from "../lib/settings"
 import { useBlockExplorerUrl } from "../lib/useBlockExplorerUrl"
 import { IconBrandDiscord } from "@tabler/icons-react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (
@@ -77,7 +78,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             >
               <IconBrandDiscord className="inline-block" />
             </a>
-            <ConnectButton className="w-48" />
+            <ConnectButton accountStatus="avatar" />
           </div>
         </div>
         <nav>

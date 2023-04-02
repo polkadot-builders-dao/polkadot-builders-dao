@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFractio
 /**
  * @title DaoGovernor
  * @author Polkadot Builders
- * @notice This contract allows for execution of DAO proposals. Still WIP, unused at this time.
+ * @notice This contract allows for execution of DAO proposals.
  */
 contract DaoGovernor is
     Governor,
@@ -23,7 +23,6 @@ contract DaoGovernor is
         IVotes _token
     )
         Governor("Polkadot Builders DAO Governor")
-        //TODO GovernorSettings(1 /* 1 block */, 50400 /* 1 week */, 0)
         GovernorSettings(1 /* 1 block */, 300 /* 5 mins */, 0)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4)

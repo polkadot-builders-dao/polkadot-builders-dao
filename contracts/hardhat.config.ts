@@ -11,7 +11,7 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 1_000,
+        runs: 10_000,
       },
     },
   },
@@ -75,10 +75,10 @@ const config: HardhatUserConfig = {
       // TODO change so we need only 1 private key
       accounts: [
         process.env.DEPLOYER_MOONBEAM,
-        process.env.DEPLOYER_MOONBEAM,
-        process.env.DEPLOYER_MOONBEAM,
-        process.env.DEPLOYER_MOONBEAM,
-        process.env.DEPLOYER_MOONBEAM,
+        // process.env.DEPLOYER_MOONBEAM,
+        // process.env.DEPLOYER_MOONBEAM,
+        // process.env.DEPLOYER_MOONBEAM,
+        // process.env.DEPLOYER_MOONBEAM,
       ],
       verify: {
         etherscan: {
@@ -88,15 +88,6 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  // etherscan: {
-  //   apiKey: {
-  //     moonbeam: process.env.MOONSCAN_API_KEY,
-  //   },
-  // },
-  // gasReporter: {
-  //   enabled: true,
-  //   gasPrice: 21,
-  // },
 }
 
 export default config

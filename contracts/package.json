@@ -47,8 +47,11 @@
     "coverage": "NODE_ENV=test hardhat coverage",
     "deploy:localhost": "hardhat deploy --network localhost --tags AuctionHouse_Config_PROD",
     "deploy:moonbase": "hardhat deploy --network moonbase --tags AuctionHouse_Config_PROD",
+    "deploy:moonbeam": "hardhat deploy --network moonbeam --tags AuctionHouse_Config_PROD",
     "verify:moonbase": "hardhat etherscan-verify --network moonbase --solc-input --sleep",
+    "verify:moonbeam": "hardhat etherscan-verify --network moonbeam --solc-input --sleep",
     "sourcify:moonbase": "hardhat sourcify --network moonbase",
+    "sourcify:moonbeam": "hardhat sourcify --network moonbeam",
     "lint": "eslint .",
     "clean": "hardhat clean"
   },

@@ -30,7 +30,7 @@ const getContractsDeployments = () => {
         ).address
         deployments[contract][chainId] = address
       } catch (err) {
-        console.warn("Failed to deployment of", contract, "for chain", chainId, "in", dirPath)
+        console.warn("Failed to load deployment of", contract, "for chain", chainId, "in", dirPath)
       }
     }
   }

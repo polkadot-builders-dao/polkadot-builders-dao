@@ -37,7 +37,7 @@ const Treasury = () => {
 
   const url = useMemo(() => {
     if (!blockExplorerUrl) return "https://perdu.com"
-    return `${blockExplorerUrl}/address/${config?.treasury}}`
+    return `${blockExplorerUrl}/address/${config?.treasury}`
   }, [blockExplorerUrl, config?.treasury])
 
   if (!config || !balance) return null

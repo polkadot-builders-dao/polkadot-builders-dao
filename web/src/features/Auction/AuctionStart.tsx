@@ -50,7 +50,7 @@ export const AuctionStart = () => {
     }
   }, [isConnected, openConnectModal, refetch, writeAsync])
 
-  if (!auction || !auction.isFinished) return null
+  if (!auction || !auction.isFinished || !writeAsync) return null
 
   return (
     <button type="button" className="btn primary" onClick={handleStart}>

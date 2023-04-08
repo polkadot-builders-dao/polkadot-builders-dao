@@ -1,12 +1,10 @@
 import "dotenv/config"
 import { HardhatUserConfig } from "hardhat/config"
 import "@nomicfoundation/hardhat-toolbox"
-// import "@nomiclabs/hardhat-ethers"
 import "hardhat-deploy"
 
 const config: HardhatUserConfig = {
   solidity: {
-    // TODO make this work
     version: "0.8.17",
     settings: {
       optimizer: {
@@ -54,13 +52,7 @@ const config: HardhatUserConfig = {
       saveDeployments: true,
       url: "https://rpc.api.moonbase.moonbeam.network",
       // TODO change so we need only 1 private key
-      accounts: [
-        process.env.DEPLOYER_MOONBASE,
-        // process.env.DEPLOYER_MOONBASE,
-        // process.env.DEPLOYER_MOONBASE,
-        // process.env.DEPLOYER_MOONBASE,
-        // process.env.DEPLOYER_MOONBASE,
-      ],
+      accounts: [process.env.DEPLOYER_MOONBASE],
       verify: {
         etherscan: {
           apiKey: process.env.MOONSCAN_API_KEY,
@@ -73,19 +65,19 @@ const config: HardhatUserConfig = {
       saveDeployments: true,
       url: "https://rpc.api.moonbeam.network",
       // TODO change so we need only 1 private key
-      accounts: [
-        process.env.DEPLOYER_MOONBEAM,
-        // process.env.DEPLOYER_MOONBEAM,
-        // process.env.DEPLOYER_MOONBEAM,
-        // process.env.DEPLOYER_MOONBEAM,
-        // process.env.DEPLOYER_MOONBEAM,
-      ],
+      accounts: [process.env.DEPLOYER_MOONBEAM],
       verify: {
         etherscan: {
           apiKey: process.env.MOONSCAN_API_KEY,
           apiUrl: "https://api-moonbeam.moonscan.io",
         },
       },
+    },
+  },
+  etherscan: {
+    apiKey: {
+      moonbaseAlpha: process.env.MOONSCAN_API_KEY,
+      moonbeam: process.env.MOONSCAN_API_KEY,
     },
   },
 }

@@ -14,7 +14,7 @@ sqd init auctionhouse --template abi
 cd auctionhouse
 npm ci
 # adjust address & from (block number)
-sqd generate --address 0xed51a10D1423C5f10241E313aB7c34657b905b60 --abi ../../contracts/deployments/moonbase/AuctionHouse.json --archive https://moonbase-evm.archive.subsquid.io --event '*' --function '*' --from 3832215
+sqd generate --address 0x89bE56Ce74C86eA90e429fBb98824aEf435C8e87 --abi ../../contracts/deployments/moonbase/AuctionHouse.json --archive https://moonbase-evm.archive.subsquid.io --event '*' --function '*' --from 4065903
 sqd build
 sqd up
 sqd migration:generate

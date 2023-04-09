@@ -55,11 +55,35 @@ export const ABI_JSON = [
     {
         "type": "event",
         "anonymous": false,
+        "name": "Paused",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "account",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
         "name": "Start",
         "inputs": [
             {
                 "type": "uint256",
                 "name": "tokenId",
+                "indexed": false
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "Unpaused",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "account",
                 "indexed": false
             }
         ]
@@ -161,6 +185,19 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
+        "name": "glmr",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
         "name": "onERC721Received",
         "constant": true,
         "stateMutability": "pure",
@@ -195,6 +232,27 @@ export const ABI_JSON = [
         "outputs": [
             {
                 "type": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "pause",
+        "constant": false,
+        "payable": false,
+        "inputs": [],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "paused",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "bool"
             }
         ]
     },
@@ -303,6 +361,27 @@ export const ABI_JSON = [
                 "name": "newOwner"
             }
         ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "treasury",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "unpause",
+        "constant": false,
+        "payable": false,
+        "inputs": [],
         "outputs": []
     }
 ]

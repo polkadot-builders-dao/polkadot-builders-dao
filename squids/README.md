@@ -10,8 +10,8 @@ https://docs.subsquid.io/quickstart/quickstart-abi/
 Generate and start indexer :
 
 ```bash
-sqd init auctionhouse --template abi
-cd auctionhouse
+sqd init pb-auctionhouse-moonbase --template abi
+cd pb-auctionhouse-moonbase
 npm ci
 # adjust address & from (block number)
 sqd generate --address 0x89bE56Ce74C86eA90e429fBb98824aEf435C8e87 --abi ../../contracts/deployments/moonbase/AuctionHouse.json --archive https://moonbase-evm.archive.subsquid.io --event '*' --function '*' --from 4065903

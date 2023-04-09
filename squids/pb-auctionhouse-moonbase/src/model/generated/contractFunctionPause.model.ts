@@ -1,9 +1,9 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import * as marshal from "./marshal"
 
-@Index_(["previousOwner", "newOwner"], {unique: false})
 @Entity_()
-export class ContractEventOwnershipTransferred {
-    constructor(props?: Partial<ContractEventOwnershipTransferred>) {
+export class ContractFunctionPause {
+    constructor(props?: Partial<ContractFunctionPause>) {
         Object.assign(this, props)
     }
 
@@ -28,12 +28,12 @@ export class ContractEventOwnershipTransferred {
 
     @Index_()
     @Column_("text", {nullable: false})
-    eventName!: string
+    functionName!: string
 
-    @Column_("text", {nullable: false})
-    previousOwner!: string
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
+    functionValue!: bigint | undefined | null
 
     @Index_()
-    @Column_("text", {nullable: false})
-    newOwner!: string
+    @Column_("bool", {nullable: true})
+    functionSuccess!: boolean | undefined | null
 }

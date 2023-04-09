@@ -2,8 +2,8 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, I
 import * as marshal from "./marshal"
 
 @Entity_()
-export class ContractFunctionOnErc721Received {
-    constructor(props?: Partial<ContractFunctionOnErc721Received>) {
+export class ContractFunctionUnpause {
+    constructor(props?: Partial<ContractFunctionUnpause>) {
         Object.assign(this, props)
     }
 
@@ -36,16 +36,4 @@ export class ContractFunctionOnErc721Received {
     @Index_()
     @Column_("bool", {nullable: true})
     functionSuccess!: boolean | undefined | null
-
-    @Column_("text", {nullable: false})
-    arg0!: string
-
-    @Column_("text", {nullable: false})
-    arg1!: string
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    arg2!: bigint
-
-    @Column_("text", {nullable: false})
-    arg3!: string
 }

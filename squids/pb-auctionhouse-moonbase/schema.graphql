@@ -6,7 +6,7 @@ type Block @entity {
 
 type Transaction @entity {
     id: ID!
-    blockNumber: Int! @index
+    blockNumber: Int @index
     blockTimestamp: DateTime! @index
     hash: String! @index
     to: String @index
@@ -14,27 +14,7 @@ type Transaction @entity {
     success: Boolean @index
 }
 
-interface Event @query {
-    id: ID!
-    blockNumber: Int!
-    blockTimestamp: DateTime!
-    transactionHash: String!
-    contract: String!
-    eventName: String!
-}
-
-interface Function @query {
-    id: ID!
-    blockNumber: Int!
-    blockTimestamp: DateTime!
-    transactionHash: String!
-    contract: String!
-    functionName: String!
-    functionValue: BigInt
-    functionSuccess: Boolean
-}
-
-type ContractEventBid implements Event @entity {
+type ContractEventBid @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -46,7 +26,7 @@ type ContractEventBid implements Event @entity {
     bid: BigInt!
 }
 
-type ContractEventOwnershipTransferred implements Event @entity @index(fields: ["previousOwner", "newOwner"]) {
+type ContractEventOwnershipTransferred @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -57,7 +37,17 @@ type ContractEventOwnershipTransferred implements Event @entity @index(fields: [
     newOwner: String! @index
 }
 
-type ContractEventStart implements Event @entity {
+type ContractEventPaused @entity {
+    id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
+    account: String!
+}
+
+type ContractEventStart @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -67,7 +57,17 @@ type ContractEventStart implements Event @entity {
     tokenId: BigInt!
 }
 
-type ContractFunctionBid implements Function @entity {
+type ContractEventUnpaused @entity {
+    id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
+    account: String!
+}
+
+type ContractFunctionBid @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -78,7 +78,7 @@ type ContractFunctionBid implements Function @entity {
     functionSuccess: Boolean @index
 }
 
-type ContractFunctionOnErc721Received implements Function @entity {
+type ContractFunctionOnErc721Received @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -87,13 +87,13 @@ type ContractFunctionOnErc721Received implements Function @entity {
     functionName: String! @index
     functionValue: BigInt
     functionSuccess: Boolean @index
-    arg0: String!
-    arg1: String!
-    arg2: BigInt!
-    arg3: String!
+    param0: String!
+    param1: String!
+    param2: BigInt!
+    param3: String!
 }
 
-type ContractFunctionRenounceOwnership implements Function @entity {
+type ContractFunctionPause @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -104,7 +104,18 @@ type ContractFunctionRenounceOwnership implements Function @entity {
     functionSuccess: Boolean @index
 }
 
-type ContractFunctionSetDuration implements Function @entity {
+type ContractFunctionRenounceOwnership @entity {
+    id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+}
+
+type ContractFunctionSetDuration @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -116,7 +127,7 @@ type ContractFunctionSetDuration implements Function @entity {
     duration: BigInt!
 }
 
-type ContractFunctionSetExtendedDuration implements Function @entity {
+type ContractFunctionSetExtendedDuration @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -128,7 +139,7 @@ type ContractFunctionSetExtendedDuration implements Function @entity {
     extendedDuration: BigInt!
 }
 
-type ContractFunctionSetGlmr implements Function @entity {
+type ContractFunctionSetGlmr @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -140,7 +151,7 @@ type ContractFunctionSetGlmr implements Function @entity {
     glmr: String!
 }
 
-type ContractFunctionSetMinBidIncrementPercent implements Function @entity {
+type ContractFunctionSetMinBidIncrementPercent @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -152,7 +163,7 @@ type ContractFunctionSetMinBidIncrementPercent implements Function @entity {
     minBidIncrementPercent: BigInt!
 }
 
-type ContractFunctionSetMinFirstBid implements Function @entity {
+type ContractFunctionSetMinFirstBid @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -164,7 +175,7 @@ type ContractFunctionSetMinFirstBid implements Function @entity {
     minFirstBid: BigInt!
 }
 
-type ContractFunctionSetTreasury implements Function @entity {
+type ContractFunctionSetTreasury @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -176,7 +187,7 @@ type ContractFunctionSetTreasury implements Function @entity {
     treasury: String!
 }
 
-type ContractFunctionStart implements Function @entity {
+type ContractFunctionStart @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -187,7 +198,7 @@ type ContractFunctionStart implements Function @entity {
     functionSuccess: Boolean @index
 }
 
-type ContractFunctionTransferOwnership implements Function @entity {
+type ContractFunctionTransferOwnership @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -198,3 +209,15 @@ type ContractFunctionTransferOwnership implements Function @entity {
     functionSuccess: Boolean @index
     newOwner: String!
 }
+
+type ContractFunctionUnpause @entity {
+    id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    functionName: String! @index
+    functionValue: BigInt
+    functionSuccess: Boolean @index
+}
+

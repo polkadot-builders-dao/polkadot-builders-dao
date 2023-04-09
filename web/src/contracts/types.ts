@@ -1,3 +1,4 @@
-import { useAuctionHouseGetAuction } from "./generated"
+import { ReadContractResult } from "wagmi/dist/actions"
+import { auctionHouseABI } from "./generated"
 
-export type AuctionData = NonNullable<ReturnType<typeof useAuctionHouseGetAuction>["data"]>
+export type AuctionData = ReadContractResult<typeof auctionHouseABI, "getAuction">

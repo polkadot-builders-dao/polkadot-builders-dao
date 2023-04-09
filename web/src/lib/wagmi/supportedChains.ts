@@ -1,5 +1,4 @@
 import { Chain } from "wagmi"
-import { CHAIN_ID } from "../settings"
 
 // PROD
 const moonbeam: Chain = {

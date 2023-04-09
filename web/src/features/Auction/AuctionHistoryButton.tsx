@@ -5,7 +5,7 @@ import { useOpenClose } from "../../lib/useOpenClose"
 import request, { gql } from "graphql-request"
 import { useQuery } from "@tanstack/react-query"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
-import { CHAIN_ID } from "../../lib/settings"
+import { CHAIN_ID, SQUID_URL_AUCTIONHOUSE } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon"
 import { useBlockExplorerUrl } from "../../lib/useBlockExplorerUrl"
@@ -36,7 +36,7 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
     queryKey: ["auctionHistory", tokenId],
     queryFn: () =>
       request<AuctionHistoryResults>(
-        "http://localhost:4350/graphql",
+        SQUID_URL_AUCTIONHOUSE,
         gql`
           query MyQuery {
             contractEventBids(where: { tokenId_eq: ${tokenId.toString()} }, orderBy: id_DESC) {

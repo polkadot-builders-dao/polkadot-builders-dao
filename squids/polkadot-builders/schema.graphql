@@ -1,0 +1,31 @@
+type Token @entity {
+  id: ID!
+  owner: Owner
+  uri: String
+  transfers: [Transfer!]! @derivedFrom(field: "token")
+  bids: [Bid!]! @derivedFrom(field: "token")
+}
+
+type Owner @entity {
+  id: ID!
+  ownedTokens: [Token!]! @derivedFrom(field: "owner")
+}
+
+type Transfer @entity {
+  id: ID!
+  token: Token!
+  from: Owner
+  to: Owner
+  timestamp: BigInt! @index
+  block: Int! @index
+  txHash: String! @index
+}
+
+type Bid @entity {
+  id: ID!
+  token: Token! @index
+  timestamp: BigInt! @index
+  bidder: String!
+  value: BigInt!
+  txHash: String! @index
+}

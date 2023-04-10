@@ -1,0 +1,29 @@
+manifestVersion: subsquid.io/v0.1
+name: polkadot-builders
+version: 1
+description: "Providers auctions and transfers details for Polkadot Builders Crests"
+build:
+deploy:
+  env: ADDRESS_AUCTIONHOUSE:0x89bE56Ce74C86eA90e429fBb98824aEf435C8e87
+    ADDRESS_CREST:0x8417F77904a86436223942a516f00F8aDF933B70
+    ARCHIVE_NAME:moonbeam
+    RPC_ENDPOINT:https://rpc.api.moonbeam.network
+    START_BLOCK:3270401
+  addons:
+    postgres:
+  processor:
+    cmd:
+      - node
+      - lib/processor
+  api:
+    cmd:
+      - npx
+      - squid-graphql-server
+      - "--dumb-cache"
+      - in-memory
+      - "--dumb-cache-ttl"
+      - "1000"
+      - "--dumb-cache-size"
+      - "100"
+      - "--dumb-cache-max-age"
+      - "1000"

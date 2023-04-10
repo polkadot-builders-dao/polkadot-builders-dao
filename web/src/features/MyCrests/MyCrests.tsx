@@ -16,7 +16,7 @@ export const CrestOfOwnerByIndex = ({
     args: [address, ethers.BigNumber.from(index)],
   })
 
-  return <PolkadotBuilderCrest tokenId={tokenId} withName />
+  return <PolkadotBuilderCrest tokenId={tokenId} />
 }
 
 export const MyCrests = () => {

@@ -5,7 +5,7 @@ import { useOpenClose } from "../../lib/useOpenClose"
 import request, { gql } from "graphql-request"
 import { useQuery } from "@tanstack/react-query"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
-import { CHAIN_ID, SQUID_URL_AUCTIONHOUSE } from "../../lib/settings"
+import { CHAIN_ID, SQUID_URL } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon"
 import { useBlockExplorerUrl } from "../../lib/useBlockExplorerUrl"
@@ -16,40 +16,43 @@ type AuctionHistoryButton = {
   className?: string
 } & PropsWithChildren
 
-type BidEvent = {
-  id: string
-  bid: string
-  bidder: string
-  blockNumber: number
-  blockTimestamp: string
-  transactionHash: string
+type CrestDetailsData = {
+  bids: {
+    id: string
+    bidder: string
+    value: string
+    timestamp: string
+    txHash: string
+  }[]
 }
 
-type AuctionHistoryResults = {
-  contractEventBids: BidEvent[]
+type CrestDetailsResponseData = {
+  tokenById: CrestDetailsData
 }
 
 const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
   const currency = useNativeCurrency(CHAIN_ID)
 
-  const { data, error } = useQuery({
-    queryKey: ["auctionHistory", tokenId],
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["auction-history", tokenId],
     queryFn: () =>
-      request<AuctionHistoryResults>(
-        SQUID_URL_AUCTIONHOUSE,
+      request<CrestDetailsResponseData>(
+        SQUID_URL,
         gql`
           query MyQuery {
-            contractEventBids(where: { tokenId_eq: ${tokenId.toString()} }, orderBy: id_DESC) {
-              id
-              bid
-              bidder
-              blockNumber
-              blockTimestamp
-              transactionHash
+            tokenById(id: "${tokenId}") {
+              bids(orderBy: timestamp_DESC) {
+                bidder
+                txHash
+                value
+                timestamp
+                id
+              }
             }
           }
         `
       ),
+    select: (data) => data.tokenById,
   })
 
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
@@ -64,8 +67,8 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
 
   return (
     <div>
-      {data?.contractEventBids.map((bidEvent) => {
-        const date = new Date(bidEvent.blockTimestamp)
+      {data?.bids.map((bidEvent) => {
+        const date = new Date(Number(bidEvent.timestamp))
         return (
           <div
             key={bidEvent.id}
@@ -76,14 +79,14 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
               <div className="flex gap-2">
                 <div className="grow"> {shortenAddress(bidEvent.bidder, 4, 4)}</div>
                 <div className="text-neutral-300">
-                  {Number(ethers.utils.formatEther(bidEvent.bid)).toFixed(4)} {currency?.symbol}
+                  {Number(ethers.utils.formatEther(bidEvent.value)).toFixed(4)} {currency?.symbol}
                 </div>
               </div>
               <div className="mt-1 flex items-center text-xs">
                 <div className="leading-tight">
                   {date.toLocaleDateString()} {date.toLocaleTimeString()}
                 </div>
-                <a target="_blank" href={`${blockExplorerUrl}/tx/${bidEvent.transactionHash}`}>
+                <a target="_blank" href={`${blockExplorerUrl}/tx/${bidEvent.txHash}`}>
                   <IconExternalLink className="inline h-4" />
                 </a>
               </div>
@@ -91,7 +94,7 @@ const AuctionHistory = ({ tokenId }: { tokenId: BigNumberish }) => {
           </div>
         )
       })}
-      {data?.contractEventBids?.length === 0 && <div className="px-4 py-2">No bid found</div>}
+      {data?.bids?.length === 0 && <div className="px-4 py-2">No bid found</div>}
     </div>
   )
 }

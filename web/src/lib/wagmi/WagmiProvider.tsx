@@ -3,6 +3,7 @@ import { WagmiConfig } from "wagmi"
 import { chains, wagmiClient } from "./wagmiClient"
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { rainbowTheme } from "./rainbowTheme"
+import { CustomAvatar } from "../../components/Avatar"
 
 export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -14,6 +15,7 @@ export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => {
         coolMode
         theme={rainbowTheme}
         chains={chains}
+        avatar={CustomAvatar}
       >
         {children}
       </RainbowKitProvider>

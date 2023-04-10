@@ -14,6 +14,7 @@ import { ContractsPage } from "./routes/ContractsPage"
 import { GovernancePage } from "./routes/GovernancePage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { WagmiProvider } from "./lib/wagmi/WagmiProvider"
+import { AllCrestsPage } from "./routes/AllCrestsPage"
 
 const queryClient = new QueryClient()
 
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Route path="/" element={<HomePage />} />
             <Route path="/playground" element={<PlaygroundPage />} />
             <Route path="/governance" element={<GovernancePage />} />
+            <Route path="/crests" element={<AllCrestsPage />} />
             <Route path="/my-crests" element={<MyCrestsPage />} />
             <Route path="/contracts" element={<ContractsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -44,5 +44,7 @@ export const useCrestDetails = (tokenId?: BigNumberish) => {
 
   const { image, metadata } = useCrestDetailsFromData(call.data)
 
+  if (call.error) console.log({ tokenId, call })
+
   return { ...call, image, metadata }
 }

@@ -2,6 +2,7 @@ import { Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import { default as clsx } from "clsx"
 import { ReactNode } from "react"
+import { createPortal } from "react-dom"
 
 type DrawerProps = {
   show?: boolean
@@ -12,14 +13,14 @@ type DrawerProps = {
 }
 
 export const Drawer = ({ show = false, children, title, onDismiss, lightDismiss }: DrawerProps) => {
-  return (
+  return createPortal(
     <Transition show={show}>
       {/* Background overlay */}
       {lightDismiss && (
         <Transition.Child
           data-testid="sidepanel-overlay"
           className={clsx(
-            "fixed top-0 left-0 z-40 h-full w-full bg-neutral-900 bg-opacity-50",
+            "fixed left-0 top-0 z-40 h-full w-full bg-neutral-900 bg-opacity-50",
             onDismiss ? "cursor-pointer" : ""
           )}
           enter="transition-opacity ease-linear duration-300"
@@ -35,7 +36,7 @@ export const Drawer = ({ show = false, children, title, onDismiss, lightDismiss 
       {/* Sliding sidebar */}
       <Transition.Child
         data-testid="sidepanel-panel"
-        className="fixed top-0 right-0 z-50 flex h-screen w-full max-w-[100vw] flex-col bg-neutral-800 shadow-2xl sm:w-96"
+        className="fixed right-0 top-0 z-50 flex h-screen w-full max-w-[100vw] flex-col bg-neutral-800 shadow-2xl sm:w-96"
         enter="transition ease-in-out duration-300 transform"
         enterFrom="translate-x-full"
         enterTo="translate-x-0"
@@ -60,6 +61,7 @@ export const Drawer = ({ show = false, children, title, onDismiss, lightDismiss 
         </div>
         <div className="flex-grow overflow-y-hidden text-base font-normal ">{children}</div>
       </Transition.Child>
-    </Transition>
+    </Transition>,
+    document.body
   )
 }

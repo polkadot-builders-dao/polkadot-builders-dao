@@ -64,28 +64,28 @@ const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
       {ev.type === "mint" && (
         <div className="flex items-center gap-2">
           <div>Minted by </div>
-          <AvatarAndAddress address={ev.to} size={12} />
+          <AvatarAndAddress address={ev.to} size={14} />
         </div>
       )}
       {ev.type === "burn" && (
         <div className="flex items-center gap-2">
           <div>Burned by </div>
-          <AvatarAndAddress address={ev.from} size={12} />
+          <AvatarAndAddress address={ev.from} size={14} />
         </div>
       )}
       {ev.type === "transfer" && (
         <>
           <div className="flex w-full items-center justify-between gap-2">
-            <AvatarAndAddress address={ev.from} size={12} />
+            <AvatarAndAddress address={ev.from} size={14} />
             <ArrowRightIcon className="h-4 w-4" />
-            <AvatarAndAddress address={ev.to} size={12} />
+            <AvatarAndAddress address={ev.to} size={14} />
           </div>
         </>
       )}
       {ev.type === "bid" && (
         <>
           <div className="flex w-full items-center justify-between gap-2">
-            <AvatarAndAddress address={ev.from} size={12} />
+            <AvatarAndAddress address={ev.from} size={14} />
             <div className="text-neutral-300">
               {Number(ethers.utils.formatEther(ev.value)).toFixed(4)} {currency?.symbol}
             </div>

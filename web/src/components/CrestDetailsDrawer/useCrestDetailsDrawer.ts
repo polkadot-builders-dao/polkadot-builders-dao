@@ -32,7 +32,7 @@ type CrestRawData = {
   timestamp: string
 }
 
-type CrestViewData = {
+export type CrestViewData = {
   id: string
   name: string
   description: string

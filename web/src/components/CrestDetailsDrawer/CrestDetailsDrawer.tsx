@@ -1,21 +1,119 @@
-import { IconExternalLink, IconHistory } from "@tabler/icons-react"
+import { ArrowRightIcon } from "@heroicons/react/20/solid"
+import { IconExternalLink, IconGavel, IconHistory } from "@tabler/icons-react"
 import { ethers } from "ethers"
-import { FC } from "react"
+import { FC, useMemo } from "react"
+import { auctionHouseAddress } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"
 import { useBlockExplorerUrl } from "../../lib/useBlockExplorerUrl"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
 import { Avatar } from "../Avatar"
 import { Drawer } from "../Drawer"
-import { useCrestDetailsDrawer } from "./useCrestDetailsDrawer"
+import { CrestViewData, useCrestDetailsDrawer } from "./useCrestDetailsDrawer"
+import { CrestHistoryEvent, useCrestHistory } from "./useCrestHistory"
 
-const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
-  const currency = useNativeCurrency(CHAIN_ID)
+const AvatarAndAddress: FC<{ address: string; size?: number }> = ({ address, size = 16 }) => {
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
 
-  const { data: token, isLoading, error } = useCrestDetailsDrawer(tokenId)
+  if (address === auctionHouseAddress[CHAIN_ID])
+    return (
+      <a
+        href={`${blockExplorerUrl}/address/${address}`}
+        target="_blank"
+        className="inline-flex items-center gap-1 hover:text-neutral-300"
+      >
+        <IconGavel size={size} />
+        <span>Auction House</span>
+      </a>
+    )
 
-  console.log("CrestDetails", { token, error })
+  return (
+    <a
+      href={`${blockExplorerUrl}/address/${address}`}
+      target="_blank"
+      className="inline-flex items-center gap-1 hover:text-neutral-300"
+    >
+      <Avatar size={size} address={address} />
+      <span>{shortenAddress(address, 4, 4)}</span>
+    </a>
+  )
+}
+
+const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
+  const currency = useNativeCurrency(CHAIN_ID)
+  const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
+  const date = new Date(Number(ev.timestamp))
+  return (
+    <div className="py-2   leading-none">
+      <div className="flex w-full items-center justify-between text-xs font-light ">
+        <div className="grow">
+          {date.toLocaleDateString()} {date.toLocaleTimeString()}
+        </div>
+        <a
+          target="_blank"
+          href={`${blockExplorerUrl}/tx/${ev.txHash}`}
+          className="inline-flex items-center capitalize hover:text-neutral-300"
+        >
+          {ev.type}
+          <span className="pb-1">
+            <IconExternalLink className="inline h-4" />
+          </span>
+        </a>
+      </div>
+
+      {ev.type === "mint" && (
+        <div className="flex items-center gap-2">
+          <div>Minted by </div>
+          <AvatarAndAddress address={ev.to} size={12} />
+        </div>
+      )}
+      {ev.type === "burn" && (
+        <div className="flex items-center gap-2">
+          <div>Burned by </div>
+          <AvatarAndAddress address={ev.from} size={12} />
+        </div>
+      )}
+      {ev.type === "transfer" && (
+        <>
+          <div className="flex w-full items-center justify-between gap-2">
+            <AvatarAndAddress address={ev.from} size={12} />
+            <ArrowRightIcon className="h-4 w-4" />
+            <AvatarAndAddress address={ev.to} size={12} />
+          </div>
+        </>
+      )}
+      {ev.type === "bid" && (
+        <>
+          <div className="flex w-full items-center justify-between gap-2">
+            <AvatarAndAddress address={ev.from} size={12} />
+            <div className="text-neutral-300">
+              {Number(ethers.utils.formatEther(ev.value)).toFixed(4)} {currency?.symbol}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+const CrestHistory: FC<{ crest: CrestViewData | null | undefined }> = ({ crest }) => {
+  const events = useCrestHistory(crest)
+
+  return (
+    <div className="mt-8">
+      <div className="flex items-center gap-1 font-semibold text-neutral-300">
+        <IconHistory className="inline" size={18} />
+        <span className="">History</span>
+      </div>
+      {events?.map((ev) => (
+        <CrestHistoryEventView key={ev.id} ev={ev} />
+      ))}
+    </div>
+  )
+}
+
+const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
+  const { data: token, isLoading, error } = useCrestDetailsDrawer(tokenId)
 
   if (error) return <div className="text-red p-4">{(error as any).message}</div>
 
@@ -51,14 +149,7 @@ const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
           ))}
           <div className="flex w-full items-center justify-between">
             <div>Owned by</div>
-            <a
-              target="_blank"
-              className="flex items-center gap-2 hover:text-neutral-300"
-              href={`${blockExplorerUrl}/address/${token.owner}`}
-            >
-              <Avatar size={20} address={token.owner} />
-              <span>{shortenAddress(token.owner)}</span>
-            </a>
+            <AvatarAndAddress address={token.owner} />
           </div>
           <div className="flex w-full items-center justify-between">
             <div>Created on</div>
@@ -66,45 +157,7 @@ const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
           </div>
         </div>
       </div>
-
-      <div>
-        {token?.bids?.length ? (
-          <div className="mt-8">
-            <div className="flex items-center gap-1 font-semibold text-neutral-300">
-              <IconHistory className="inline" />
-              <span className="text-lg">History</span>
-            </div>
-            {token?.bids.map((bidEvent) => {
-              const date = new Date(Number(bidEvent.timestamp))
-              return (
-                <div
-                  key={bidEvent.id}
-                  className="flex w-full items-center gap-2 border-b border-neutral-700 px-4 py-2"
-                >
-                  <Avatar size={36} address={bidEvent.bidder} />
-                  <div className="grow">
-                    <div className="flex gap-2">
-                      <div className="grow"> {shortenAddress(bidEvent.bidder, 4, 4)}</div>
-                      <div className="text-neutral-300">
-                        {Number(ethers.utils.formatEther(bidEvent.value)).toFixed(4)}{" "}
-                        {currency?.symbol}
-                      </div>
-                    </div>
-                    <div className="mt-1 flex items-center text-xs">
-                      <div className="leading-tight">
-                        {date.toLocaleDateString()} {date.toLocaleTimeString()}
-                      </div>
-                      <a target="_blank" href={`${blockExplorerUrl}/tx/${bidEvent.txHash}`}>
-                        <IconExternalLink className="inline h-4" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        ) : null}
-      </div>
+      <CrestHistory crest={token} />
     </div>
   )
 }

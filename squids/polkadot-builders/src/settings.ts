@@ -1,6 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 
-import { KnownArchivesEVM, KnownArchivesSubstrate } from "@subsquid/archive-registry"
+import { KnownArchivesEVM } from "@subsquid/archive-registry"
 
 if (!process.env.ADDRESS_CREST) throw new Error("ADDRESS_CREST is not defined")
 if (!process.env.ADDRESS_AUCTIONHOUSE) throw new Error("ADDRESS_AUCTIONHOUSE is not defined")

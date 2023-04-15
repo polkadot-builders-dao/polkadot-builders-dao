@@ -1,9 +1,20 @@
 type Token @entity {
   id: ID!
+  name: String
+  description: String
   owner: Owner
-  uri: String
+  image: String
+  dna: BigInt
+  attributes: [Attribute!]! @derivedFrom(field: "token")
   transfers: [Transfer!]! @derivedFrom(field: "token")
   bids: [Bid!]! @derivedFrom(field: "token")
+}
+
+type Attribute @entity {
+  id: ID!
+  token: Token!
+  type: String!
+  value: String!
 }
 
 type Owner @entity {

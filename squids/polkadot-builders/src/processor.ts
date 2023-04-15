@@ -3,7 +3,7 @@ import { EvmBatchProcessor } from "@subsquid/evm-processor"
 import { lookupArchive } from "@subsquid/archive-registry"
 import { events as crestEvents, Contract as CrestContract } from "./abi/crestContract"
 import { events as auctionHouseEvents } from "./abi/auctionHouse"
-import { Bid, Owner, Token, Transfer } from "./model"
+import { Attribute, Bid, Owner, Token, Transfer } from "./model"
 import { BigNumber } from "ethers"
 import { Block, ChainContext } from "./abi/abi.support"
 import {
@@ -13,6 +13,7 @@ import {
   RPC_ENDPOINT,
   START_BLOCK,
 } from "./settings"
+import md5 from "blueimp-md5"
 
 const processor = new EvmBatchProcessor()
   .setDataSource({
@@ -48,6 +49,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
   const tokens: Record<string, Token> = {}
   const transfers: Transfer[] = []
   const bids: Bid[] = []
+  const attributes: Attribute[] = []
 
   for (const block of ctx.blocks) {
     for (const item of block.items) {
@@ -64,7 +66,8 @@ processor.run(new TypeormDatabase(), async (ctx) => {
                 block.header,
                 ctx.store,
                 tokens,
-                tokenId.toString()
+                tokenId.toString(),
+                attributes
               )
 
               token.owner = newOwner
@@ -72,7 +75,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
 
               transfers.push(
                 new Transfer({
-                  id: `transfer-${item.transaction.hash}-${from}-${to}`,
+                  id: md5(`transfer-${item.transaction.hash}-${tokenId}-${from}-${to}`),
                   from: oldOwner,
                   to: newOwner,
                   token,
@@ -96,11 +99,12 @@ processor.run(new TypeormDatabase(), async (ctx) => {
                 block.header,
                 ctx.store,
                 tokens,
-                tokenId.toString()
+                tokenId.toString(),
+                attributes
               )
 
               const BidItem = new Bid({
-                id: `bid-${item.transaction.hash}`,
+                id: md5(`bid-${item.transaction.hash}-${item.evmLog.id}`),
                 bidder,
                 token,
                 timestamp: BigInt(block.header.timestamp),
@@ -115,17 +119,43 @@ processor.run(new TypeormDatabase(), async (ctx) => {
       await ctx.store.save([...Object.values(tokens)])
       await ctx.store.save([...transfers])
       await ctx.store.save([...bids])
+      await ctx.store.save([...attributes])
     }
   }
 })
 
-const ensureTokenURI = async (ctx: ChainContext, block: Block, token: Token) => {
+const ensureTokenData = async (
+  ctx: ChainContext,
+  block: Block,
+  token: Token,
+  attributes: Attribute[]
+) => {
   try {
+    const tokenId = BigNumber.from(token.id)
     const contract = new CrestContract(ctx, block, ADDRESS_CREST)
-    token.uri = await contract.tokenURI(BigNumber.from(token.id))
+    const tokenUri = await contract.tokenURI(tokenId)
+    token.dna = (await contract.dnaMap(tokenId)).toBigInt()
+
+    const base64 = Buffer.from(tokenUri.split(",")[1], "base64").toString("utf-8")
+    const json = JSON.parse(base64)
+
+    token.name = json.name
+    token.description = json.description
+    token.image = json.image
+    for (const attr of json.attributes) {
+      attributes.push(
+        new Attribute({
+          id: md5(`attribute-${token.id}-${attr.trait_type}-${attr.value}`),
+          token,
+          type: attr.trait_type,
+          value: attr.value,
+        })
+      )
+    }
+
     return true
   } catch (err) {
-    console.error("Failed to get tokenURI for %s", token.id, err)
+    console.error("Failed to decode metadata for %s", token.id, err)
     return false
   }
 }
@@ -145,7 +175,8 @@ const ensureToken = async (
   block: Block,
   store: Store,
   tokens: Record<string, Token>,
-  id: string
+  id: string,
+  attributes: Attribute[]
 ) => {
   let token = await store.get(Token, id)
   if (!token && tokens[id]) token = tokens[id]
@@ -153,7 +184,7 @@ const ensureToken = async (
     token = new Token({ id })
     tokens[id] = token
   }
-  if (!token.uri && (await ensureTokenURI(ctx, block, token))) tokens[id] = token
+  if (!token.dna && (await ensureTokenData(ctx, block, token, attributes))) tokens[id] = token
 
   return token as Token
 }

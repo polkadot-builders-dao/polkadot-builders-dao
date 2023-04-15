@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid"
 import { IconExternalLink, IconGavel, IconHistory } from "@tabler/icons-react"
 import { ethers } from "ethers"
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import { auctionHouseAddress } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"

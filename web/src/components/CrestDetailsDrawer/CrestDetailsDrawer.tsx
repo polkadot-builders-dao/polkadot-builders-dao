@@ -63,7 +63,7 @@ const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
 
       {ev.type === "mint" && (
         <div className="flex items-center gap-2">
-          <div>Minted by </div>
+          <div>Minted for </div>
           <AvatarAndAddress address={ev.to} size={14} />
         </div>
       )}

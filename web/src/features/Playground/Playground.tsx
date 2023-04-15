@@ -20,21 +20,22 @@ export const Playground: FC = () => {
           <div
             className={classNames(
               "flex flex-col items-center justify-center",
-              "max-w-[300px]",
-              !image && "animate-pulse"
+              "w-[300px] max-w-[300px]"
             )}
           >
-            {image && (
+            {image ? (
               <img
                 alt=""
                 src={image}
                 className="inline-block aspect-square w-full max-w-[300px] rounded-xl"
               />
+            ) : (
+              <div className="inline-block aspect-square w-full max-w-[300px] animate-pulse rounded-xl"></div>
             )}
           </div>
           <pre
             className={classNames(
-              "h-80 min-w-0 max-w-full grow overflow-auto rounded-xl bg-neutral-800 p-4 text-sm",
+              "h-80 w-full min-w-0 max-w-full grow overflow-auto rounded-xl bg-neutral-800 p-4 text-sm",
               !metadata && "animate-pulse"
             )}
           >

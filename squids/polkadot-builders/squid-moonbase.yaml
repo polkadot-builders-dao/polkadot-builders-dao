@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: polkadot-builders-moonbase
-version: 1
+version: 2
 description: "[TESTNET] Providers auctions and transfers details for Polkadot Builders Crests"
 build:
 deploy:

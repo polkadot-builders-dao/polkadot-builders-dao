@@ -17,6 +17,7 @@
   "devDependencies": {
     "@subsquid/evm-typegen": "2.1.1",
     "@subsquid/typeorm-codegen": "0.3.3",
+    "@types/blueimp-md5": "^2.18.0",
     "@types/node": "^18.15.5",
     "typescript": "~5.0.2"
   }

@@ -1,8 +1,12 @@
+import { useAccount } from "wagmi"
 import { Layout } from "../components/Layout"
-import { MyCrests } from "../features/MyCrests/MyCrests"
+import { Crests } from "../features/Crests/Crests"
 
-export const MyCrestsPage = () => (
-  <Layout>
-    <MyCrests />
-  </Layout>
-)
+export const MyCrestsPage = () => {
+  const { address } = useAccount()
+  return (
+    <Layout>
+      <Crests address={address} />
+    </Layout>
+  )
+}

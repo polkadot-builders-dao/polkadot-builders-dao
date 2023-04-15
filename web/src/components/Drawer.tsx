@@ -3,6 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import { default as clsx } from "clsx"
 import { ReactNode } from "react"
 import { createPortal } from "react-dom"
+import { useLockBodyScroll } from "react-use"
 
 type DrawerProps = {
   show?: boolean
@@ -12,9 +13,16 @@ type DrawerProps = {
   lightDismiss?: boolean
 }
 
+const BodyScrollLock = ({ locked }: { locked?: boolean }) => {
+  useLockBodyScroll(locked)
+  return null
+}
+
 export const Drawer = ({ show = false, children, title, onDismiss, lightDismiss }: DrawerProps) => {
   return createPortal(
     <Transition show={show}>
+      <BodyScrollLock locked />
+
       {/* Background overlay */}
       {lightDismiss && (
         <Transition.Child
@@ -59,7 +67,7 @@ export const Drawer = ({ show = false, children, title, onDismiss, lightDismiss 
             )}
           </div>
         </div>
-        <div className="flex-grow overflow-y-hidden text-base font-normal ">{children}</div>
+        <div className="flex-grow overflow-y-auto text-base font-normal">{children}</div>
       </Transition.Child>
     </Transition>,
     document.body

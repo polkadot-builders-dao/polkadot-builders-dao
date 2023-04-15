@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from "ethers"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useCrestTokenUri } from "../contracts/generated"
 import { CHAIN_ID } from "./settings"
 
@@ -33,7 +33,7 @@ export const useCrestDetailsFromData = (data?: string) => {
   }, [data])
 }
 
-export const useCrestDetails = (tokenId?: BigNumberish) => {
+export const useCrestFromChain = (tokenId?: BigNumberish) => {
   const id = tokenId ? BigNumber.from(tokenId) : BigNumber.from(0)
 
   const call = useCrestTokenUri({

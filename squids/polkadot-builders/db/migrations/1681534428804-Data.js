@@ -1,5 +1,5 @@
-module.exports = class Data1681528588156 {
-    name = 'Data1681528588156'
+module.exports = class Data1681534428804 {
+    name = 'Data1681534428804'
 
     async up(db) {
         await db.query(`CREATE TABLE "owner" ("id" character varying NOT NULL, CONSTRAINT "PK_8e86b6b9f94aece7d12d465dc0c" PRIMARY KEY ("id"))`)
@@ -16,7 +16,9 @@ module.exports = class Data1681528588156 {
         await db.query(`CREATE INDEX "IDX_e7923cd640284be438bd80d3bd" ON "bid" ("token_id") `)
         await db.query(`CREATE INDEX "IDX_75f92a69d75b5098a765f7c205" ON "bid" ("timestamp") `)
         await db.query(`CREATE INDEX "IDX_b906cbac65d288db71e12e6822" ON "bid" ("tx_hash") `)
-        await db.query(`CREATE TABLE "token" ("id" character varying NOT NULL, "name" text, "description" text, "image" text, "dna" numeric, "owner_id" character varying, CONSTRAINT "PK_82fae97f905930df5d62a702fc9" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE TABLE "token" ("id" character varying NOT NULL, "token_id" numeric NOT NULL, "timestamp" numeric NOT NULL, "name" text, "description" text, "image" text, "dna" numeric, "owner_id" character varying, CONSTRAINT "PK_82fae97f905930df5d62a702fc9" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_cab3c454b0419a03584a3990ce" ON "token" ("token_id") `)
+        await db.query(`CREATE INDEX "IDX_d9c1205e8840caf1bb0fd7c87c" ON "token" ("timestamp") `)
         await db.query(`CREATE INDEX "IDX_77fa31a311c711698a0b944382" ON "token" ("owner_id") `)
         await db.query(`ALTER TABLE "attribute" ADD CONSTRAINT "FK_8c947bde2aea695c9257d1eea83" FOREIGN KEY ("token_id") REFERENCES "token"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
         await db.query(`ALTER TABLE "transfer" ADD CONSTRAINT "FK_b27b1150b8a7af68424540613c7" FOREIGN KEY ("token_id") REFERENCES "token"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
@@ -42,6 +44,8 @@ module.exports = class Data1681528588156 {
         await db.query(`DROP INDEX "public"."IDX_75f92a69d75b5098a765f7c205"`)
         await db.query(`DROP INDEX "public"."IDX_b906cbac65d288db71e12e6822"`)
         await db.query(`DROP TABLE "token"`)
+        await db.query(`DROP INDEX "public"."IDX_cab3c454b0419a03584a3990ce"`)
+        await db.query(`DROP INDEX "public"."IDX_d9c1205e8840caf1bb0fd7c87c"`)
         await db.query(`DROP INDEX "public"."IDX_77fa31a311c711698a0b944382"`)
         await db.query(`ALTER TABLE "attribute" DROP CONSTRAINT "FK_8c947bde2aea695c9257d1eea83"`)
         await db.query(`ALTER TABLE "transfer" DROP CONSTRAINT "FK_b27b1150b8a7af68424540613c7"`)

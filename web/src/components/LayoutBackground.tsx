@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react"
 import { getBackgroundColorCode } from "../lib/getBackgroundColorCode"
-import { CrestMetadata } from "../lib/useCrestDetails"
+import { CrestMetadata } from "../lib/useCrestFromChain"
 
 const applyLayoutColor = (color: string) => {
   const layout = document.getElementById("layout")

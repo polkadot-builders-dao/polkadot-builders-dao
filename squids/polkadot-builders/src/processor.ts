@@ -1,5 +1,5 @@
 import { Store, TypeormDatabase } from "@subsquid/typeorm-store"
-import { EvmBatchProcessor } from "@subsquid/evm-processor"
+import { EvmBatchProcessor, EvmBlock } from "@subsquid/evm-processor"
 import { lookupArchive } from "@subsquid/archive-registry"
 import { events as crestEvents, Contract as CrestContract } from "./abi/crestContract"
 import { events as auctionHouseEvents } from "./abi/auctionHouse"
@@ -108,7 +108,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
                 bidder,
                 token,
                 timestamp: BigInt(block.header.timestamp),
-                value: BigNumber.from(value).toBigInt(),
+                value: value.toBigInt(),
                 txHash: item.transaction.hash,
               })
               bids.push(BidItem)
@@ -172,7 +172,7 @@ const ensureOwner = async (store: Store, owners: Record<string, Owner>, id: stri
 
 const ensureToken = async (
   ctx: ChainContext,
-  block: Block,
+  block: EvmBlock,
   store: Store,
   tokens: Record<string, Token>,
   id: string,
@@ -181,7 +181,11 @@ const ensureToken = async (
   let token = await store.get(Token, id)
   if (!token && tokens[id]) token = tokens[id]
   if (!token) {
-    token = new Token({ id })
+    token = new Token({
+      id,
+      tokenId: BigInt(id),
+      timestamp: BigInt(block.timestamp),
+    })
     tokens[id] = token
   }
   if (!token.dna && (await ensureTokenData(ctx, block, token, attributes))) tokens[id] = token

@@ -1,4 +1,4 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, ManyToOne as ManyToOne_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
 import {Owner} from "./owner.model"
 import {Attribute} from "./attribute.model"
@@ -13,6 +13,14 @@ export class Token {
 
     @PrimaryColumn_()
     id!: string
+
+    @Index_()
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    tokenId!: bigint
+
+    @Index_()
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    timestamp!: bigint
 
     @Column_("text", {nullable: true})
     name!: string | undefined | null

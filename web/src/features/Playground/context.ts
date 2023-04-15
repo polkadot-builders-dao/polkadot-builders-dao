@@ -9,7 +9,7 @@ import {
 } from "../../contracts/generated"
 import { provideContext } from "../../lib/provideContext"
 import { CHAIN_ID } from "../../lib/settings"
-import { useCrestDetailsFromData } from "../../lib/useCrestDetails"
+import { useCrestDetailsFromData } from "../../lib/useCrestFromChain"
 
 const usePlaygroundProvider = () => {
   const [dna, setDna] = useState("0")

@@ -9,11 +9,13 @@ import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
 import { useEffect, useMemo, useState } from "react"
 import { useNativeCurrency } from "../../lib/useNativeCurrency"
-import { useCrestDetails } from "../../lib/useCrestDetails"
+import { useCrestFromChain } from "../../lib/useCrestFromChain"
 import { AuctionHistoryButton } from "./AuctionHistoryButton"
 import Jazzicon from "react-jazzicon/dist/Jazzicon"
 import { jsNumberForAddress } from "react-jazzicon"
 import { LayoutBackground } from "../../components/LayoutBackground"
+import { useOpenClose } from "../../lib/useOpenClose"
+import { CrestDetailsDrawer } from "../../components/CrestDetailsDrawer/CrestDetailsDrawer"
 
 const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
   const currency = useNativeCurrency(CHAIN_ID)
@@ -64,7 +66,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
               </div>
               <AuctionHistoryButton
                 className="text-polkadot-400 hover:text-polkadot-300 font-light"
-                tokenId={auction.tokenId}
+                tokenId={auction.tokenId?.toString()}
               />
             </div>
             <div className="flex w-full justify-between sm:text-lg">
@@ -94,7 +96,8 @@ export const Auction = () => {
     watch: true,
   })
 
-  const { image, metadata } = useCrestDetails(auction?.tokenId)
+  const { image, metadata } = useCrestFromChain(auction?.tokenId)
+  const { open, close, isOpen } = useOpenClose()
 
   // keep prev value until all data is fetched for the new auction
   // this allows for smooth UI transition
@@ -113,11 +116,13 @@ export const Auction = () => {
         <div className="grid min-h-[300px] w-full grid-cols-1 justify-evenly gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col items-center justify-center">
             {auctionData && (
-              <img
-                className="inline-block aspect-square w-full max-w-[300px] rounded-xl lg:max-w-[400px]"
-                src={auctionData.image}
-                alt=""
-              />
+              <button onClick={open}>
+                <img
+                  className="inline-block aspect-square w-full max-w-[300px] rounded-xl lg:max-w-[400px]"
+                  src={auctionData.image}
+                  alt=""
+                />
+              </button>
             )}
           </div>
           <div className="lg-col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
@@ -130,6 +135,9 @@ export const Auction = () => {
       </div>
 
       {auctionData && <LayoutBackground metadata={auctionData.metadata} />}
+      {!!auction?.tokenId && (
+        <CrestDetailsDrawer tokenId={auction.tokenId.toString()} onDismiss={close} show={isOpen} />
+      )}
     </div>
   )
 }

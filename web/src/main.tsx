@@ -11,7 +11,6 @@ import { PlaygroundPage } from "./routes/PlaygroundPage"
 import { HomePage } from "./routes/HomePage"
 import { MyCrestsPage } from "./routes/MyCrestsPage"
 import { ContractsPage } from "./routes/ContractsPage"
-import { GovernancePage } from "./routes/GovernancePage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { WagmiProvider } from "./lib/wagmi/WagmiProvider"
 import { AllCrestsPage } from "./routes/AllCrestsPage"
@@ -26,7 +25,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/playground" element={<PlaygroundPage />} />
-            <Route path="/governance" element={<GovernancePage />} />
             <Route path="/crests" element={<AllCrestsPage />} />
             <Route path="/my-crests" element={<MyCrestsPage />} />
             <Route path="/contracts" element={<ContractsPage />} />

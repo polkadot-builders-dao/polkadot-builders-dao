@@ -3,10 +3,10 @@ import { NavLink, To } from "react-router-dom"
 import classNames from "classnames"
 import { DaoLogoColor } from "../assets/logos"
 import { useAuctionHouseGetConfig } from "../contracts/generated"
-import { useAccount, useBalance } from "wagmi"
+import { useBalance } from "wagmi"
 import { CHAIN_ID } from "../lib/settings"
 import { useBlockExplorerUrl } from "../lib/useBlockExplorerUrl"
-import { IconBrandDiscord } from "@tabler/icons-react"
+import { IconBrandDiscord, IconHeartFilled } from "@tabler/icons-react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
@@ -57,10 +57,9 @@ const Treasury = () => {
   )
 }
 
-export const Layout: FC<PropsWithChildren> = ({ children }) => {
-  const { address } = useAccount()
+export const Layout: FC<PropsWithChildren & { content?: ReactNode }> = ({ children, content }) => {
   return (
-    <div id="layout" className="">
+    <div id="layout" className="flex min-h-screen flex-col">
       <header className="w-full py-5 text-center">
         <div className="inline-flex h-10 w-full max-w-5xl items-center justify-between gap-4 px-3 sm:px-6">
           <div className="flex items-center gap-4">
@@ -69,7 +68,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="https://discord.gg/AKnhvdazUm"
+              href="https://discord.gg/dCm9utHjYz"
               className="btn secondary flex flex-col justify-center"
             >
               <IconBrandDiscord className="inline-block" />
@@ -90,17 +89,27 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             <li>
               <Link to="/playground">Playground</Link>
             </li>
-            {address && (
-              <li>
-                <Link to="/my-crests">My Crests</Link>
-              </li>
-            )}
           </ul>
         </nav>
       </header>
-      <section className="animate-fade-in container mx-auto my-4 w-full max-w-5xl px-3 sm:px-6">
-        {children}
-      </section>
+      <div className="flex w-full grow flex-col">
+        <section className="animate-fade-in container mx-auto my-4 w-full max-w-5xl  px-3 sm:px-6">
+          {children}
+        </section>
+        <section className="grow bg-neutral-950 pb-4">{content}</section>
+      </div>
+      <footer className="flex flex-col items-center justify-center border-t border-neutral-800 bg-neutral-900 py-4 text-sm shadow">
+        <div className="text-center">
+          Built with <IconHeartFilled className="inline h-5 w-5 text-red-500" /> for the Polkadot
+          ecosystem
+        </div>
+        <div className="text-center">
+          Supercharged with{" "}
+          <a href="https://subsquid.io" className="text-neutral-300 hover:text-neutral-200">
+            subsquid.io
+          </a>
+        </div>
+      </footer>
     </div>
   )
 }

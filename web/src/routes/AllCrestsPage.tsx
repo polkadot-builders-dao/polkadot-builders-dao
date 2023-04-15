@@ -1,8 +1,8 @@
 import { Layout } from "../components/Layout"
-import { AllCrests } from "../features/AllCrests/AllCrests"
+import { Crests } from "../features/Crests/Crests"
 
 export const AllCrestsPage = () => (
   <Layout>
-    <AllCrests />
+    <Crests />
   </Layout>
 )

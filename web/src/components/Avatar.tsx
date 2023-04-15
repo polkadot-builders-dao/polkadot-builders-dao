@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { jsNumberForAddress } from "react-jazzicon"
 import Jazzicon from "react-jazzicon/dist/Jazzicon"
 
-export const CustomAvatar: AvatarComponent = ({ address, size }) => {
+export const Avatar: AvatarComponent = ({ address, size }) => {
   const seed = useMemo(() => jsNumberForAddress(address), [address])
 
   return <Jazzicon diameter={size} seed={seed} />

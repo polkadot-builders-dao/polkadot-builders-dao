@@ -1,5 +1,7 @@
 type Token @entity {
   id: ID!
+  tokenId: BigInt! @index
+  timestamp: BigInt! @index
   name: String
   description: String
   owner: Owner

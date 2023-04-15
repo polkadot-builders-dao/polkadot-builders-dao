@@ -48,5 +48,3 @@ export const Playground: FC = () => {
     </div>
   )
 }
-
-export default {}

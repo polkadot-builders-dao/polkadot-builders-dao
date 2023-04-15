@@ -35,11 +35,6 @@ const PartEditor: FC<PartEditorProps> = ({ label, parts, selectedIndex = 0, onSe
   )
 }
 
-type DnaEditorProps = {
-  dna: string
-  onChange: (dna: string) => void
-}
-
 export const DnaEditor = () => {
   const { dna, setDna } = usePlayground()
   const { data: parts } = usePartsStoreGetAllParts({

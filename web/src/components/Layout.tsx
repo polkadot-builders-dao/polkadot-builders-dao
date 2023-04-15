@@ -37,7 +37,7 @@ const Treasury = () => {
 
   const url = useMemo(() => {
     if (!blockExplorerUrl) return "https://perdu.com"
-    return `${blockExplorerUrl}/address/${config?.treasury}`
+    return `${blockExplorerUrl}/tokenholdings?a=${config?.treasury}`
   }, [blockExplorerUrl, config?.treasury])
 
   if (!config || !balance) return null
@@ -46,7 +46,6 @@ const Treasury = () => {
     <a
       title={`${balance.formatted} ${balance.symbol}`}
       href={url}
-      //className="flex items-center gap-2 rounded border border-white/20 bg-neutral-950/30 px-2 py-2 text-xs text-neutral-200 hover:bg-neutral-950/10"
       className="btn secondary flex items-center gap-2 text-xs"
     >
       <div className="hidden sm:block">Treasury</div>

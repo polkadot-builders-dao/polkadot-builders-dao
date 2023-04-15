@@ -41,7 +41,8 @@ export const HomePageContent = () => (
             Founders receive rewards in the form of Crests (10% of supply for first 2000 crests).
           </li>
           <li>
-            The treasury will be controlled exclusively by Polkadot Builders via governance - WIP
+            The treasury will be controlled exclusively by Polkadot Builders via{" "}
+            <a href="https://www.tally.xyz/gov/polkadot-builders">governance</a>
           </li>
           <li>Artwork is generative and stored directly on-chain (not IPFS).</li>
           <li>

@@ -130,7 +130,7 @@ const GovernanceConfig = () => {
         {quorumNum?.toString()} / {quorumDen?.toString()}
       </SectionRow>
       <SectionRow title="Voting Delay">{votinDelay?.toString()} blocks</SectionRow>
-      <SectionRow title="Voting Period">{votinPeriod?.toString()} seconds</SectionRow>
+      <SectionRow title="Voting Period">{votinPeriod?.toString()} blocks</SectionRow>
     </Section>
   )
 }

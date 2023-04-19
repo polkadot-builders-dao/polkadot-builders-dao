@@ -1,4 +1,3 @@
-import { formatEther } from "ethers/lib/utils.js"
 import { useAuctionHouseGetAuction } from "../../contracts/generated"
 import { shortenAddress } from "../../lib/shortenAddress"
 
@@ -8,7 +7,6 @@ import { CHAIN_ID } from "../../lib/settings"
 import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
 import { useEffect, useMemo, useState } from "react"
-import { useNativeCurrency } from "../../lib/useNativeCurrency"
 import { useCrestFromChain } from "../../lib/useCrestFromChain"
 import { AuctionHistoryButton } from "./AuctionHistoryButton"
 import Jazzicon from "react-jazzicon/dist/Jazzicon"
@@ -16,18 +14,14 @@ import { jsNumberForAddress } from "react-jazzicon"
 import { LayoutBackground } from "../../components/LayoutBackground"
 import { useOpenClose } from "../../lib/useOpenClose"
 import { CrestDetailsDrawer } from "../../components/CrestDetailsDrawer/CrestDetailsDrawer"
+import { EthValue } from "../../components/EthValue"
 
 const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
-  const currency = useNativeCurrency(CHAIN_ID)
   const auctionDate = useMemo(
     () => new Date(auction.startTime.toNumber() * 1000).toLocaleDateString(),
     [auction.startTime]
   )
   const dateEnd = useMemo(() => new Date(auction.endTime.toNumber() * 1000), [auction.endTime])
-  const currentBid = useMemo(
-    () => Number(formatEther(auction.currentBid)).toFixed(2),
-    [auction.currentBid]
-  )
 
   return (
     <div className="flex min-h-[300px] w-full max-w-[500px] flex-col rounded-xl bg-neutral-950/40 p-4">
@@ -44,7 +38,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
           <div>
             <div className="text-neutral-500">Current bid</div>
             <div className="text-xl">
-              {currentBid} {currency?.symbol}
+              <EthValue wei={auction.currentBid} />
             </div>
           </div>
           <div className="my-1 hidden border-r border-current opacity-50 sm:block"></div>
@@ -80,7 +74,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
                 <span>{shortenAddress(auction.bidder, 4, 4)}</span>
               </div>
               <div className="text-neutral-200">
-                {currentBid} {currency?.symbol}
+                <EthValue wei={auction.currentBid} />
               </div>
             </div>
           </div>

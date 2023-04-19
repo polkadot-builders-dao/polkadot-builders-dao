@@ -1,7 +1,6 @@
 import classNames from "classnames"
-import { ethers } from "ethers"
 import { FC, PropsWithChildren } from "react"
-import { Chain } from "wagmi"
+import { EthValue } from "../../components/EthValue"
 import { PageHead } from "../../components/PageHead"
 import {
   useAuctionHouse,
@@ -25,9 +24,6 @@ import {
   usePartsStoreOwner,
 } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
-import { supportedChains } from "../../lib/wagmi/supportedChains"
-
-const network = supportedChains.find((c) => c.id === CHAIN_ID) as Chain
 
 const SectionRow = ({
   title,
@@ -86,7 +82,7 @@ const AuctionHouseConfig = () => {
         {config.extendedDuration.toNumber()} seconds
       </SectionRow>
       <SectionRow title="Min First Bid">
-        {ethers.utils.formatEther(config.minFirstBid)} {network.nativeCurrency.symbol}
+        <EthValue wei={config.minFirstBid} />
       </SectionRow>
       <SectionRow title="Min Big Increment">
         {config.minBidIncrementPercent.toNumber()} %

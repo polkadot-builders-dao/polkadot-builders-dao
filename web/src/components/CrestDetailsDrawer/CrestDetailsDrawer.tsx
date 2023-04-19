@@ -1,14 +1,13 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid"
 import { IconExternalLink, IconGavel, IconHistory } from "@tabler/icons-react"
-import { ethers } from "ethers"
 import { FC } from "react"
 import { auctionHouseAddress } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"
 import { useBlockExplorerUrl } from "../../lib/useBlockExplorerUrl"
-import { useNativeCurrency } from "../../lib/useNativeCurrency"
 import { Avatar } from "../Avatar"
 import { Drawer } from "../Drawer"
+import { EthValue } from "../EthValue"
 import { CrestViewData, useCrestDetailsDrawer } from "./useCrestDetailsDrawer"
 import { CrestHistoryEvent, useCrestHistory } from "./useCrestHistory"
 
@@ -40,7 +39,6 @@ const AvatarAndAddress: FC<{ address: string; size?: number }> = ({ address, siz
 }
 
 const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
-  const currency = useNativeCurrency(CHAIN_ID)
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
   const date = new Date(Number(ev.timestamp))
   return (
@@ -87,7 +85,7 @@ const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
           <div className="flex w-full items-center justify-between gap-2">
             <AvatarAndAddress address={ev.from} size={14} />
             <div className="text-neutral-300">
-              {Number(ethers.utils.formatEther(ev.value)).toFixed(4)} {currency?.symbol}
+              <EthValue wei={ev.value} />
             </div>
           </div>
         </>
@@ -115,7 +113,7 @@ const CrestHistory: FC<{ crest: CrestViewData | null | undefined }> = ({ crest }
 const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
   const { data: token, isLoading, error } = useCrestDetailsDrawer(tokenId)
 
-  if (error) return <div className="text-red p-4">{(error as any).message}</div>
+  if (error) return <div className="text-red p-4">{(error as Error).message}</div>
 
   if (isLoading)
     return (

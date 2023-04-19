@@ -18,7 +18,7 @@ export const BidInput = () => {
 
   const minValue = useMemo(() => {
     if (!auction) return undefined
-    return Number(ethers.utils.formatEther(auction.minBid)).toFixed(2)
+    return ethers.utils.formatEther(auction.minBid)
   }, [auction])
 
   const [bid, setBid] = useState<number>()

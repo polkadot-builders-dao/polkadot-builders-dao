@@ -85,9 +85,6 @@ export const Layout: FC<PropsWithChildren & { content?: ReactNode }> = ({ childr
             <li>
               <Link to="/crests">Crests</Link>
             </li>
-            <li>
-              <Link to="/playground">Playground</Link>
-            </li>
           </ul>
         </nav>
       </header>

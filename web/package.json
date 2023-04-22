@@ -15,13 +15,13 @@
     "wagmi:watch": "wagmi generate --watch"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.23.0",
-    "@headlessui/react": "^1.7.13",
+    "@floating-ui/react": "^0.23.1",
+    "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
-    "@rainbow-me/rainbowkit": "^0.12.5",
-    "@tabler/icons-react": "^2.13.1",
+    "@rainbow-me/rainbowkit": "^0.12.9",
+    "@tabler/icons-react": "^2.17.0",
     "@talismn/wagmi-connector": "^0.2.0",
-    "@tanstack/react-query": "^4.28.0",
+    "@tanstack/react-query": "^4.29.3",
     "blueimp-md5": "^2.19.0",
     "classnames": "^2.3.2",
     "color": "^4.2.3",
@@ -36,21 +36,21 @@
     "react-router-dom": "^6.10.0",
     "react-toastify": "^9.1.2",
     "react-use": "^17.4.0",
-    "wagmi": "^0.12.8"
+    "wagmi": "^0.12.12"
   },
   "devDependencies": {
     "@types/blueimp-md5": "^2.18.0",
     "@types/color": "^3.0.3",
-    "@types/react": "^18.0.31",
+    "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
-    "@wagmi/cli": "^0.1.14",
+    "@wagmi/cli": "^0.1.15",
     "autoprefixer": "^10.4.14",
     "dotenv": "^16.0.3",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.23",
     "tailwindcss": "^3.3.1",
-    "typescript": "^5.0.3",
-    "vite": "^4.2.1",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.1",
     "vite-plugin-svgr": "^2.4.0"
   },
   "packageManager": "yarn@3.3.0"

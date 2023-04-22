@@ -11,6 +11,9 @@ import { EthValue } from "../EthValue"
 import { CrestViewData, useCrestDetailsDrawer } from "./useCrestDetailsDrawer"
 import { CrestHistoryEvent, useCrestHistory } from "./useCrestHistory"
 
+const isFounderMint = (ev: CrestHistoryEvent) =>
+  ev.type === "mint" && ev.to !== auctionHouseAddress[CHAIN_ID]
+
 const AvatarAndAddress: FC<{ address: string; size?: number }> = ({ address, size = 16 }) => {
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
 
@@ -42,7 +45,7 @@ const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
   const date = new Date(Number(ev.timestamp))
   return (
-    <div className="py-2   leading-none">
+    <div className="py-2 leading-none">
       <div className="flex w-full items-center justify-between text-xs font-light ">
         <div className="grow">
           {date.toLocaleDateString()} {date.toLocaleTimeString()}
@@ -61,7 +64,7 @@ const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
 
       {ev.type === "mint" && (
         <div className="flex items-center gap-2">
-          <div>Minted for </div>
+          <div>{isFounderMint(ev) ? "Founder mint" : "Minted"} for </div>
           <AvatarAndAddress address={ev.to} size={14} />
         </div>
       )}

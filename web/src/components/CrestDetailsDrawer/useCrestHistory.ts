@@ -20,16 +20,6 @@ export type CrestHistoryEventTransfer = {
   txHash: string
 }
 
-// type CrestHistoryEvent = {
-//   id: string
-//   type: "mint" | "burn" | "bid" | "transfer"
-//   from: string
-//   to?: string
-//   value?: string
-//   timestamp: string
-//   txHash: string
-// }
-
 export type CrestHistoryEvent = CrestHistoryEventBid | CrestHistoryEventTransfer
 
 const getTransferType = (transfer: CrestViewData["transfers"][0]) => {

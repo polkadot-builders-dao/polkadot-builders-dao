@@ -1,6 +1,6 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit"
 import { BigNumber, ethers } from "ethers"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 import { Id } from "react-toastify"
 import { useAccount, useChainId } from "wagmi"
 import { showToastAlert } from "../../components/ToastAlert"
@@ -72,6 +72,7 @@ export const BidInput = () => {
         })
       refetch()
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Cannot bid", { err })
 
       let errorMessage = (err as Error).message
@@ -85,10 +86,6 @@ export const BidInput = () => {
     }
     setIsProcessing(false)
   }, [bnBid, openConnectModal, isConnected, refetch, writeAsync])
-
-  useEffect(() => {
-    console.log(auction)
-  }, [auction])
 
   if (!auction || auction.isFinished) return null
 

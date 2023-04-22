@@ -1,6 +1,6 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit"
-import { ethers } from "ethers"
-import { useCallback, useMemo, useRef, useState } from "react"
+import { BigNumber, ethers } from "ethers"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Id } from "react-toastify"
 import { useAccount, useChainId } from "wagmi"
 import { showToastAlert } from "../../components/ToastAlert"
@@ -31,7 +31,10 @@ export const BidInput = () => {
       : auction?.minBid ?? ethers.BigNumber.from(0)
   }, [auction?.minBid, bid])
 
-  const { writeAsync } = useAuctionHouseBid({ mode: "recklesslyUnprepared" })
+  const { writeAsync } = useAuctionHouseBid({
+    mode: "recklesslyUnprepared",
+    chainId: CHAIN_ID,
+  })
   const [isProcessing, setIsProcessing] = useState(false)
   const refInput = useRef<HTMLInputElement>(null)
   const handleBid = useCallback(async () => {
@@ -46,6 +49,7 @@ export const BidInput = () => {
       const tx = await writeAsync({
         recklesslySetUnpreparedOverrides: {
           value: bnBid,
+          gasLimit: BigNumber.from("100000"), // supposed to be 86400 but can vary if tx triggers extented time limit
         },
       })
       if (refInput.current) refInput.current.value = ""
@@ -81,6 +85,10 @@ export const BidInput = () => {
     }
     setIsProcessing(false)
   }, [bnBid, openConnectModal, isConnected, refetch, writeAsync])
+
+  useEffect(() => {
+    console.log(auction)
+  }, [auction])
 
   if (!auction || auction.isFinished) return null
 

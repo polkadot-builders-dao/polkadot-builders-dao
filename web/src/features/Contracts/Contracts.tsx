@@ -181,10 +181,10 @@ const PartsStoreConfig = () => {
   return (
     <Section title="PartsStore">
       <SectionRow title="Address" className="font-mono font-bold">
-        {partsStore?.address}
+        <EthAddress address={partsStore?.address} withHref />
       </SectionRow>
       <SectionRow title="Owner" className="font-mono font-bold">
-        {owner}
+        <EthAddress address={owner} withHref />
       </SectionRow>
     </Section>
   )

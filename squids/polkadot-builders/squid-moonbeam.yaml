@@ -1,11 +1,14 @@
 manifestVersion: subsquid.io/v0.1
 name: polkadot-builders
-version: 1
+version: 2
 description: "Providers auctions and transfers details for Polkadot Builders Crests"
 build:
 deploy:
   addons:
     postgres:
+  secrets:
+    - DISCORD_WEBHOOK_ID
+    - DISCORD_WEBHOOK_TOKEN
   processor:
     env:
       {

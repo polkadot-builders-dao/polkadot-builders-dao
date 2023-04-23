@@ -14,6 +14,8 @@ import {
   START_BLOCK,
 } from "./settings"
 import md5 from "blueimp-md5"
+import { broadcastNewAuction } from "./discord/broadcastNewAuction"
+import { broadcastNewBid } from "./discord/broadcastNewBid"
 
 const processor = new EvmBatchProcessor()
   .setDataSource({
@@ -103,7 +105,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
                 attributes
               )
 
-              const BidItem = new Bid({
+              const bidItem = new Bid({
                 id: md5(`bid-${item.transaction.hash}-${item.evmLog.id}`),
                 bidder,
                 token,
@@ -111,7 +113,9 @@ processor.run(new TypeormDatabase(), async (ctx) => {
                 value: value.toBigInt(),
                 txHash: item.transaction.hash,
               })
-              bids.push(BidItem)
+              bids.push(bidItem)
+
+              broadcastNewBid(bidItem)
             }
       }
 
@@ -152,6 +156,8 @@ const ensureTokenData = async (
         })
       )
     }
+
+    broadcastNewAuction(token)
 
     return true
   } catch (err) {

@@ -5,12 +5,14 @@
     "build": "rm -rf lib && tsc"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.4.1",
     "@subsquid/archive-registry": "^2.1.9",
     "@subsquid/evm-processor": "^0.4.0",
     "@subsquid/graphql-server": "3.3.2",
     "@subsquid/typeorm-migration": "0.1.6",
     "@subsquid/typeorm-store": "0.2.2",
     "blueimp-md5": "^2.19.0",
+    "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2"
   },

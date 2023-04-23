@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: polkadot-builders
-version: 2
+version: 3
 description: "Providers auctions and transfers details for Polkadot Builders Crests"
 build:
 deploy:

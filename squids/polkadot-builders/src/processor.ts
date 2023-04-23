@@ -157,10 +157,11 @@ const ensureTokenData = async (
       )
     }
 
-    broadcastNewAuction(token)
+    broadcastNewAuction(token, contract)
 
     return true
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Failed to decode metadata for %s", token.id, err)
     return false
   }

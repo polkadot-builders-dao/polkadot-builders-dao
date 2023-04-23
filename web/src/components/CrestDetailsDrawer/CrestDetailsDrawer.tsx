@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid"
 import { IconExternalLink, IconGavel, IconHistory } from "@tabler/icons-react"
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { auctionHouseAddress } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"
@@ -43,16 +43,24 @@ const AvatarAndAddress: FC<{ address: string; size?: number }> = ({ address, siz
 
 const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
   const blockExplorerUrl = useBlockExplorerUrl(CHAIN_ID)
-  const date = new Date(Number(ev.timestamp))
+
+  const dateDisplay = useMemo(() => {
+    if (ev.timestamp === "now") return "Just now"
+    const date = new Date(Number(ev.timestamp))
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+  }, [ev.timestamp])
+
   return (
     <div className="py-2 leading-none">
       <div className="flex w-full items-center justify-between text-xs font-light ">
-        <div className="grow">
-          {date.toLocaleDateString()} {date.toLocaleTimeString()}
-        </div>
+        <div className="grow">{dateDisplay}</div>
         <a
           target="_blank"
-          href={`${blockExplorerUrl}/tx/${ev.txHash}`}
+          href={
+            ev.txHash
+              ? `${blockExplorerUrl}/tx/${ev.txHash}`
+              : `${blockExplorerUrl}/address/${auctionHouseAddress[CHAIN_ID]}`
+          }
           className="inline-flex items-center capitalize hover:text-neutral-300"
         >
           {ev.type}

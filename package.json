@@ -11,7 +11,7 @@
   "scripts": {
     "build": "turbo run build",
     "compile": "turbo run compile",
-    "dev": "turbo run dev --parallel",
+    "dev": "yarn workspace web dev",
     "test": "turbo run test --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

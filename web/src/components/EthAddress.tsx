@@ -59,9 +59,7 @@ export const EthAddress: FC<EthAddressProps> = ({
           {shorten ? shortenAddress(address) : address}
         </EthAddressContent>
       </TooltipTrigger>
-      <TooltipContent className="z-50 rounded border border-neutral-600 bg-black px-2 py-1 text-xs">
-        {address}
-      </TooltipContent>
+      <TooltipContent>{address}</TooltipContent>
     </Tooltip>
   )
 }

@@ -1,6 +1,12 @@
 import { ArrowRightIcon } from "@heroicons/react/20/solid"
-import { IconExternalLink, IconGavel, IconHistory } from "@tabler/icons-react"
-import { FC, useMemo } from "react"
+import {
+  IconCopy,
+  IconDownload,
+  IconExternalLink,
+  IconGavel,
+  IconHistory,
+} from "@tabler/icons-react"
+import { FC, useCallback, useMemo } from "react"
 import { auctionHouseAddress } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
 import { shortenAddress } from "../../lib/shortenAddress"
@@ -10,6 +16,8 @@ import { Drawer } from "../Drawer"
 import { EthValue } from "../EthValue"
 import { CrestViewData, useCrestDetailsDrawer } from "./useCrestDetailsDrawer"
 import { CrestHistoryEvent, useCrestHistory } from "./useCrestHistory"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../Tooltip"
+import { copySvgAsPng, downloadSvgAsPng } from "../../lib/svgToPng"
 
 const isFounderMint = (ev: CrestHistoryEvent) =>
   ev.type === "mint" && ev.to !== auctionHouseAddress[CHAIN_ID]
@@ -121,6 +129,40 @@ const CrestHistory: FC<{ crest: CrestViewData | null | undefined }> = ({ crest }
   )
 }
 
+const CrestImage: FC<{ crest: CrestViewData }> = ({ crest }) => {
+  const handleCopyClick = useCallback(() => {
+    copySvgAsPng(crest.image)
+  }, [crest])
+
+  const handleDownloadClick = useCallback(() => {
+    downloadSvgAsPng(crest.image, `crest-${crest.id}.png`)
+  }, [crest])
+
+  return (
+    <div className="relative text-center">
+      <img src={crest.image} alt="" className="aspect-square w-full rounded-xl" />
+      <div className="absolute bottom-3 right-3 flex gap-2">
+        <Tooltip placement="bottom-end">
+          <TooltipTrigger asChild>
+            <button type="button" className="hover:text-neutral-300" onClick={handleDownloadClick}>
+              <IconDownload />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>Download</TooltipContent>
+        </Tooltip>
+        <Tooltip placement="bottom-end">
+          <TooltipTrigger asChild>
+            <button type="button" className="hover:text-neutral-300" onClick={handleCopyClick}>
+              <IconCopy />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>Copy as PNG</TooltipContent>
+        </Tooltip>
+      </div>
+    </div>
+  )
+}
+
 const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
   const { data: token, isLoading, error } = useCrestDetailsDrawer(tokenId)
 
@@ -143,9 +185,7 @@ const CrestDetails: FC<{ tokenId: string }> = ({ tokenId }) => {
 
   return (
     <div className="p-4">
-      <div className="text-center">
-        <img src={token.image} alt="" className="aspect-square w-full rounded-xl" />
-      </div>
+      <CrestImage crest={token} />
       <div className="mt-4">
         <div className="space-y-1">
           {token.attributes.map(({ type, value }, i) => (

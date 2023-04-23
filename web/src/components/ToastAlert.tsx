@@ -51,7 +51,7 @@ export const showToastAlert = (
   const baseOptions = {
     autoClose: false as const,
     className: classNames(
-      "rounded-lg border border-neutral-200 shadow bg-neutral-100 bg-neutral-800 border-neutral-700 ",
+      "rounded-lg border border-neutral-200 shadow bg-neutral-100 bg-neutral-800 border-neutral-700",
       options?.className?.toString?.()
     ),
     ...options,

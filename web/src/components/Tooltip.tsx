@@ -146,6 +146,10 @@ export const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLProps<H
             ...props.style,
           }}
           {...context.getFloatingProps(props)}
+          className={
+            props.className ??
+            "z-50 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-xs text-neutral-400"
+          }
         />
       </FloatingPortal>
     )

@@ -109,7 +109,7 @@ export const Auction = () => {
       <div>
         <div className="grid min-h-[300px] w-full grid-cols-1 justify-evenly gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col items-center justify-center">
-            {auctionData && (
+            {auctionData ? (
               <button onClick={open}>
                 <img
                   className="inline-block aspect-square w-full max-w-[300px] rounded-xl lg:max-w-[400px]"
@@ -117,10 +117,16 @@ export const Auction = () => {
                   alt=""
                 />
               </button>
+            ) : (
+              <div className="inline-block aspect-square w-full max-w-[300px] animate-pulse rounded-xl bg-neutral-900 lg:max-w-[400px]"></div>
             )}
           </div>
           <div className="lg-col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-            {auctionData && <AuctionDetails auction={auctionData.auction} />}
+            {auctionData ? (
+              <AuctionDetails auction={auctionData.auction} />
+            ) : (
+              <div className="flex min-h-[300px] w-full max-w-[500px] animate-pulse flex-col rounded-xl bg-neutral-900 p-4"></div>
+            )}
           </div>
         </div>
         <div className="flex h-24 items-center justify-center md:justify-end">

@@ -15,7 +15,7 @@ const getQuery = (address?: string) =>
         query MyQuery {
           tokens(
             where: { owner: { id_eq: "${address}" } }
-            orderBy: tokenId_ASC
+            orderBy: tokenId_DESC
           ) {
             id
             image
@@ -24,7 +24,7 @@ const getQuery = (address?: string) =>
       `
     : gql`
         query MyQuery {
-          tokens(orderBy: tokenId_ASC) {
+          tokens(orderBy: tokenId_DESC) {
             id
             image
           }

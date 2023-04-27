@@ -20,10 +20,13 @@ export const HomePageContent = () => (
           professions to create public goods.
         </p>
         <p className="my-4">
-          Nouns have done an amazing job at bootstrapping culture, community and governance to
-          create one of the most well known web3 brands. The noggles in the crest are a tip to the
-          Nouns and Lil-Nouns communities, a way to bring the eyes in Polkadot to amazing projects
-          like Nouns and as a reminder to create, try, iterate and be nounish.
+          <a className="underline hover:text-neutral-300" href="https://nouns.wtf">
+            Nouns
+          </a>{" "}
+          have done an amazing job at bootstrapping culture, community and governance to create one
+          of the most well known web3 brands. The noggles in the crest are a tip to the Nouns and
+          Lil-Nouns communities, a way to bring the eyes in Polkadot to amazing projects like Nouns
+          and as a reminder to create, try, iterate and be nounish.
         </p>
       </div>
     </section>
@@ -42,12 +45,22 @@ export const HomePageContent = () => (
           </li>
           <li>
             The treasury will be controlled exclusively by Polkadot Builders via{" "}
-            <a href="https://www.tally.xyz/gov/polkadot-builders">governance</a>
+            <a
+              className="underline hover:text-neutral-300"
+              href="https://www.tally.xyz/gov/polkadot-builders"
+            >
+              governance
+            </a>
           </li>
-          <li>Artwork is generative and stored directly on-chain (not IPFS).</li>
+          <li>Artwork is generative and stored directly on-chain (no IPFS involved).</li>
           <li>
-            Polkadot Builders artwork is in the
-            <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain.</a>
+            Polkadot Builders artwork is in the{" "}
+            <a
+              className="underline hover:text-neutral-300"
+              href="https://creativecommons.org/publicdomain/zero/1.0/"
+            >
+              public domain.
+            </a>
           </li>
         </ul>
       </div>

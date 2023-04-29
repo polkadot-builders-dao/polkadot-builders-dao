@@ -1,6 +1,6 @@
-# Polkadot Builders
+# Polkadot Builders DAO
 
-[![Polkadot Builders DAO - BUIDL](https://user-images.githubusercontent.com/10047147/235113830-e5de6f7b-e117-4d81-854b-b1c244c2c8e2.svg)](https://app.polkadotbuilders.xyz/)
+[![Proudly built by Polkadot Builders DAO](https://user-images.githubusercontent.com/10047147/235292777-f72f2d0d-a425-4c6d-8b3a-325813b72d31.svg)](https://app.polkadotbuilders.xyz/)
 
 ## Project infos
 

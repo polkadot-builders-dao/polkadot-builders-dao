@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import { FC } from "react"
-import { LayoutBackground } from "../../components/LayoutBackground"
+import { LayoutBackground } from "../../components/Layout/LayoutBackground"
 import { usePlayground } from "./context"
 
 export const Playground: FC = () => {

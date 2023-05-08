@@ -1,1 +1,5 @@
 export const NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
+export const URL_DISCORD = "https://discord.gg/hcrsYgCUVz"
+export const URL_TALLY = "https://www.tally.xyz/gov/polkadot-builders"
+export const URL_MARKETPLACE = "https://moonbeans.io/collections/polkadotbuilders"
+export const URL_DOCUMENTATION = "https://bip.so/polkadotbuilders/"

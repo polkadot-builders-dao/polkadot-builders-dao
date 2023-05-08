@@ -1,4 +1,4 @@
-import { Layout } from "../components/Layout"
+import { Layout } from "../components/Layout/Layout"
 import { Auction } from "../features/Auction/Auction"
 import { HomePageContent } from "../features/HomePageContent/HomePageContent"
 

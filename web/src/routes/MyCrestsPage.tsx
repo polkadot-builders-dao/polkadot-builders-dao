@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi"
-import { Layout } from "../components/Layout"
+import { Layout } from "../components/Layout/Layout"
 import { Crests } from "../features/Crests/Crests"
 
 export const MyCrestsPage = () => {

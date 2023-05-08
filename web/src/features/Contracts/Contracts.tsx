@@ -87,7 +87,7 @@ const AuctionHouseConfig = () => {
       <SectionRow title="Min First Bid">
         <EthValue wei={config.minFirstBid} />
       </SectionRow>
-      <SectionRow title="Min Big Increment">
+      <SectionRow title="Min Bid Increment">
         {config.minBidIncrementPercent.toNumber()} %
       </SectionRow>
     </Section>
@@ -179,7 +179,7 @@ const PartsStoreConfig = () => {
   })
 
   return (
-    <Section title="PartsStore">
+    <Section title="Parts Store">
       <SectionRow title="Address" className="font-mono font-bold">
         <EthAddress address={partsStore?.address} withHref />
       </SectionRow>

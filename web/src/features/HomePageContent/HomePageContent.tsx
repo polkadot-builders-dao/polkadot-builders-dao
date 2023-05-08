@@ -8,6 +8,11 @@ export const HomePageContent = () => (
           ecosystem by funding the creation of public goods and proliferating Nounish culture. From
           designers, to developers, to marketers, anyone can be a builder.
         </p>
+        <p className="my-4">
+          Every 24h, a Crest NFT is auctioned to the highest bidder, this is the entry to the DAO.
+          All funds are sent to the DAO treasury, to be distributed back to builders creating Open
+          Source software for the Polkadot Ecosystem.
+        </p>
       </div>
     </section>
     <section className="mt-12">
@@ -34,14 +39,15 @@ export const HomePageContent = () => (
       <h2 className="mb-4 text-2xl font-bold text-neutral-300">Summary</h2>
       <div>
         <ul className="list-disc pl-5">
-          <li>All Crest holders are members of Polkadot Builders DAO.</li>
+          <li>All Crest NFT holders are members of Polkadot Builders DAO.</li>
           <li>One Crest is equal to one vote.</li>
-          <li>One crest is trustlessly auctioned every 24 hours, forever.</li>
+          <li>One Crest is trustlessly auctioned every 24 hours, forever.</li>
           <li>100% of crest auction proceeds are trustlessly sent to the treasury.</li>
           <li>Settlement of one auction kicks off the next.</li>
           <li>No explicit rules exist for attribute scarcity; all Crests are equally rare.</li>
           <li>
-            Founders receive rewards in the form of Crests (10% of supply for first 2000 crests).
+            Founders received the first six Crest NFTs and rewards in the form of Crests (10% of
+            supply for first 2000 crests).
           </li>
           <li>
             The treasury will be controlled exclusively by Polkadot Builders via{" "}

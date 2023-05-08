@@ -16,6 +16,7 @@ import { WagmiProvider } from "./lib/wagmi/WagmiProvider"
 import { AllCrestsPage } from "./routes/AllCrestsPage"
 import { ErrorBoundary } from "react-error-boundary"
 import { ErrorPage } from "./components/ErrorPage"
+import { PageColorProvider } from "./lib/usePageColor"
 
 const queryClient = new QueryClient()
 
@@ -25,15 +26,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <WagmiProvider>
           <BrowserRouter basename={import.meta.env.BASE_URL}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/playground" element={<PlaygroundPage />} />
-              <Route path="/crests" element={<AllCrestsPage />} />
-              <Route path="/my-crests" element={<MyCrestsPage />} />
-              <Route path="/contracts" element={<ContractsPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-            <ToastContainer hideProgressBar closeOnClick pauseOnHover closeButton={false} />
+            <PageColorProvider>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/playground" element={<PlaygroundPage />} />
+                <Route path="/crests" element={<AllCrestsPage />} />
+                <Route path="/my-crests" element={<MyCrestsPage />} />
+                <Route path="/contracts" element={<ContractsPage />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+              <ToastContainer hideProgressBar closeOnClick pauseOnHover closeButton={false} />
+            </PageColorProvider>
           </BrowserRouter>
         </WagmiProvider>
       </QueryClientProvider>

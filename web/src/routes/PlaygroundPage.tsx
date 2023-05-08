@@ -1,4 +1,4 @@
-import { Layout } from "../components/Layout"
+import { Layout } from "../components/Layout/Layout"
 import { PlaygroundProvider } from "../features/Playground/context"
 import { DnaEditor } from "../features/Playground/DnaEditor"
 

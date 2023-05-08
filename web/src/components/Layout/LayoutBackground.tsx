@@ -1,12 +1,7 @@
 import { FC, useEffect } from "react"
-import { getBackgroundColorCode } from "../lib/getBackgroundColorCode"
-import { CrestMetadata } from "../lib/useCrestFromChain"
-
-const applyLayoutColor = (color: string) => {
-  const layout = document.getElementById("layout")
-  if (!layout) return
-  layout.style.backgroundColor = color
-}
+import { getBackgroundColorCode } from "../../lib/getBackgroundColorCode"
+import { CrestMetadata } from "../../lib/useCrestFromChain"
+import { usePageColor } from "../../lib/usePageColor"
 
 type LayoutBackgroundProps = {
   metadata?: CrestMetadata
@@ -14,13 +9,14 @@ type LayoutBackgroundProps = {
 }
 
 export const LayoutBackground: FC<LayoutBackgroundProps> = ({ metadata, force }) => {
+  const { setPageColor } = usePageColor()
   useEffect(() => {
     if (!metadata) return
 
     const colorName = metadata.attributes?.find((attr) => attr.trait_type === "Background")?.value
     const colorCode = getBackgroundColorCode(force ?? colorName)
-    applyLayoutColor(colorCode)
-  }, [force, metadata])
+    setPageColor(colorCode)
+  }, [force, metadata, setPageColor])
 
   return null
 }

@@ -27,11 +27,7 @@ const download = (href: string, filename: string) => {
 
 export const copySvgAsPng = async (svg: string) => {
   try {
-    const image = await svgToPng(svg)
-    const item = new ClipboardItem({
-      [image.type]: image,
-    })
-    await navigator.clipboard.write([item])
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": svgToPng(svg) })])
 
     showToastAlert("success", "Success", "Image copied to clipboard", {
       autoClose: 3000,

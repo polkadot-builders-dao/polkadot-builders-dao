@@ -1,4 +1,3 @@
-import { BigNumber, BigNumberish } from "ethers"
 import { useMemo } from "react"
 import { useCrestTokenUri } from "../contracts/generated"
 import { CHAIN_ID } from "./settings"
@@ -33,17 +32,18 @@ export const useCrestDetailsFromData = (data?: string) => {
   }, [data])
 }
 
-export const useCrestFromChain = (tokenId?: BigNumberish) => {
-  const id = tokenId ? BigNumber.from(tokenId) : BigNumber.from(0)
+export const useCrestFromChain = (tokenId?: bigint) => {
+  const id = tokenId ? BigInt(tokenId) : 0n
 
   const call = useCrestTokenUri({
     args: [id],
-    enabled: id.gt(0),
+    enabled: id > 0n,
     chainId: CHAIN_ID,
   })
 
   const { image, metadata } = useCrestDetailsFromData(call.data)
 
+  // eslint-disable-next-line no-console
   if (call.error) console.log({ tokenId, call })
 
   return { ...call, image, metadata }

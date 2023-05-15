@@ -3,16 +3,17 @@ import { FC, PropsWithChildren } from "react"
 import { EthValue } from "../../components/EthValue"
 import { PageHead } from "../../components/PageHead"
 import {
-  useAuctionHouse,
+  auctionHouseAddress,
+  crestAddress,
+  daoGovernorAddress,
+  partsStoreAddress,
   useAuctionHouseGetConfig,
   useAuctionHouseOwner,
-  useCrest,
   useCrestAuctionHouse,
   useCrestFounders,
   useCrestOwner,
   useCrestStore,
   useCrestTotalSupply,
-  useDaoGovernor,
   useDaoGovernorBallotTypehash,
   useDaoGovernorCountingMode,
   useDaoGovernorQuorumDenominator,
@@ -20,7 +21,6 @@ import {
   useDaoGovernorToken,
   useDaoGovernorVotingDelay,
   useDaoGovernorVotingPeriod,
-  usePartsStore,
   usePartsStoreOwner,
 } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
@@ -56,9 +56,9 @@ const Section: FC<{ title: string } & PropsWithChildren> = ({ title, children })
 }
 
 const AuctionHouseConfig = () => {
-  const auctionHouse = useAuctionHouse({
-    chainId: CHAIN_ID,
-  })
+  // const auctionHouse = useAuctionHouse({
+  //   chainId: CHAIN_ID,
+  // })
   const { data: owner } = useAuctionHouseOwner({ chainId: CHAIN_ID })
   const { data: config } = useAuctionHouseGetConfig({
     chainId: CHAIN_ID,
@@ -69,7 +69,7 @@ const AuctionHouseConfig = () => {
   return (
     <Section title="Auction House">
       <SectionRow title="Address" className="font-mono font-bold">
-        <EthAddress address={auctionHouse?.address} withHref />
+        <EthAddress address={auctionHouseAddress[CHAIN_ID]} withHref />
       </SectionRow>
       <SectionRow title="Owner" className="font-mono font-bold">
         <EthAddress address={owner} withHref />
@@ -80,22 +80,22 @@ const AuctionHouseConfig = () => {
       <SectionRow title="Token" className="font-mono font-bold">
         <EthAddress address={config.token} withHref />
       </SectionRow>
-      <SectionRow title="Duration">{config.duration.toNumber()} seconds</SectionRow>
+      <SectionRow title="Duration">{config.duration.toString()} seconds</SectionRow>
       <SectionRow title="Extended Duration">
-        {config.extendedDuration.toNumber()} seconds
+        {config.extendedDuration.toString()} seconds
       </SectionRow>
       <SectionRow title="Min First Bid">
         <EthValue wei={config.minFirstBid} />
       </SectionRow>
       <SectionRow title="Min Bid Increment">
-        {config.minBidIncrementPercent.toNumber()} %
+        {config.minBidIncrementPercent.toString()} %
       </SectionRow>
     </Section>
   )
 }
 
 const GovernanceConfig = () => {
-  const governor = useDaoGovernor({ chainId: CHAIN_ID })
+  //  const governor = useDaoGovernor({ chainId: CHAIN_ID })
 
   const { data: countingMode } = useDaoGovernorCountingMode({
     chainId: CHAIN_ID,
@@ -116,7 +116,7 @@ const GovernanceConfig = () => {
   return (
     <Section title="Governance">
       <SectionRow title="Address" className="font-mono font-bold">
-        <EthAddress address={governor?.address} withHref />
+        <EthAddress address={daoGovernorAddress[CHAIN_ID]} withHref />
       </SectionRow>
       <SectionRow title="Counting Mode">{countingMode}</SectionRow>
       <SectionRow title="Ballot Type Hash" className="font-mono font-bold">
@@ -135,7 +135,6 @@ const GovernanceConfig = () => {
 }
 
 const CrestConfig = () => {
-  const crest = useCrest({ chainId: CHAIN_ID })
   const { data: auctionHouse } = useCrestAuctionHouse({
     chainId: CHAIN_ID,
   })
@@ -153,7 +152,7 @@ const CrestConfig = () => {
   return (
     <Section title="Crest">
       <SectionRow title="Address" className="font-mono font-bold">
-        <EthAddress address={crest?.address} withHref />
+        <EthAddress address={crestAddress[CHAIN_ID]} withHref />
       </SectionRow>
       <SectionRow title="Owner" className="font-mono font-bold">
         <EthAddress address={owner} withHref />
@@ -167,13 +166,12 @@ const CrestConfig = () => {
       <SectionRow title="Parts Store" className="font-mono font-bold">
         <EthAddress address={partsStore} withHref />
       </SectionRow>
-      <SectionRow title="Total Supply">{totalSupply?.toNumber()}</SectionRow>
+      <SectionRow title="Total Supply">{totalSupply?.toString()}</SectionRow>
     </Section>
   )
 }
 
 const PartsStoreConfig = () => {
-  const partsStore = usePartsStore()
   const { data: owner } = usePartsStoreOwner({
     chainId: CHAIN_ID,
   })
@@ -181,7 +179,7 @@ const PartsStoreConfig = () => {
   return (
     <Section title="Parts Store">
       <SectionRow title="Address" className="font-mono font-bold">
-        <EthAddress address={partsStore?.address} withHref />
+        <EthAddress address={partsStoreAddress[CHAIN_ID]} withHref />
       </SectionRow>
       <SectionRow title="Owner" className="font-mono font-bold">
         <EthAddress address={owner} withHref />

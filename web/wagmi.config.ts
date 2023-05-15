@@ -30,11 +30,13 @@ const getContractsDeployments = () => {
         ).address
         deployments[contract][chainId] = address
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.warn("Failed to load deployment of", contract, "for chain", chainId, "in", dirPath)
       }
     }
   }
 
+  // eslint-disable-next-line no-console
   console.log("deployments", deployments)
 
   return deployments

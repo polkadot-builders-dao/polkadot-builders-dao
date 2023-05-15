@@ -10,7 +10,7 @@ const usePageColorProvider = () => {
 
   useEffect(() => {
     setPageColor(DEFAULT_COLOR)
-  }, [location])
+  }, [location.pathname])
 
   useEffect(() => {
     const layout = document.getElementById("layout")

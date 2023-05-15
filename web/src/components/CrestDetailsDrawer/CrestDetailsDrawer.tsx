@@ -104,7 +104,7 @@ const CrestHistoryEventView: FC<{ ev: CrestHistoryEvent }> = ({ ev }) => {
           <div className="flex w-full items-center justify-between gap-2">
             <AvatarAndAddress address={ev.from} size={14} />
             <div className="text-neutral-300">
-              <EthValue wei={ev.value} />
+              <EthValue wei={BigInt(ev.value)} />
             </div>
           </div>
         </>

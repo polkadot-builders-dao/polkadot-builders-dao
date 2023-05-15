@@ -6,11 +6,11 @@ import { useAuctionHouseGetConfig } from "../../contracts/generated"
 import { useBalance } from "wagmi"
 import { CHAIN_ID } from "../../lib/settings"
 import { useBlockExplorerUrl } from "../../lib/useBlockExplorerUrl"
-import { IconBrandDiscord, IconHeartFilled } from "@tabler/icons-react"
+import { IconHeartFilled } from "@tabler/icons-react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { NavMenuButton } from "./NavMenuButton"
 import { Nav } from "./Nav"
-import { NavProvider, useNav } from "./NavContext"
+import { NavProvider } from "./NavContext"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (

@@ -6,7 +6,7 @@ import { formatEther } from "viem"
 
 const getEthValueFormat = (wei: bigint) => {
   const full = formatEther(wei)
-  const [integer, decimals] = full.split(".")
+  const [integer, decimals = ""] = full.split(".")
 
   const safeDecimals = decimals.replace(/0+$/, "")
 

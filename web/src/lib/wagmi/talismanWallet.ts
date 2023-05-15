@@ -1,24 +1,68 @@
-import type { InjectedConnectorOptions } from "@wagmi/core/dist/connectors/injected"
+import { InjectedConnectorOptions, WindowProvider, InjectedConnector } from "@wagmi/core"
 import { Chain, Wallet } from "@rainbow-me/rainbowkit"
-import { TalismanConnector } from "@talismn/wagmi-connector"
+
+declare global {
+  interface Window {
+    talismanEth: WindowProvider & { isTalisman?: true }
+  }
+}
 
 export interface TalismanWalletOptions {
   chains: Chain[]
 }
-
 export const talismanWallet = ({
   chains,
+  ...options
 }: TalismanWalletOptions & InjectedConnectorOptions): Wallet => ({
   id: "talisman",
   name: "Talisman",
-  iconUrl: async () => (await import("./logos/talisman.svg")).default,
-  iconBackground: "#fd4848",
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  installed: typeof window !== "undefined" && !!(window as any).talismanEth?.isTalisman,
+  iconUrl: async () => (await import("./talismanWallet.svg")).default,
+  iconBackground: "#fff",
+  installed:
+    typeof window !== "undefined" &&
+    typeof window.talismanEth !== "undefined" &&
+    window.talismanEth.isTalisman === true,
   downloadUrls: {
+    chrome:
+      "https://chrome.google.com/webstore/detail/talisman-polkadot-wallet/fijngjgcjhjmmpcmkeiomlglpeiijkld",
+    firefox: "https://addons.mozilla.org/en-US/firefox/addon/talisman-wallet-extension/",
     browserExtension: "https://talisman.xyz/download",
   },
   createConnector: () => ({
-    connector: new TalismanConnector({ chains }),
+    connector: new InjectedConnector({
+      chains,
+      options: {
+        getProvider: () => {
+          if (typeof window === "undefined") return
+          return window.talismanEth
+        },
+        ...options,
+      },
+    }),
+    extension: {
+      instructions: {
+        learnMoreUrl: "https://talisman.xyz/",
+        steps: [
+          {
+            description:
+              "We recommend pinning Talisman to your taskbar for quicker access to your wallet.",
+            step: "install",
+            title: "Install the Talisman extension",
+          },
+          {
+            description:
+              "Be sure to back up your wallet using a secure method. Never share your recovery phrase with anyone.",
+            step: "create",
+            title: "Create or Import an Ethereum Wallet",
+          },
+          {
+            description:
+              "Once you set up your wallet, click below to refresh the browser and load up the extension.",
+            step: "refresh",
+            title: "Refresh your browser",
+          },
+        ],
+      },
+    },
   }),
 })

@@ -1,4 +1,4 @@
-import { useConnectModal } from "@rainbow-me/rainbowkit"
+import { useAddRecentTransaction, useConnectModal } from "@rainbow-me/rainbowkit"
 import { FC, useCallback } from "react"
 import { Id } from "react-toastify"
 import { useAccount } from "wagmi"
@@ -12,6 +12,7 @@ export const AuctionStart: FC<{ auction: AuctionData; refetchAuction: () => void
   auction,
   refetchAuction,
 }) => {
+  const addRecentTransaction = useAddRecentTransaction()
   const { openConnectModal } = useConnectModal()
   const { isConnected, address } = useAccount()
 
@@ -27,6 +28,11 @@ export const AuctionStart: FC<{ auction: AuctionData; refetchAuction: () => void
 
       if (!writeAsync) return
       const { hash } = await writeAsync()
+      addRecentTransaction({
+        hash,
+        description: `Settle auction #${auction.tokenId}`,
+      })
+
       toastId = showToastAlert("loading", "Initializing", "Next auction is about to start...", {
         autoClose: false,
       })
@@ -55,7 +61,14 @@ export const AuctionStart: FC<{ auction: AuctionData; refetchAuction: () => void
       })
       refetchAuction()
     }
-  }, [isConnected, openConnectModal, refetchAuction, writeAsync])
+  }, [
+    addRecentTransaction,
+    auction.tokenId,
+    isConnected,
+    openConnectModal,
+    refetchAuction,
+    writeAsync,
+  ])
 
   if (!auction || !auction.isFinished || !writeAsync) return null
 

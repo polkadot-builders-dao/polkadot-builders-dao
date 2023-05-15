@@ -16,6 +16,7 @@ export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => {
         theme={rainbowTheme}
         chains={chains}
         avatar={Avatar}
+        showRecentTransactions
       >
         {children}
       </RainbowKitProvider>

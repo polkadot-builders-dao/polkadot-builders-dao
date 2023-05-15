@@ -1,4 +1,4 @@
-import { useConnectModal } from "@rainbow-me/rainbowkit"
+import { useAddRecentTransaction, useConnectModal } from "@rainbow-me/rainbowkit"
 import { FC, useCallback, useMemo, useRef, useState } from "react"
 import { Id } from "react-toastify"
 import { useAccount, useChainId } from "wagmi"
@@ -25,6 +25,7 @@ export const BidInput: FC<{ auction: AuctionData; refetchAuction: () => void }> 
   auction,
   refetchAuction,
 }) => {
+  const addRecentTransaction = useAddRecentTransaction()
   const chainId = useChainId()
   const { openConnectModal } = useConnectModal()
   const { isConnected } = useAccount()
@@ -67,6 +68,11 @@ export const BidInput: FC<{ auction: AuctionData; refetchAuction: () => void }> 
 
       setIsProcessing(true)
       const { hash } = await writeAsync()
+      addRecentTransaction({
+        hash,
+        description: `[#${auction.tokenId}] Bid ${formatEther(bnBid)} ${currency?.symbol}`,
+      })
+
       if (refInput.current) refInput.current.value = ""
       setBid(undefined)
 
@@ -100,7 +106,17 @@ export const BidInput: FC<{ auction: AuctionData; refetchAuction: () => void }> 
       refetchAuction()
     }
     setIsProcessing(false)
-  }, [isConnected, error, writeAsync, refetchAuction, openConnectModal])
+  }, [
+    isConnected,
+    error,
+    writeAsync,
+    addRecentTransaction,
+    auction.tokenId,
+    bnBid,
+    currency?.symbol,
+    refetchAuction,
+    openConnectModal,
+  ])
 
   if (!auction || auction.isFinished) return null
 

@@ -6,7 +6,7 @@ import { BidInput } from "./BidInput"
 import { CHAIN_ID } from "../../lib/settings"
 import { Countdown } from "../../components/Countdown"
 import { AuctionData } from "../../contracts/types"
-import { useEffect, useMemo, useState } from "react"
+import { FC, useEffect, useMemo, useState } from "react"
 import { useCrestFromChain } from "../../lib/useCrestFromChain"
 import { AuctionHistoryButton } from "./AuctionHistoryButton"
 import Jazzicon from "react-jazzicon/dist/Jazzicon"
@@ -16,18 +16,21 @@ import { useOpenClose } from "../../lib/useOpenClose"
 import { CrestDetailsDrawer } from "../../components/CrestDetailsDrawer/CrestDetailsDrawer"
 import { EthValue } from "../../components/EthValue"
 
-const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
+const AuctionDetails: FC<{ auction: AuctionData; refetchAuction: () => void }> = ({
+  auction,
+  refetchAuction,
+}) => {
   const auctionDate = useMemo(
-    () => new Date(auction.startTime.toNumber() * 1000).toLocaleDateString(),
+    () => new Date(Number(auction.startTime) * 1000).toLocaleDateString(),
     [auction.startTime]
   )
-  const dateEnd = useMemo(() => new Date(auction.endTime.toNumber() * 1000), [auction.endTime])
+  const dateEnd = useMemo(() => new Date(Number(auction.endTime) * 1000), [auction.endTime])
 
   return (
     <div className="flex min-h-[300px] w-full max-w-[500px] flex-col rounded-xl bg-neutral-950/40 p-4">
       <div className="text-neutral-500">{auctionDate}</div>
       <h1 className="text-3xl font-bold text-neutral-300">
-        Polkadot Builder #{auction.tokenId.toNumber()}
+        Polkadot Builder #{Number(auction.tokenId)}
       </h1>
       {auction.isFinished ? (
         <div className="mt-8">
@@ -49,10 +52,10 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
         </div>
       )}
       <div className="my-4 flex grow items-center">
-        <BidInput />
+        <BidInput auction={auction} refetchAuction={refetchAuction} />
       </div>
       <div>
-        {auction.currentBid?.gt(0) ? (
+        {auction.currentBid ? (
           <div className="text-sm sm:text-base">
             <div className="flex w-full items-center ">
               <div className="grow text-neutral-500">
@@ -85,7 +88,7 @@ const AuctionDetails = ({ auction }: { auction: AuctionData }) => {
 }
 
 export const Auction = () => {
-  const { data: auction } = useAuctionHouseGetAuction({
+  const { data: auction, refetch } = useAuctionHouseGetAuction({
     chainId: CHAIN_ID,
     watch: true,
   })
@@ -123,14 +126,14 @@ export const Auction = () => {
           </div>
           <div className="lg-col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
             {auctionData ? (
-              <AuctionDetails auction={auctionData.auction} />
+              <AuctionDetails auction={auctionData.auction} refetchAuction={refetch} />
             ) : (
               <div className="flex min-h-[300px] w-full max-w-[500px] animate-pulse flex-col rounded-xl bg-neutral-900 p-4"></div>
             )}
           </div>
         </div>
         <div className="flex h-24 items-center justify-center md:justify-end">
-          <AuctionStart />
+          {!!auctionData && <AuctionStart auction={auctionData.auction} refetchAuction={refetch} />}
         </div>
       </div>
 

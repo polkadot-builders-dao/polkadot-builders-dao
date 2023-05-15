@@ -54,7 +54,6 @@
     "verify:moonbeam": "hardhat run scripts/verify.ts --network moonbeam",
     "sourcify:moonbase": "hardhat sourcify --network moonbase",
     "sourcify:moonbeam": "hardhat sourcify --network moonbeam",
-    "lint": "eslint .",
     "clean": "hardhat clean"
   },
   "nodemonConfig": {

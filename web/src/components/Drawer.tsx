@@ -3,7 +3,6 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import { default as clsx } from "clsx"
 import { ReactNode } from "react"
 import { createPortal } from "react-dom"
-import { useLockBodyScroll } from "react-use"
 
 type DrawerProps = {
   show?: boolean

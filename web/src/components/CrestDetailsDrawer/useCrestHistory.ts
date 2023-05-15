@@ -3,7 +3,6 @@ import { NULL_ADDRESS } from "../../lib/constants"
 import { CrestViewData } from "./useCrestDetailsDrawer"
 import { CHAIN_ID } from "../../lib/settings"
 import { useAuctionHouseGetAuction } from "../../contracts/generated"
-import { BigNumber } from "ethers"
 
 export type CrestHistoryEventBid = {
   id: string
@@ -41,9 +40,9 @@ export const useCrestHistory = (crest: CrestViewData | null | undefined) => {
     // current bid might not have been picked up by the squid yet
     const currentBid: CrestHistoryEventBid | undefined =
       crest?.id &&
-      auction?.tokenId.eq(crest.id) &&
-      auction.currentBid.gt(BigNumber.from(0)) &&
-      !crest.bids.some((b) => auction.currentBid.eq(b.value))
+      auction?.tokenId === BigInt(crest.id) &&
+      auction.currentBid > 0n &&
+      !crest.bids.some((b) => auction.currentBid === BigInt(b.value))
         ? {
             id: "current",
             type: "bid",

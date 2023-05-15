@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers"
 import { FC, useCallback, useMemo } from "react"
 import { Dropdown } from "../../components/Dropdown"
 import { usePartsStoreGetAllParts } from "../../contracts/generated"
@@ -41,13 +40,14 @@ export const DnaEditor = () => {
     chainId: CHAIN_ID,
   })
 
+  // prettier-ignore
   const [
     bgColorId,
     nogglesColorId,
     crownId,
     doodadId,
-    garlandId,
-    shieldId,
+    /* garlandId */,
+    /* shieldId */,
     quadrantPalette1Id,
     quadrantPalette2Id,
     repId,
@@ -55,33 +55,34 @@ export const DnaEditor = () => {
     classId,
     traitId,
   ] = useMemo(() => {
-    const bnDna = BigNumber.from(dna)
+    const biDna = BigInt(dna)
     return [
-      bnDna.mask(8).toNumber(),
-      bnDna.shr(8).mask(8).toNumber(),
-      bnDna.shr(16).mask(8).toNumber(),
-      bnDna.shr(24).mask(8).toNumber(),
-      bnDna.shr(32).mask(8).toNumber(),
-      bnDna.shr(40).mask(8).toNumber(),
-      bnDna.shr(48).mask(8).toNumber(),
-      bnDna.shr(56).mask(8).toNumber(),
-      bnDna.shr(64).mask(8).toNumber(),
-      bnDna.shr(72).mask(8).toNumber(),
-      bnDna.shr(80).mask(8).toNumber(),
-      bnDna.shr(88).mask(8).toNumber(),
+      Number(biDna & 255n),
+      Number((biDna >> 8n) & 255n),
+      Number((biDna >> 16n) & 255n),
+      Number((biDna >> 24n) & 255n),
+      Number((biDna >> 32n) & 255n),
+      Number((biDna >> 40n) & 255n),
+      Number((biDna >> 48n) & 255n),
+      Number((biDna >> 56n) & 255n),
+      Number((biDna >> 64n) & 255n),
+      Number((biDna >> 72n) & 255n),
+      Number((biDna >> 80n) & 255n),
+      Number((biDna >> 88n) & 255n),
     ]
   }, [dna])
 
   const handleSelect = useCallback(
     (shift: number) => (index: number) => {
-      const bnDna = BigNumber.from(dna)
-      const oldIndex = bnDna.shr(shift).mask(8)
-      const bnOldValue = BigNumber.from(oldIndex).shl(shift)
-      const bnNewValue = BigNumber.from(index).shl(shift)
+      const biDna = BigInt(dna)
+      const biShift = BigInt(shift)
+      const oldIndex = (biDna >> biShift) & 255n
+      const bnOldValue = oldIndex << biShift
+      const bnNewValue = BigInt(index) << biShift
 
-      const newDna = bnDna.sub(bnOldValue).add(bnNewValue).toString()
+      const newDna = biDna - bnOldValue + bnNewValue //.sub(bnOldValue).add(bnNewValue).toString()
 
-      setDna(newDna)
+      setDna(newDna.toString())
     },
     [dna, setDna]
   )

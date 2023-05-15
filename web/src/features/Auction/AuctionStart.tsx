@@ -1,16 +1,19 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit"
-import { useCallback } from "react"
+import { FC, useCallback } from "react"
 import { Id } from "react-toastify"
 import { useAccount } from "wagmi"
 import { showToastAlert } from "../../components/ToastAlert"
-import { useAuctionHouseGetAuction, useAuctionHouseStart } from "../../contracts/generated"
+import { useAuctionHouseStart } from "../../contracts/generated"
 import { CHAIN_ID } from "../../lib/settings"
+import { waitForTransaction } from "wagmi/actions"
+import { AuctionData } from "../../contracts/types"
 
-export const AuctionStart = () => {
+export const AuctionStart: FC<{ auction: AuctionData; refetchAuction: () => void }> = ({
+  auction,
+  refetchAuction,
+}) => {
   const { openConnectModal } = useConnectModal()
   const { isConnected, address } = useAccount()
-
-  const { data: auction, refetch } = useAuctionHouseGetAuction({ chainId: CHAIN_ID })
 
   const { writeAsync } = useAuctionHouseStart()
 
@@ -23,12 +26,15 @@ export const AuctionStart = () => {
       }
 
       if (!writeAsync) return
-      const tx = await writeAsync()
-
+      const { hash } = await writeAsync()
       toastId = showToastAlert("loading", "Initializing", "Next auction is about to start...", {
         autoClose: false,
       })
-      const receipt = await tx.wait(1)
+
+      const receipt = await waitForTransaction({
+        chainId: CHAIN_ID,
+        hash,
+      })
       if (receipt.status)
         showToastAlert("success", "Success", "Auction is ready", {
           toastId,
@@ -39,16 +45,17 @@ export const AuctionStart = () => {
           toastId,
           autoClose: 10000,
         })
-      refetch()
+      refetchAuction()
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Cannot bid", { err })
       showToastAlert("error", "Error", (err as Error).message, {
         toastId,
         autoClose: 3000,
       })
-      refetch()
+      refetchAuction()
     }
-  }, [isConnected, openConnectModal, refetch, writeAsync])
+  }, [isConnected, openConnectModal, refetchAuction, writeAsync])
 
   if (!auction || !auction.isFinished || !writeAsync) return null
 

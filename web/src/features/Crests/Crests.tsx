@@ -27,7 +27,7 @@ export const Crests: FC<{ address?: string }> = ({ address }) => {
             </>
           )}
         </div>
-        {!!error && <div className="text-red">{(error as any).message}</div>}
+        {!!error && <div className="text-red">{(error as Error).message}</div>}
       </div>
     </div>
   )

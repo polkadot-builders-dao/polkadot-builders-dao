@@ -10,6 +10,7 @@ module.exports = {
   ],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
+  ignorePatterns: ["**/contracts/generated.ts"],
   rules: {
     "no-console": "warn",
   },

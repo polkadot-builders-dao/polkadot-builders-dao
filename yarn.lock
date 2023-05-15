@@ -2481,10 +2481,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.29.5":
-  version: 4.29.5
-  resolution: "@tanstack/query-core@npm:4.29.5"
-  checksum: 367176beccd78e959c74e69e96497b626dd1c139398501eb7a04cf92215edf262665c3e7bb59df68320779d49893d3153a3b41e750b9046655b45cfe44691b36
+"@tanstack/query-core@npm:4.29.7":
+  version: 4.29.7
+  resolution: "@tanstack/query-core@npm:4.29.7"
+  checksum: f28441a1fc17881d770ebacbe3a2fcf58bd065ac0cf58f8dc544d367f00d7f65213e09a1a1280e021eef25a50b307cac6884173b5acf32570e755baf29b741aa
   languageName: node
   linkType: hard
 
@@ -2536,11 +2536,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^4.29.5":
-  version: 4.29.5
-  resolution: "@tanstack/react-query@npm:4.29.5"
+"@tanstack/react-query@npm:^4.29.7":
+  version: 4.29.7
+  resolution: "@tanstack/react-query@npm:4.29.7"
   dependencies:
-    "@tanstack/query-core": 4.29.5
+    "@tanstack/query-core": 4.29.7
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2551,7 +2551,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: de45573900810b37216aa8d6599cae5ea43602eaada9fd2224f57ff7ab1de10b3f2e681e7fdb993ee1519ed8ffc7e6e07d6bf3ad1b9da4136b1ae78ca19f31f6
+  checksum: 9db2fb78e18f299c0e58f3c177261f6010fdea63a5f950e4c93a7cf7a46da019aa3171c77759fa7b327e35763e3379f0a885c71dafd9aa99bf2ddda9f264de90
   languageName: node
   linkType: hard
 
@@ -3248,9 +3248,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wagmi/core@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@wagmi/core@npm:1.0.2"
+"@wagmi/core@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@wagmi/core@npm:1.0.4"
   dependencies:
     "@wagmi/chains": 0.2.22
     "@wagmi/connectors": 1.0.2
@@ -3263,7 +3263,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 1adcbbb09437a72ed64a3ce5ea0a326c2a435f284e6d66f3f656fa96b65ed62d052723d47a847db75ed2efaba6c4264769c5d46a0c1c054ab03f410f4e4e2ebd
+  checksum: 2f960e1812324f9e597eb316cb8758aac0a380f4c61852322731f60d7d8fa298d799fa62ec45d05865560911574acee0bf1c9137856ad6e374bb882d9d3ca45c
   languageName: node
   linkType: hard
 
@@ -5313,7 +5313,7 @@ __metadata:
     ethers: ^5.7.2
     fs-extra: ^11.1.1
     hardhat: ^2.14.0
-    hardhat-deploy: ^0.11.28
+    hardhat-deploy: ^0.11.29
     hardhat-gas-reporter: ^1.0.9
     mocha: ^10.2.0
     nodemon: ^2.0.22
@@ -8002,9 +8002,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-deploy@npm:^0.11.28":
-  version: 0.11.28
-  resolution: "hardhat-deploy@npm:0.11.28"
+"hardhat-deploy@npm:^0.11.29":
+  version: 0.11.29
+  resolution: "hardhat-deploy@npm:0.11.29"
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/abstract-signer": ^5.7.0
@@ -8030,7 +8030,7 @@ __metadata:
     murmur-128: ^0.2.1
     qs: ^6.9.4
     zksync-web3: ^0.14.3
-  checksum: 48c8e9a34dba2fae61d2850ab12137532ba622e20d0463dc7ad398a9bd201ec55dcd24b22edf974bf57fa95a78d14dc1abf5c4efc7a7c4bc765b7501c8fcaf85
+  checksum: 4a963e202271189566921fb7ab73bde4ed45204fddeeacdc9993883772b7349b513ba3dd17dee4bc178581724ab20d537f0b69c7ddf227710e7f070ec65c70d2
   languageName: node
   linkType: hard
 
@@ -11513,15 +11513,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-toastify@npm:^9.1.2":
-  version: 9.1.2
-  resolution: "react-toastify@npm:9.1.2"
+"react-toastify@npm:^9.1.3":
+  version: 9.1.3
+  resolution: "react-toastify@npm:9.1.3"
   dependencies:
     clsx: ^1.1.1
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: 0b21851bbb03592aa6e318ca62622016a6aa37cc52484c4a2fee39ce38c9933993e570c8ad9375f0a7061d3401fd175796b74f851b7d5a711b4802e0a3f9f34a
+  checksum: e8bd92c5cbf831b43a042644ab9bc69abe6ceb3ce91ba71f5cd2d8b6a2c9885ca52770e1f1ba64c5632607f6df962db344a26c7fba57606faf5aa0e7bfc8535f
   languageName: node
   linkType: hard
 
@@ -13905,14 +13905,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wagmi@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "wagmi@npm:1.0.2"
+"wagmi@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "wagmi@npm:1.0.4"
   dependencies:
     "@tanstack/query-sync-storage-persister": ^4.27.1
     "@tanstack/react-query": ^4.28.0
     "@tanstack/react-query-persist-client": ^4.28.0
-    "@wagmi/core": 1.0.2
+    "@wagmi/core": 1.0.4
     abitype: 0.8.1
     use-sync-external-store: ^1.2.0
   peerDependencies:
@@ -13922,7 +13922,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: b8933afb2caf05c1a3ff8e00355040e2bff008eb609a2d9c3c784aa3207b505342415ce784f6ec283b1a5fad9e87be312d0ef0ef86fa5e40b399b145d94e0e99
+  checksum: 8d983a562097a6bbe711609c946fad64e0c2b3c4db3ec4ab383c516aca4f557c777cec8af8eb192cb3508f871b7ce497d3537af6f44de947c6a2457466b6d134
   languageName: node
   linkType: hard
 
@@ -13967,7 +13967,7 @@ __metadata:
     "@rainbow-me/rainbowkit": ^1.0.0
     "@tabler/icons-react": ^2.18.0
     "@talismn/wagmi-connector": ^0.2.0
-    "@tanstack/react-query": ^4.29.5
+    "@tanstack/react-query": ^4.29.7
     "@types/blueimp-md5": ^2.18.0
     "@types/color": ^3.0.3
     "@types/react": ^18.2.6
@@ -13991,14 +13991,14 @@ __metadata:
     react-error-boundary: ^4.0.4
     react-icons: ^4.8.0
     react-router-dom: ^6.11.1
-    react-toastify: ^9.1.2
+    react-toastify: ^9.1.3
     react-use: ^17.4.0
     tailwindcss: ^3.3.2
     typescript: ^5.0.4
     viem: ^0.3.24
     vite: ^4.3.5
     vite-plugin-svgr: ^3.2.0
-    wagmi: ^1.0.2
+    wagmi: ^1.0.4
   languageName: unknown
   linkType: soft
 

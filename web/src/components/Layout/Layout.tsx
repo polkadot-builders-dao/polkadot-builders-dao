@@ -11,6 +11,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { NavMenuButton } from "./NavMenuButton"
 import { Nav } from "./Nav"
 import { NavProvider } from "./NavContext"
+import { useNativeCurrency } from "../../lib/useNativeCurrency"
 
 const Link = ({ to, children }: { to: To; children: ReactNode }) => {
   return (
@@ -37,6 +38,8 @@ const Treasury = () => {
     address: config?.treasury,
     chainId: CHAIN_ID,
   })
+  // balance.symbol not reliable, defaults to ETH if no wallet connected
+  const currency = useNativeCurrency(CHAIN_ID)
 
   const url = useMemo(() => {
     if (!blockExplorerUrl) return ""
@@ -47,13 +50,13 @@ const Treasury = () => {
 
   return (
     <a
-      title={`${balance.formatted} ${balance.symbol}`}
+      title={`${balance.formatted} ${currency?.symbol}`}
       href={url}
       className="btn secondary hidden items-center gap-2 text-xs sm:flex"
     >
       <div className="hidden sm:block">Treasury</div>
       <div>
-        {Number(balance.formatted).toFixed()} {balance.symbol}
+        {Number(balance.formatted).toFixed()} {currency?.symbol}
       </div>
     </a>
   )
@@ -73,12 +76,6 @@ export const Layout: FC<PropsWithChildren & { content?: ReactNode }> = ({ childr
                 <Treasury />
               </div>
               <div className="flex items-center gap-4">
-                {/* <a
-                  href="https://discord.gg/dCm9utHjYz"
-                  className="btn secondary flex flex-col justify-center"
-                >
-                  <IconBrandDiscord className="inline-block" />
-                </a> */}
                 <NavMenuButton />
                 <div className="btn-connect-wrapper">
                   <ConnectButton accountStatus="avatar" label="Connect" />
@@ -87,17 +84,6 @@ export const Layout: FC<PropsWithChildren & { content?: ReactNode }> = ({ childr
             </div>
             <Nav />
           </div>
-
-          {/* <nav>
-            <ul className="mx-auto flex w-full max-w-5xl gap-4 px-6">
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/crests">Crests</Link>
-              </li>
-            </ul>
-          </nav> */}
         </header>
       </NavProvider>
       <div className="flex w-full grow flex-col">

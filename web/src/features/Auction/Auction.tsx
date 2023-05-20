@@ -50,7 +50,7 @@ const AuctionDetails: FC<{ auction: AuctionData; refetchAuction: () => void }> =
           </div>
         </div>
       )}
-      <div className="my-4 flex grow items-center">
+      <div className="my-4 grow items-center">
         <BidInput auction={auction} refetchAuction={refetchAuction} />
       </div>
       <div>

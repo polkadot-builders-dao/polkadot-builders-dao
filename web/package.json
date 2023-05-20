@@ -13,7 +13,7 @@
     "lint": "eslint . --ext ts,tsx",
     "wagmi": "wagmi generate",
     "wagmi:watch": "wagmi generate --watch",
-    "analyze-bundle": "vite-bundle-visualizer"
+    "analyze-bundle": "npx vite-bundle-visualizer"
   },
   "dependencies": {
     "@floating-ui/react": "^0.24.1",
@@ -55,7 +55,6 @@
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
-    "vite-bundle-visualizer": "^0.7.0",
     "vite-plugin-svgr": "^3.2.0"
   },
   "packageManager": "yarn@3.3.0"

@@ -1,4 +1,3 @@
-import { IconDots } from "@tabler/icons-react"
 import { useNav } from "./NavContext"
 import classNames from "classnames"
 
@@ -12,7 +11,7 @@ export const NavMenuButton = () => {
       onClick={toggle}
       className={classNames("btn secondary", !isOpen && "border-none")}
     >
-      <IconDots />
+      Menu
     </button>
   )
 }

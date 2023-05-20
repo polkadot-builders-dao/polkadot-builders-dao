@@ -9,12 +9,11 @@ import { AuctionData } from "../../contracts/types"
 import { FC, useEffect, useMemo, useState } from "react"
 import { useCrestFromChain } from "../../lib/useCrestFromChain"
 import { AuctionHistoryButton } from "./AuctionHistoryButton"
-import Jazzicon from "react-jazzicon/dist/Jazzicon"
-import { jsNumberForAddress } from "react-jazzicon"
 import { LayoutBackground } from "../../components/Layout/LayoutBackground"
 import { useOpenClose } from "../../lib/useOpenClose"
 import { CrestDetailsDrawer } from "../../components/CrestDetailsDrawer/CrestDetailsDrawer"
 import { EthValue } from "../../components/EthValue"
+import { Avatar } from "../../components/Avatar"
 
 const AuctionDetails: FC<{ auction: AuctionData; refetchAuction: () => void }> = ({
   auction,
@@ -69,10 +68,10 @@ const AuctionDetails: FC<{ auction: AuctionData; refetchAuction: () => void }> =
             <div className="flex w-full justify-between sm:text-lg">
               <div className="flex items-center gap-1">
                 <span className="inline-block sm:hidden">
-                  <Jazzicon diameter={12} seed={jsNumberForAddress(auction.bidder)} />
+                  <Avatar size={12} address={auction.bidder} />
                 </span>
                 <span className="hidden sm:inline-block">
-                  <Jazzicon diameter={16} seed={jsNumberForAddress(auction.bidder)} />
+                  <Avatar size={16} address={auction.bidder} />
                 </span>
                 <span>{shortenAddress(auction.bidder, 4, 4)}</span>
               </div>

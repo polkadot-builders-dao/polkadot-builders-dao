@@ -20,6 +20,7 @@
     "@heroicons/react": "^2.0.18",
     "@rainbow-me/rainbowkit": "^1.0.0",
     "@tabler/icons-react": "^2.18.0",
+    "@talismn/orb": "0.0.0-pr771-20230520015633",
     "@tanstack/react-query": "^4.29.7",
     "blueimp-md5": "^2.19.0",
     "canvg": "^4.0.1",

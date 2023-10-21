@@ -1,11 +1,11 @@
 import * as ethers from 'ethers'
 import {LogEvent, Func, ContractBase} from './abi.support'
-import {ABI_JSON} from './auctionHouse.abi'
+import {ABI_JSON} from './AuctionHouse.abi'
 
-export const abi = new ethers.utils.Interface(ABI_JSON);
+export const abi = new ethers.Interface(ABI_JSON);
 
 export const events = {
-    Bid: new LogEvent<([tokenId: ethers.BigNumber, bidder: string, bid: ethers.BigNumber] & {tokenId: ethers.BigNumber, bidder: string, bid: ethers.BigNumber})>(
+    Bid: new LogEvent<([tokenId: bigint, bidder: string, bid: bigint] & {tokenId: bigint, bidder: string, bid: bigint})>(
         abi, '0xdcd726e11f8b5e160f00290f0fe3a1abb547474e53a8e7a8f49a85e7b1ca3199'
     ),
     OwnershipTransferred: new LogEvent<([previousOwner: string, newOwner: string] & {previousOwner: string, newOwner: string})>(
@@ -14,7 +14,7 @@ export const events = {
     Paused: new LogEvent<([account: string] & {account: string})>(
         abi, '0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258'
     ),
-    Start: new LogEvent<([tokenId: ethers.BigNumber] & {tokenId: ethers.BigNumber})>(
+    Start: new LogEvent<([tokenId: bigint] & {tokenId: bigint})>(
         abi, '0xf06a29c94c6f4edc1085072972d9441f7603e81c8535a308f214285d0653c850'
     ),
     Unpaused: new LogEvent<([account: string] & {account: string})>(
@@ -26,16 +26,16 @@ export const functions = {
     bid: new Func<[], {}, []>(
         abi, '0x1998aeef'
     ),
-    getAuction: new Func<[], {}, ([tokenId: ethers.BigNumber, startTime: ethers.BigNumber, endTime: ethers.BigNumber, currentBid: ethers.BigNumber, bidder: string, minBid: ethers.BigNumber, isFinished: boolean] & {tokenId: ethers.BigNumber, startTime: ethers.BigNumber, endTime: ethers.BigNumber, currentBid: ethers.BigNumber, bidder: string, minBid: ethers.BigNumber, isFinished: boolean})>(
+    getAuction: new Func<[], {}, ([tokenId: bigint, startTime: bigint, endTime: bigint, currentBid: bigint, bidder: string, minBid: bigint, isFinished: boolean] & {tokenId: bigint, startTime: bigint, endTime: bigint, currentBid: bigint, bidder: string, minBid: bigint, isFinished: boolean})>(
         abi, '0x7327df25'
     ),
-    getConfig: new Func<[], {}, ([treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber] & {treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber})>(
+    getConfig: new Func<[], {}, ([treasury: string, token: string, glmr: string, duration: bigint, extendedDuration: bigint, minFirstBid: bigint, minBidIncrementPercent: bigint] & {treasury: string, token: string, glmr: string, duration: bigint, extendedDuration: bigint, minFirstBid: bigint, minBidIncrementPercent: bigint})>(
         abi, '0xc3f909d4'
     ),
     glmr: new Func<[], {}, string>(
         abi, '0x12d8e41b'
     ),
-    onERC721Received: new Func<[_: string, _: string, _: ethers.BigNumber, _: string], {}, string>(
+    onERC721Received: new Func<[_: string, _: string, _: bigint, _: string], {}, string>(
         abi, '0x150b7a02'
     ),
     owner: new Func<[], {}, string>(
@@ -50,19 +50,19 @@ export const functions = {
     renounceOwnership: new Func<[], {}, []>(
         abi, '0x715018a6'
     ),
-    setDuration: new Func<[_duration: ethers.BigNumber], {_duration: ethers.BigNumber}, []>(
+    setDuration: new Func<[_duration: bigint], {_duration: bigint}, []>(
         abi, '0xf6be71d1'
     ),
-    setExtendedDuration: new Func<[_extendedDuration: ethers.BigNumber], {_extendedDuration: ethers.BigNumber}, []>(
+    setExtendedDuration: new Func<[_extendedDuration: bigint], {_extendedDuration: bigint}, []>(
         abi, '0xb535ef80'
     ),
     setGLMR: new Func<[_glmr: string], {_glmr: string}, []>(
         abi, '0x8b058715'
     ),
-    setMinBidIncrementPercent: new Func<[_minBidIncrementPercent: ethers.BigNumber], {_minBidIncrementPercent: ethers.BigNumber}, []>(
+    setMinBidIncrementPercent: new Func<[_minBidIncrementPercent: bigint], {_minBidIncrementPercent: bigint}, []>(
         abi, '0xe0f0815c'
     ),
-    setMinFirstBid: new Func<[_minFirstBid: ethers.BigNumber], {_minFirstBid: ethers.BigNumber}, []>(
+    setMinFirstBid: new Func<[_minFirstBid: bigint], {_minFirstBid: bigint}, []>(
         abi, '0x3d44ce32'
     ),
     setTreasury: new Func<[_treasury: string], {_treasury: string}, []>(
@@ -84,11 +84,11 @@ export const functions = {
 
 export class Contract extends ContractBase {
 
-    getAuction(): Promise<([tokenId: ethers.BigNumber, startTime: ethers.BigNumber, endTime: ethers.BigNumber, currentBid: ethers.BigNumber, bidder: string, minBid: ethers.BigNumber, isFinished: boolean] & {tokenId: ethers.BigNumber, startTime: ethers.BigNumber, endTime: ethers.BigNumber, currentBid: ethers.BigNumber, bidder: string, minBid: ethers.BigNumber, isFinished: boolean})> {
+    getAuction(): Promise<([tokenId: bigint, startTime: bigint, endTime: bigint, currentBid: bigint, bidder: string, minBid: bigint, isFinished: boolean] & {tokenId: bigint, startTime: bigint, endTime: bigint, currentBid: bigint, bidder: string, minBid: bigint, isFinished: boolean})> {
         return this.eth_call(functions.getAuction, [])
     }
 
-    getConfig(): Promise<([treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber] & {treasury: string, token: string, glmr: string, duration: ethers.BigNumber, extendedDuration: ethers.BigNumber, minFirstBid: ethers.BigNumber, minBidIncrementPercent: ethers.BigNumber})> {
+    getConfig(): Promise<([treasury: string, token: string, glmr: string, duration: bigint, extendedDuration: bigint, minFirstBid: bigint, minBidIncrementPercent: bigint] & {treasury: string, token: string, glmr: string, duration: bigint, extendedDuration: bigint, minFirstBid: bigint, minBidIncrementPercent: bigint})> {
         return this.eth_call(functions.getConfig, [])
     }
 
@@ -96,7 +96,7 @@ export class Contract extends ContractBase {
         return this.eth_call(functions.glmr, [])
     }
 
-    onERC721Received(arg0: string, arg1: string, arg2: ethers.BigNumber, arg3: string): Promise<string> {
+    onERC721Received(arg0: string, arg1: string, arg2: bigint, arg3: string): Promise<string> {
         return this.eth_call(functions.onERC721Received, [arg0, arg1, arg2, arg3])
     }
 

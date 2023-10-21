@@ -30,7 +30,8 @@ const processor = new EvmBatchProcessor()
     archive: lookupArchive(ARCHIVE_NAME, { type: "EVM" }),
     chain: RPC_ENDPOINT,
   })
-  .setFinalityConfirmation(75)
+  .setFinalityConfirmation(3)
+  .useArchiveOnly(true)
   .setBlockRange({ from: START_BLOCK })
   .addLog({
     address: [ADDRESS_CREST, ADDRESS_AUCTIONHOUSE],

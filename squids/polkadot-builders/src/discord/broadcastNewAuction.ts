@@ -2,8 +2,7 @@ import { Resvg } from "@resvg/resvg-js"
 import { Token } from "../model"
 import { webhookClient } from "./webhookClient"
 import { AttachmentBuilder, EmbedBuilder } from "discord.js"
-import { Contract as CrestContract } from "../abi/crestContract"
-import { BigNumber } from "ethers"
+import { Contract as CrestContract } from "../abi/Crest"
 
 export const broadcastNewAuction = async (token: Token, contract: CrestContract) => {
   try {
@@ -16,7 +15,7 @@ export const broadcastNewAuction = async (token: Token, contract: CrestContract)
     // only broadcast if the token is owned by auction house (others are most likely founder grants)
     const [auctionHouse, owner] = await Promise.all([
       contract.auctionHouse(),
-      contract.ownerOf(BigNumber.from(token.id)),
+      contract.ownerOf(BigInt(token.id)),
     ])
     if (auctionHouse !== owner) return
 

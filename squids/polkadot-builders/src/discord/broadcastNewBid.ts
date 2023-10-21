@@ -1,8 +1,7 @@
 import { EmbedBuilder } from "discord.js"
 import { Bid } from "../model"
-import { formatEther } from "ethers/lib/utils"
-import { BigNumber } from "ethers"
 import { webhookClient } from "./webhookClient"
+import { formatEther } from "ethers"
 
 export const broadcastNewBid = async (bid: Bid) => {
   try {
@@ -15,7 +14,7 @@ export const broadcastNewBid = async (bid: Bid) => {
     const embed = new EmbedBuilder({
       title: `New bid on ${bid.token.name}`,
       url: "https://app.polkadotbuilders.xyz",
-      description: `Bid : ${formatEther(BigNumber.from(bid.value))} GLMR\nFrom : ${bid.bidder}`,
+      description: `Bid : ${formatEther(bid.value)} GLMR\nFrom : ${bid.bidder}`,
     })
 
     await webhookClient.send({

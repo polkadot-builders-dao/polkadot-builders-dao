@@ -9,6 +9,7 @@ deploy:
   secrets:
     - DEV_DISCORD_WEBHOOK_ID
     - DEV_DISCORD_WEBHOOK_TOKEN
+    - BLAST_APIKEY
   processor:
     env:
       {

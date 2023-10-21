@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: polkadot-builders
-version: 5
+version: 6
 description: "Providers auctions and transfers details for Polkadot Builders Crests"
 build:
 deploy:
@@ -9,13 +9,14 @@ deploy:
   secrets:
     - DISCORD_WEBHOOK_ID
     - DISCORD_WEBHOOK_TOKEN
+    - BLAST_APIKEY
   processor:
     env:
       {
         ADDRESS_AUCTIONHOUSE: "0x89bE56Ce74C86eA90e429fBb98824aEf435C8e87",
         ADDRESS_CREST: "0x8417F77904a86436223942a516f00F8aDF933B70",
         ARCHIVE_NAME: "moonbeam",
-        RPC_ENDPOINT: "https://rpc.api.moonbeam.network",
+        RPC_ENDPOINT: "https://moonbeam.blastapi.io",
         START_BLOCK: 3270401,
       }
     cmd:

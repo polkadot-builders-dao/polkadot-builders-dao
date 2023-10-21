@@ -11,5 +11,7 @@ if (!process.env.START_BLOCK) throw new Error("START_BLOCK is not defined")
 export const ADDRESS_CREST = process.env.ADDRESS_CREST.toLowerCase()
 export const ADDRESS_AUCTIONHOUSE = process.env.ADDRESS_AUCTIONHOUSE.toLowerCase()
 export const ARCHIVE_NAME = process.env.ARCHIVE_NAME as KnownArchivesEVM
-export const RPC_ENDPOINT = process.env.RPC_ENDPOINT
+export const RPC_ENDPOINT = process.env.BLAST_APIKEY
+  ? `${process.env.RPC_ENDPOINT}/${process.env.BLAST_APIKEY}`
+  : process.env.RPC_ENDPOINT
 export const START_BLOCK = Number(process.env.START_BLOCK)

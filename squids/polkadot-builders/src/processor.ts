@@ -24,7 +24,7 @@ const processor = new EvmBatchProcessor()
     chain: RPC_ENDPOINT,
   })
   .setFinalityConfirmation(3)
-  .useArchiveOnly(true)
+  //.useArchiveOnly(true)
   .setBlockRange({ from: START_BLOCK })
   .addLog({
     address: [ADDRESS_CREST, ADDRESS_AUCTIONHOUSE],

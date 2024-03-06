@@ -73,7 +73,13 @@ export const AuctionStart: FC<{ auction: AuctionData; refetchAuction: () => void
   if (!auction || !auction.isFinished || !writeAsync) return null
 
   return (
-    <button type="button" className="btn primary" onClick={handleStart}>
+    <button
+      type="button"
+      disabled
+      title="So Long, and Thanks for All the Fish"
+      className="btn primary"
+      onClick={handleStart}
+    >
       {auction.bidder === address ? "Claim" : "Next"}
     </button>
   )
